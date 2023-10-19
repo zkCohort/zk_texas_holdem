@@ -260,6 +260,7 @@ program zk_texas_holdem.aleo {
             let hit: bool = false;
             let use_a: bool = false;
             let use_b: bool = false;
+            let temp_card: u64 = 0u64;
             if (!hit && i < n) {
                 use_b = true;
                 hit = true;
@@ -281,166 +282,323 @@ program zk_texas_holdem.aleo {
             if (use_a) {
                 // Assign the card to the correct position in the deck
                 if (a_index == 26u8) {
-                    c0 = a.c0;
+                    temp_card = a.c0;
                 }
                 if (a_index == 27u8) {
-                    c1 = a.c1;
+                    temp_card = a.c1;
                 }
                 if (a_index == 28u8) {
-                    c2 = a.c2;
+                    temp_card = a.c2;
                 }
                 if (a_index == 29u8) {
-                    c3 = a.c3;
+                    temp_card = a.c3;
                 }
                 if (a_index == 30u8) {
-                    c4 = a.c4;
+                    temp_card = a.c4;
                 }
                 if (a_index == 31u8) {
-                    c5 = a.c5;
+                    temp_card = a.c5;
                 }
                 if (a_index == 32u8) {
-                    c6 = a.c6;
+                    temp_card = a.c6;
                 }
                 if (a_index == 33u8) {
-                    c7 = a.c7;
+                    temp_card = a.c7;
                 }
                 if (a_index == 34u8) {
-                    c8 = a.c8;
+                    temp_card = a.c8;
                 }
                 if (a_index == 35u8) {
-                    c9 = a.c9;
+                    temp_card = a.c9;
                 }
                 if (a_index == 36u8) {
-                    c10 = a.c10;
+                    temp_card = a.c10;
                 }
                 if (a_index == 37u8) {
-                    c11 = a.c11;
+                    temp_card = a.c11;
                 }
                 if (a_index == 38u8) {
-                    c12 = a.c12;
+                    temp_card = a.c12;
                 }
                 if (a_index == 39u8) {
-                    c13 = a.c13;
+                    temp_card = a.c13;
                 }
                 if (a_index == 40u8) {
-                    c14 = a.c14;
+                    temp_card = a.c14;
                 }
                 if (a_index == 41u8) {
-                    c15 = a.c15;
+                    temp_card = a.c15;
                 }
                 if (a_index == 42u8) {
-                    c16 = a.c16;
+                    temp_card = a.c16;
                 }
                 if (a_index == 43u8) {
-                    c17 = a.c17;
+                    temp_card = a.c17;
                 }
                 if (a_index == 44u8) {
-                    c18 = a.c18;
+                    temp_card = a.c18;
                 }
                 if (a_index == 45u8) {
-                    c19 = a.c19;
+                    temp_card = a.c19;
                 }
                 if (a_index == 46u8) {
-                    c20 = a.c20;
+                    temp_card = a.c20;
                 }
                 if (a_index == 47u8) {
-                    c21 = a.c21;
+                    temp_card = a.c21;
                 }
                 if (a_index == 48u8) {
-                    c22 = a.c22;
+                    temp_card = a.c22;
                 }
                 if (a_index == 49u8) {
-                    c23 = a.c23;
+                    temp_card = a.c23;
                 }
                 if (a_index == 50u8) {
-                    c24 = a.c24;
+                    temp_card = a.c24;
                 }
                 if (a_index == 51u8) {
-                    c25 = a.c25;
+                    temp_card = a.c25;
                 }
                 a_index = a_index + 1u8;
             }
             if (use_b) {
                 // Assign the card to the correct position in the deck
                 if (b_index == 0u8) {
-                    c26 = b.c0;
+                    temp_card = b.c0;
                 }
                 if (b_index == 1u8) {
-                    c27 = b.c1;
+                    temp_card = b.c1;
                 }
                 if (b_index == 2u8) {
-                    c28 = b.c2;
+                    temp_card = b.c2;
                 }
                 if (b_index == 3u8) {
-                    c29 = b.c3;
+                    temp_card = b.c3;
                 }
                 if (b_index == 4u8) {
-                    c30 = b.c4;
+                    temp_card = b.c4;
                 }
                 if (b_index == 5u8) {
-                    c31 = b.c5;
+                    temp_card = b.c5;
                 }
                 if (b_index == 6u8) {
-                    c32 = b.c6;
+                    temp_card = b.c6;
                 }
                 if (b_index == 7u8) {
-                    c33 = b.c7;
+                    temp_card = b.c7;
                 }
                 if (b_index == 8u8) {
-                    c34 = b.c8;
+                    temp_card = b.c8;
                 }
                 if (b_index == 9u8) {
-                    c35 = b.c9;
+                    temp_card = b.c9;
                 }
                 if (b_index == 10u8) {
-                    c36 = b.c10;
+                    temp_card = b.c10;
                 }
                 if (b_index == 11u8) {
-                    c37 = b.c11;
+                    temp_card = b.c11;
                 }
                 if (b_index == 12u8) {
-                    c38 = b.c12;
+                    temp_card = b.c12;
                 }
                 if (b_index == 13u8) {
-                    c39 = b.c13;
+                    temp_card = b.c13;
                 }
                 if (b_index == 14u8) {
-                    c40 = b.c14;
+                    temp_card = b.c14;
                 }
                 if (b_index == 15u8) {
-                    c41 = b.c15;
+                    temp_card = b.c15;
                 }
                 if (b_index == 16u8) {
-                    c42 = b.c16;
+                    temp_card = b.c16;
                 }
                 if (b_index == 17u8) {
-                    c43 = b.c17;
+                    temp_card = b.c17;
                 }
                 if (b_index == 18u8) {
-                    c44 = b.c18;
+                    temp_card = b.c18;
                 }
                 if (b_index == 19u8) {
-                    c45 = b.c19;
+                    temp_card = b.c19;
                 }
                 if (b_index == 20u8) {
-                    c46 = b.c20;
+                    temp_card = b.c20;
                 }
                 if (b_index == 21u8) {
-                    c47 = b.c21;
+                    temp_card = b.c21;
                 }
                 if (b_index == 22u8) {
-                    c48 = b.c22;
+                    temp_card = b.c22;
                 }
                 if (b_index == 23u8) {
-                    c49 = b.c23;
+                    temp_card = b.c23;
                 }
                 if (b_index == 24u8) {
-                    c50 = b.c24;
+                    temp_card = b.c24;
                 }
                 if (b_index == 25u8) {
-                    c51 = b.c25;
+                    temp_card = b.c25;
                 }
                 b_index = b_index + 1u8;
+            }
+            // Assign the card to the correct position in the deck
+            if (i == 0i8) {
+                c0 = temp_card;
+            }
+            if (i == 1i8) {
+                c1 = temp_card;
+            }
+            if (i == 2i8) {
+                c2 = temp_card;
+            }
+            if (i == 3i8) {
+                c3 = temp_card;
+            }
+            if (i == 4i8) {
+                c4 = temp_card;
+            }
+            if (i == 5i8) {
+                c5 = temp_card;
+            }
+            if (i == 6i8) {
+                c6 = temp_card;
+            }
+            if (i == 7i8) {
+                c7 = temp_card;
+            }
+            if (i == 8i8) {
+                c8 = temp_card;
+            }
+            if (i == 9i8) {
+                c9 = temp_card;
+            }
+            if (i == 10i8) {
+                c10 = temp_card;
+            }
+            if (i == 11i8) {
+                c11 = temp_card;
+            }
+            if (i == 12i8) {
+                c12 = temp_card;
+            }
+            if (i == 13i8) {
+                c13 = temp_card;
+            }
+            if (i == 14i8) {
+                c14 = temp_card;
+            }
+            if (i == 15i8) {
+                c15 = temp_card;
+            }
+            if (i == 16i8) {
+                c16 = temp_card;
+            }
+            if (i == 17i8) {
+                c17 = temp_card;
+            }
+            if (i == 18i8) {
+                c18 = temp_card;
+            }
+            if (i == 19i8) {
+                c19 = temp_card;
+            }
+            if (i == 20i8) {
+                c20 = temp_card;
+            }
+            if (i == 21i8) {
+                c21 = temp_card;
+            }
+            if (i == 22i8) {
+                c22 = temp_card;
+            }
+            if (i == 23i8) {
+                c23 = temp_card;
+            }
+            if (i == 24i8) {
+                c24 = temp_card;
+            }
+            if (i == 25i8) {
+                c25 = temp_card;
+            }
+            if (i == 26i8) {
+                c26 = temp_card;
+            }
+            if (i == 27i8) {
+                c27 = temp_card;
+            }
+            if (i == 28i8) {
+                c28 = temp_card;
+            }
+            if (i == 29i8) {
+                c29 = temp_card;
+            }
+            if (i == 30i8) {
+                c30 = temp_card;
+            }
+            if (i == 31i8) {
+                c31 = temp_card;
+            }
+            if (i == 32i8) {
+                c32 = temp_card;
+            }
+            if (i == 33i8) {
+                c33 = temp_card;
+            }
+            if (i == 34i8) {
+                c34 = temp_card;
+            }
+            if (i == 35i8) {
+                c35 = temp_card;
+            }
+            if (i == 36i8) {
+                c36 = temp_card;
+            }
+            if (i == 37i8) {
+                c37 = temp_card;
+            }
+            if (i == 38i8) {
+                c38 = temp_card;
+            }
+            if (i == 39i8) {
+                c39 = temp_card;
+            }
+            if (i == 40i8) {
+                c40 = temp_card;
+            }
+            if (i == 41i8) {
+                c41 = temp_card;
+            }
+            if (i == 42i8) {
+                c42 = temp_card;
+            }
+            if (i == 43i8) {
+                c43 = temp_card;
+            }
+            if (i == 44i8) {
+                c44 = temp_card;
+            }
+            if (i == 45i8) {
+                c45 = temp_card;
+            }
+            if (i == 46i8) {
+                c46 = temp_card;
+            }
+            if (i == 47i8) {
+                c47 = temp_card;
+            }
+            if (i == 48i8) {
+                c48 = temp_card;
+            }
+            if (i == 49i8) {
+                c49 = temp_card;
+            }
+            if (i == 50i8) {
+                c50 = temp_card;
+            }
+            if (i == 51i8) {
+                c51 = temp_card;
             }
         }
         return Deck {
