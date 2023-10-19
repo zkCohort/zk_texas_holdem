@@ -62,10 +62,62 @@ struct Deck:
 
 closure new_deck:
     input r0 as boolean;
-    cast 9223372036854775808u64 4611686018427387904u64 2305843009213693952u64 1152921504606846976u64 576460752303423488u64 288230376151711744u64 144115188075855872u64 72057594037927936u64 36028797018963968u64 18014398509481984u64 9007199254740992u64 4503599627370496u64 2251799813685248u64 1125899906842624u64 562949953421312u64 281474976710656u64 140737488355328u64 70368744177664u64 35184372088832u64 17592186044416u64 8796093022208u64 4398046511104u64 2199023255552u64 1099511627776u64 549755813888u64 274877906944u64 into r1 as SplitDeck;
-    cast 137438953472u64 68719476736u64 34359738368u64 17179869184u64 8589934592u64 4294967296u64 2147483648u64 1073741824u64 536870912u64 268435456u64 134217728u64 67108864u64 33554432u64 16777216u64 8388608u64 4194304u64 2097152u64 1048576u64 524288u64 262144u64 131072u64 65536u64 32768u64 16384u64 8192u64 4096u64 into r2 as SplitDeck;
-    cast r1 r2 into r3 as Deck;
-    output r3 as Deck;
+    shl 1u64 63u8 into r1;
+    shl 1u64 62u8 into r2;
+    shl 1u64 61u8 into r3;
+    shl 1u64 60u8 into r4;
+    shl 1u64 59u8 into r5;
+    shl 1u64 58u8 into r6;
+    shl 1u64 57u8 into r7;
+    shl 1u64 56u8 into r8;
+    shl 1u64 55u8 into r9;
+    shl 1u64 54u8 into r10;
+    shl 1u64 53u8 into r11;
+    shl 1u64 52u8 into r12;
+    shl 1u64 51u8 into r13;
+    shl 1u64 50u8 into r14;
+    shl 1u64 49u8 into r15;
+    shl 1u64 48u8 into r16;
+    shl 1u64 47u8 into r17;
+    shl 1u64 46u8 into r18;
+    shl 1u64 45u8 into r19;
+    shl 1u64 44u8 into r20;
+    shl 1u64 43u8 into r21;
+    shl 1u64 42u8 into r22;
+    shl 1u64 41u8 into r23;
+    shl 1u64 40u8 into r24;
+    shl 1u64 39u8 into r25;
+    shl 1u64 38u8 into r26;
+    cast r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 r16 r17 r18 r19 r20 r21 r22 r23 r24 r25 r26 into r27 as SplitDeck;
+    shl 1u64 37u8 into r28;
+    shl 1u64 36u8 into r29;
+    shl 1u64 35u8 into r30;
+    shl 1u64 34u8 into r31;
+    shl 1u64 33u8 into r32;
+    shl 1u64 32u8 into r33;
+    shl 1u64 31u8 into r34;
+    shl 1u64 30u8 into r35;
+    shl 1u64 29u8 into r36;
+    shl 1u64 28u8 into r37;
+    shl 1u64 27u8 into r38;
+    shl 1u64 26u8 into r39;
+    shl 1u64 25u8 into r40;
+    shl 1u64 24u8 into r41;
+    shl 1u64 23u8 into r42;
+    shl 1u64 22u8 into r43;
+    shl 1u64 21u8 into r44;
+    shl 1u64 20u8 into r45;
+    shl 1u64 19u8 into r46;
+    shl 1u64 18u8 into r47;
+    shl 1u64 17u8 into r48;
+    shl 1u64 16u8 into r49;
+    shl 1u64 15u8 into r50;
+    shl 1u64 14u8 into r51;
+    shl 1u64 13u8 into r52;
+    shl 1u64 12u8 into r53;
+    cast r28 r29 r30 r31 r32 r33 r34 r35 r36 r37 r38 r39 r40 r41 r42 r43 r44 r45 r46 r47 r48 r49 r50 r51 r52 r53 into r54 as SplitDeck;
+    cast r27 r54 into r55 as Deck;
+    output r55 as Deck;
 
 
 closure setup_shuffle:
