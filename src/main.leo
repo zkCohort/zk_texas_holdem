@@ -1,6 +1,15 @@
 // The 'zk_texas_holdem' program.
 program zk_texas_holdem.aleo {
 
+    /// TODO: 
+    //        1. Move shuffle helper and transistion shuffle to a import in a new directory imports/zk_deck_shuffle.aleo
+    //        2. Make a dealer import program/transition who owns GameState and maintains which GameState can be shared with which party
+    //        2a. Dealer program using self.signer calls shuffle and only program may access ShuffledDeck 
+    //        3. Find use for coefficients or lagrange interpolation if deemed necessary (are they private or public candidates)
+    //        4. coefficients with finite field p=53?
+    //        5. Find a way to send your card u64 to the dealer to compare w/ the coeeficients which it knows of
+
+
     record GameState {
         owner: address,
         deck: u64,
