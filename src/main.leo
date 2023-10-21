@@ -1,3 +1,6 @@
+import zk_dealer.leo;
+import zk_deck_shuffle.leo;
+
 // The 'zk_texas_holdem' program.
 program zk_texas_holdem.aleo {
 
@@ -9,739 +12,192 @@ program zk_texas_holdem.aleo {
     //        4. coefficients with finite field p=53?
     //        5. Find a way to send your card u64 to the dealer to compare w/ the coeeficients which it knows of
 
-
-    record GameState {
+    record Table {
         owner: address,
-        deck: u64,
-        river: u64,
-        players: u8,
-        // player1_address: address,
-        // player2_address: address,
-        // player3_address: address,
-        // player4_address: address,
-        // player5_address: address,
-        // player6_address: address,
-        // player7_address: address,
-        // player8_address: address,
-        player1: u64,
-        player2: u64,
-        player3: u64,
-        player4: u64,
-        player5: u64,
-        player6: u64,
-        player7: u64,
-        player8: u64,
+        table_id: group,
     }
 
-    record Invitation {
+    record Seat {
         owner: address,
-        caller: address,
+        table_id: group,
+        player_sequence: u8,
+        salt: scalar,
+        selected_seeds: [field; 7],
     }
 
     record Hand {
         owner: address,
-        card1: u64,
-        card2: u64,
+        cards: [u8; 2],
     }
 
-    record Seed {
-        owner: address,
-        seed: i8,
+    struct TableState {
+        table_id: group,
+        player_index: u8,
+        players: [address; 9],
+        winner: address,
+        rounds: u32,
+        pot: u64,
+        folded: [bool; 9],
     }
 
-    struct SplitDeck {
-        c0: u64,
-        c1: u64,
-        c2: u64,
-        c3: u64,
-        c4: u64,
-        c5: u64,
-        c6: u64,
-        c7: u64,
-        c8: u64,
-        c9: u64,
-        c10: u64,
-        c11: u64,
-        c12: u64,
-        c13: u64,
-        c14: u64,
-        c15: u64,
-        c16: u64,
-        c17: u64,
-        c18: u64,
-        c19: u64,
-        c20: u64,
-        c21: u64,
-        c22: u64,
-        c23: u64,
-        c24: u64,
-        c25: u64,
+    mapping table_index: group => TableState;
+
+    transition main(public table_id: group) -> (Table) {
+        zk_dealer.leo/init_table(table_id);
+        return 
+            Table {
+                owner: self.caller,
+                table_id,
+            } then finalize(table_id);
     }
 
-    struct Deck {
-        bottom: SplitDeck,
-        top: SplitDeck,
-    }
-
-    function new_deck(init: bool) -> Deck {
-        let mask: u64 = 1u64;
-        return Deck {
-            bottom: SplitDeck {
-                c0: mask << 63u8,
-                c1: mask << 62u8,
-                c2: mask << 61u8,
-                c3: mask << 60u8,
-                c4: mask << 59u8,
-                c5: mask << 58u8,
-                c6: mask << 57u8,
-                c7: mask << 56u8,
-                c8: mask << 55u8,
-                c9: mask << 54u8,
-                c10: mask << 53u8,
-                c11: mask << 52u8,
-                c12: mask << 51u8,
-                c13: mask << 50u8,
-                c14: mask << 49u8,
-                c15: mask << 48u8,
-                c16: mask << 47u8,
-                c17: mask << 46u8,
-                c18: mask << 45u8,
-                c19: mask << 44u8,
-                c20: mask << 43u8,
-                c21: mask << 42u8,
-                c22: mask << 41u8,
-                c23: mask << 40u8,
-                c24: mask << 39u8,
-                c25: mask << 38u8,
-            },
-            top: SplitDeck {
-                c0: mask << 37u8,
-                c1: mask << 36u8,
-                c2: mask << 35u8,
-                c3: mask << 34u8,
-                c4: mask << 33u8,
-                c5: mask << 32u8,
-                c6: mask << 31u8,
-                c7: mask << 30u8,
-                c8: mask << 29u8,
-                c9: mask << 28u8,
-                c10: mask << 27u8,
-                c11: mask << 26u8,
-                c12: mask << 25u8,
-                c13: mask << 24u8,
-                c14: mask << 23u8,
-                c15: mask << 22u8,
-                c16: mask << 21u8,
-                c17: mask << 20u8,
-                c18: mask << 19u8,
-                c19: mask << 18u8,
-                c20: mask << 17u8,
-                c21: mask << 16u8,
-                c22: mask << 15u8,
-                c23: mask << 14u8,
-                c24: mask << 13u8,
-                c25: mask << 12u8,
-            }
+    finalize main(table_id: group) {
+        let init_state: TableState = TableState {
+            table_id,
+            player_index: 0u8,
+            players: [0u8 as address, 0u8 as address, 0u8 as address, 0u8 as address, 0u8 as address, 0u8 as address, 0u8 as address, 0u8 as address, 0u8 as address],
+            winner: 0u8 as address,
+            rounds: 0u32,
+            pot: 0u64,
+            folded: [false, false, false, false, false, false, false, false, false],
         };
+        let state: TableState = Mapping::get_or_use(table_index, table_id, init_state);
+        assert(state == init_state);
+        Mapping::set(table_index, table_id, state);
     }
 
-    function setup_shuffle(seed: i8, deck: Deck) -> (i8, SplitDeck, SplitDeck) {
-        let n: i8 = seed.abs();
-        let a: SplitDeck = SplitDeck {
-            c0: deck.bottom.c0,
-            c1: deck.bottom.c1,
-            c2: deck.bottom.c2,
-            c3: deck.bottom.c3,
-            c4: deck.bottom.c4,
-            c5: deck.bottom.c5,
-            c6: deck.bottom.c6,
-            c7: deck.bottom.c7,
-            c8: deck.bottom.c8,
-            c9: deck.bottom.c9,
-            c10: deck.bottom.c10,
-            c11: deck.bottom.c11,
-            c12: deck.bottom.c12,
-            c13: deck.bottom.c13,
-            c14: deck.bottom.c14,
-            c15: deck.bottom.c15,
-            c16: deck.bottom.c16,
-            c17: deck.bottom.c17,
-            c18: deck.bottom.c18,
-            c19: deck.bottom.c19,
-            c20: deck.bottom.c20,
-            c21: deck.bottom.c21,
-            c22: deck.bottom.c22,
-            c23: deck.bottom.c23,
-            c24: deck.bottom.c24,
-            c25: deck.bottom.c25,
-        };
-        let b: SplitDeck = SplitDeck {
-            c0: deck.top.c0,
-            c1: deck.top.c1,
-            c2: deck.top.c2,
-            c3: deck.top.c3,
-            c4: deck.top.c4,
-            c5: deck.top.c5,
-            c6: deck.top.c6,
-            c7: deck.top.c7,
-            c8: deck.top.c8,
-            c9: deck.top.c9,
-            c10: deck.top.c10,
-            c11: deck.top.c11,
-            c12: deck.top.c12,
-            c13: deck.top.c13,
-            c14: deck.top.c14,
-            c15: deck.top.c15,
-            c16: deck.top.c16,
-            c17: deck.top.c17,
-            c18: deck.top.c18,
-            c19: deck.top.c19,
-            c20: deck.top.c20,
-            c21: deck.top.c21,
-            c22: deck.top.c22,
-            c23: deck.top.c23,
-            c24: deck.top.c24,
-            c25: deck.top.c25,
-        };
-        if (seed < 0i8) {
-            a = b;
-            b = a;
+    transition take_seat_at_table(table_id: group, player_sequence: u8, salt: scalar, selected_seeds: [field; 7]) -> Seat {
+        let res: bool = zk_dealer.leo/init_player(table_id, salt, selected_seeds, self.caller);
+        assert(res);
+        return Seat {
+                owner: self.caller, 
+                table_id,
+                player_sequence,
+                salt,
+                selected_seeds,
+            } then finalize(table_id, player_sequence, self.caller);
+    }
+
+    finalize take_seat_at_table(table_id: group, player_sequence: u8, player: address) {
+        let fetched_state: TableState = Mapping::get(table_index, table_id);
+        let player_index: u8 = fetched_state.player_index;
+        let players: [address; 9] = fetched_state.players;
+        let player0: address = players[0u8];
+        let player1: address = players[1u8];
+        let player2: address = players[2u8];
+        let player3: address = players[3u8];
+        let player4: address = players[4u8];
+        let player5: address = players[5u8];
+        let player6: address = players[6u8];
+        let player7: address = players[7u8];
+        let player8: address = players[8u8];
+        let match: bool = false;
+        if (!match && player0 == 0u8 as address) {
+            player0 = player;
+            match = true;
         }
-        return (n, a, b);
-    }
-
-    function shuffle_deck(n: i8, a: SplitDeck, b: SplitDeck) -> Deck {
-        let c0: u64 = 0u64;
-        let c1: u64 = 0u64;
-        let c2: u64 = 0u64;
-        let c3: u64 = 0u64;
-        let c4: u64 = 0u64;
-        let c5: u64 = 0u64;
-        let c6: u64 = 0u64;
-        let c7: u64 = 0u64;
-        let c8: u64 = 0u64;
-        let c9: u64 = 0u64;
-        let c10: u64 = 0u64;
-        let c11: u64 = 0u64;
-        let c12: u64 = 0u64;
-        let c13: u64 = 0u64;
-        let c14: u64 = 0u64;
-        let c15: u64 = 0u64;
-        let c16: u64 = 0u64;
-        let c17: u64 = 0u64;
-        let c18: u64 = 0u64;
-        let c19: u64 = 0u64;
-        let c20: u64 = 0u64;
-        let c21: u64 = 0u64;
-        let c22: u64 = 0u64;
-        let c23: u64 = 0u64;
-        let c24: u64 = 0u64;
-        let c25: u64 = 0u64;
-        let c26: u64 = 0u64;
-        let c27: u64 = 0u64;
-        let c28: u64 = 0u64;
-        let c29: u64 = 0u64;
-        let c30: u64 = 0u64;
-        let c31: u64 = 0u64;
-        let c32: u64 = 0u64;
-        let c33: u64 = 0u64;
-        let c34: u64 = 0u64;
-        let c35: u64 = 0u64;
-        let c36: u64 = 0u64;
-        let c37: u64 = 0u64;
-        let c38: u64 = 0u64;
-        let c39: u64 = 0u64;
-        let c40: u64 = 0u64;
-        let c41: u64 = 0u64;
-        let c42: u64 = 0u64;
-        let c43: u64 = 0u64;
-        let c44: u64 = 0u64;
-        let c45: u64 = 0u64;
-        let c46: u64 = 0u64;
-        let c47: u64 = 0u64;
-        let c48: u64 = 0u64;
-        let c49: u64 = 0u64;
-        let c50: u64 = 0u64;
-        let c51: u64 = 0u64;
-        let b_index: u8 = 0u8;
-        let a_index: u8 = 26u8;
-        for i: i8 in 0i8..52i8 {
-            let hit: bool = false;
-            let use_a: bool = false;
-            let use_b: bool = false;
-            let temp_card: u64 = 0u64;
-            if (!hit && i < n) {
-                use_b = true;
-                hit = true;
-            }
-            if (!hit && (i - n) % 2i8 == 0i8) {
-                use_a = true;
-                hit = true;
-            }
-            if (!hit) {
-                if (b_index < 26u8) {
-                    use_b = true;
-                    hit = true;
-                } else {
-                    use_a = true;
-                    hit = true;
-                }
-            }
-            assert(hit);
-            if (use_a) {
-                // Assign the card to the correct position in the deck
-                if (a_index == 26u8) {
-                    temp_card = a.c0;
-                }
-                if (a_index == 27u8) {
-                    temp_card = a.c1;
-                }
-                if (a_index == 28u8) {
-                    temp_card = a.c2;
-                }
-                if (a_index == 29u8) {
-                    temp_card = a.c3;
-                }
-                if (a_index == 30u8) {
-                    temp_card = a.c4;
-                }
-                if (a_index == 31u8) {
-                    temp_card = a.c5;
-                }
-                if (a_index == 32u8) {
-                    temp_card = a.c6;
-                }
-                if (a_index == 33u8) {
-                    temp_card = a.c7;
-                }
-                if (a_index == 34u8) {
-                    temp_card = a.c8;
-                }
-                if (a_index == 35u8) {
-                    temp_card = a.c9;
-                }
-                if (a_index == 36u8) {
-                    temp_card = a.c10;
-                }
-                if (a_index == 37u8) {
-                    temp_card = a.c11;
-                }
-                if (a_index == 38u8) {
-                    temp_card = a.c12;
-                }
-                if (a_index == 39u8) {
-                    temp_card = a.c13;
-                }
-                if (a_index == 40u8) {
-                    temp_card = a.c14;
-                }
-                if (a_index == 41u8) {
-                    temp_card = a.c15;
-                }
-                if (a_index == 42u8) {
-                    temp_card = a.c16;
-                }
-                if (a_index == 43u8) {
-                    temp_card = a.c17;
-                }
-                if (a_index == 44u8) {
-                    temp_card = a.c18;
-                }
-                if (a_index == 45u8) {
-                    temp_card = a.c19;
-                }
-                if (a_index == 46u8) {
-                    temp_card = a.c20;
-                }
-                if (a_index == 47u8) {
-                    temp_card = a.c21;
-                }
-                if (a_index == 48u8) {
-                    temp_card = a.c22;
-                }
-                if (a_index == 49u8) {
-                    temp_card = a.c23;
-                }
-                if (a_index == 50u8) {
-                    temp_card = a.c24;
-                }
-                if (a_index == 51u8) {
-                    temp_card = a.c25;
-                }
-                a_index = a_index + 1u8;
-            }
-            if (use_b) {
-                // Assign the card to the correct position in the deck
-                if (b_index == 0u8) {
-                    temp_card = b.c0;
-                }
-                if (b_index == 1u8) {
-                    temp_card = b.c1;
-                }
-                if (b_index == 2u8) {
-                    temp_card = b.c2;
-                }
-                if (b_index == 3u8) {
-                    temp_card = b.c3;
-                }
-                if (b_index == 4u8) {
-                    temp_card = b.c4;
-                }
-                if (b_index == 5u8) {
-                    temp_card = b.c5;
-                }
-                if (b_index == 6u8) {
-                    temp_card = b.c6;
-                }
-                if (b_index == 7u8) {
-                    temp_card = b.c7;
-                }
-                if (b_index == 8u8) {
-                    temp_card = b.c8;
-                }
-                if (b_index == 9u8) {
-                    temp_card = b.c9;
-                }
-                if (b_index == 10u8) {
-                    temp_card = b.c10;
-                }
-                if (b_index == 11u8) {
-                    temp_card = b.c11;
-                }
-                if (b_index == 12u8) {
-                    temp_card = b.c12;
-                }
-                if (b_index == 13u8) {
-                    temp_card = b.c13;
-                }
-                if (b_index == 14u8) {
-                    temp_card = b.c14;
-                }
-                if (b_index == 15u8) {
-                    temp_card = b.c15;
-                }
-                if (b_index == 16u8) {
-                    temp_card = b.c16;
-                }
-                if (b_index == 17u8) {
-                    temp_card = b.c17;
-                }
-                if (b_index == 18u8) {
-                    temp_card = b.c18;
-                }
-                if (b_index == 19u8) {
-                    temp_card = b.c19;
-                }
-                if (b_index == 20u8) {
-                    temp_card = b.c20;
-                }
-                if (b_index == 21u8) {
-                    temp_card = b.c21;
-                }
-                if (b_index == 22u8) {
-                    temp_card = b.c22;
-                }
-                if (b_index == 23u8) {
-                    temp_card = b.c23;
-                }
-                if (b_index == 24u8) {
-                    temp_card = b.c24;
-                }
-                if (b_index == 25u8) {
-                    temp_card = b.c25;
-                }
-                b_index = b_index + 1u8;
-            }
-            // Assign the card to the correct position in the deck
-            if (i == 0i8) {
-                c0 = temp_card;
-            }
-            if (i == 1i8) {
-                c1 = temp_card;
-            }
-            if (i == 2i8) {
-                c2 = temp_card;
-            }
-            if (i == 3i8) {
-                c3 = temp_card;
-            }
-            if (i == 4i8) {
-                c4 = temp_card;
-            }
-            if (i == 5i8) {
-                c5 = temp_card;
-            }
-            if (i == 6i8) {
-                c6 = temp_card;
-            }
-            if (i == 7i8) {
-                c7 = temp_card;
-            }
-            if (i == 8i8) {
-                c8 = temp_card;
-            }
-            if (i == 9i8) {
-                c9 = temp_card;
-            }
-            if (i == 10i8) {
-                c10 = temp_card;
-            }
-            if (i == 11i8) {
-                c11 = temp_card;
-            }
-            if (i == 12i8) {
-                c12 = temp_card;
-            }
-            if (i == 13i8) {
-                c13 = temp_card;
-            }
-            if (i == 14i8) {
-                c14 = temp_card;
-            }
-            if (i == 15i8) {
-                c15 = temp_card;
-            }
-            if (i == 16i8) {
-                c16 = temp_card;
-            }
-            if (i == 17i8) {
-                c17 = temp_card;
-            }
-            if (i == 18i8) {
-                c18 = temp_card;
-            }
-            if (i == 19i8) {
-                c19 = temp_card;
-            }
-            if (i == 20i8) {
-                c20 = temp_card;
-            }
-            if (i == 21i8) {
-                c21 = temp_card;
-            }
-            if (i == 22i8) {
-                c22 = temp_card;
-            }
-            if (i == 23i8) {
-                c23 = temp_card;
-            }
-            if (i == 24i8) {
-                c24 = temp_card;
-            }
-            if (i == 25i8) {
-                c25 = temp_card;
-            }
-            if (i == 26i8) {
-                c26 = temp_card;
-            }
-            if (i == 27i8) {
-                c27 = temp_card;
-            }
-            if (i == 28i8) {
-                c28 = temp_card;
-            }
-            if (i == 29i8) {
-                c29 = temp_card;
-            }
-            if (i == 30i8) {
-                c30 = temp_card;
-            }
-            if (i == 31i8) {
-                c31 = temp_card;
-            }
-            if (i == 32i8) {
-                c32 = temp_card;
-            }
-            if (i == 33i8) {
-                c33 = temp_card;
-            }
-            if (i == 34i8) {
-                c34 = temp_card;
-            }
-            if (i == 35i8) {
-                c35 = temp_card;
-            }
-            if (i == 36i8) {
-                c36 = temp_card;
-            }
-            if (i == 37i8) {
-                c37 = temp_card;
-            }
-            if (i == 38i8) {
-                c38 = temp_card;
-            }
-            if (i == 39i8) {
-                c39 = temp_card;
-            }
-            if (i == 40i8) {
-                c40 = temp_card;
-            }
-            if (i == 41i8) {
-                c41 = temp_card;
-            }
-            if (i == 42i8) {
-                c42 = temp_card;
-            }
-            if (i == 43i8) {
-                c43 = temp_card;
-            }
-            if (i == 44i8) {
-                c44 = temp_card;
-            }
-            if (i == 45i8) {
-                c45 = temp_card;
-            }
-            if (i == 46i8) {
-                c46 = temp_card;
-            }
-            if (i == 47i8) {
-                c47 = temp_card;
-            }
-            if (i == 48i8) {
-                c48 = temp_card;
-            }
-            if (i == 49i8) {
-                c49 = temp_card;
-            }
-            if (i == 50i8) {
-                c50 = temp_card;
-            }
-            if (i == 51i8) {
-                c51 = temp_card;
-            }
+        if (!match && player1 == 0u8 as address) {
+            player1 = player;
+            match = true;
         }
-        return Deck {
-            bottom: SplitDeck {
-                c0,
-                c1,
-                c2,
-                c3,
-                c4,
-                c5,
-                c6,
-                c7,
-                c8,
-                c9,
-                c10,
-                c11,
-                c12,
-                c13,
-                c14,
-                c15,
-                c16,
-                c17,
-                c18,
-                c19,
-                c20,
-                c21,
-                c22,
-                c23,
-                c24,
-                c25,
-            },
-            top: SplitDeck {
-                c0: c26,
-                c1: c27,
-                c2: c28,
-                c3: c29,
-                c4: c30,
-                c5: c31,
-                c6: c32,
-                c7: c33,
-                c8: c34,
-                c9: c35,
-                c10: c36,
-                c11: c37,
-                c12: c38,
-                c13: c39,
-                c14: c40,
-                c15: c41,
-                c16: c42,
-                c17: c43,
-                c18: c44,
-                c19: c45,
-                c20: c46,
-                c21: c47,
-                c22: c48,
-                c23: c49,
-                c24: c50,
-                c25: c51,
-            },
-        };
-    }
-
-    transition main(public players: u8) -> GameState {
-        // Here players is the number of players. Main initializes the game state and creates a record owned by the contract.
-        // bit 0 is the first card, bit 1 is the second card
-        // b1111111111111111111111111111111111111111111111111111000000000000;
-        // Here all 52 bits start in the deck and the bits are 1, 0's are used to represent other portions of the game state
-        // the value in 64-bit unsigned int would be:
-        let mask: u64 = 1u64;
-        let deck: u64 =  18446744073709547520u64;
-        return GameState {
-            owner: self.signer,
-            deck,
-            river: 0u64,
+        if (!match && player2 == 0u8 as address) {
+            player2 = player;
+            match = true;
+        }
+        if (!match && player3 == 0u8 as address) {
+            player3 = player;
+            match = true;
+        }
+        if (!match && player4 == 0u8 as address) {
+            player4 = player;
+            match = true;
+        }
+        if (!match && player5 == 0u8 as address) {
+            player5 = player;
+            match = true;
+        }
+        if (!match && player6 == 0u8 as address) {
+            player6 = player;
+            match = true;
+        }
+        if (!match && player7 == 0u8 as address) {
+            player7 = player;
+            match = true;
+        }
+        if (!match && player8 == 0u8 as address) {
+            player8 = player;
+            match = true;
+        }
+        assert(match);
+        assert(player_index < 9u8);
+        player_index += 1u8;
+        assert(player_sequence == player_index);
+        let state: TableState = TableState {
+            table_id,
+            player_index,
             players,
-            // player1_address: address, // Maybe use a mapping instead of 8 addresses
-            // player2_address: address,
-            // player3_address: address,
-            // player4_address: address,
-            // player5_address: address,
-            // player6_address: address,
-            // player7_address: address,
-            // player8_address: address,
-            player1: 0u64,
-            player2: 0u64,
-            player3: 0u64,
-            player4: 0u64,
-            player5: 0u64,
-            player6: 0u64,
-            player7: 0u64,
-            player8: 0u64,
+            winner: fetched_state.winner,
+            rounds: fetched_state.rounds,
+            pot: fetched_state.pot,
+            folded: fetched_state.folded,
         };
+        Mapping::set(table_index, table_id, state);
     }
 
-    // transition shuffle(s0: Seed, s1: Seed, s2: Seed, s3: Seed, s4: Seed, s5: Seed, s6: Seed, s7: Seed) -> Deck {
-    transition shuffle(s0: i8, s1: i8, s2: i8, s3: i8, s4: i8, s5: i8, s6: i8, s7: i8) -> Deck {
-        // assert(self.caller = zk_texas_holdem.leo/start as address)
-        let deck: Deck = new_deck(true);
-        let (n1, a1, b1): (i8, SplitDeck, SplitDeck) = setup_shuffle(s0, deck);
-        deck = shuffle_deck(n1, a1, b1);
-        let (n2, a2, b2): (i8, SplitDeck, SplitDeck) = setup_shuffle(s1, deck);
-        deck = shuffle_deck(n2, a2, b2);
-        let (n3, a3, b3): (i8, SplitDeck, SplitDeck) = setup_shuffle(s2, deck);
-        deck = shuffle_deck(n3, a3, b3);
-        let (n4, a4, b4): (i8, SplitDeck, SplitDeck) = setup_shuffle(s3, deck);
-        deck = shuffle_deck(n4, a4, b4);
-        let (n5, a5, b5): (i8, SplitDeck, SplitDeck) = setup_shuffle(s4, deck);
-        deck = shuffle_deck(n5, a5, b5);
-        let (n6, a6, b6): (i8, SplitDeck, SplitDeck) = setup_shuffle(s5, deck);
-        deck = shuffle_deck(n6, a6, b6);
-        let (n7, a7, b7): (i8, SplitDeck, SplitDeck) = setup_shuffle(s6, deck);
-        deck = shuffle_deck(n7, a7, b7);
-        let (n8, a8, b8): (i8, SplitDeck, SplitDeck) = setup_shuffle(s7, deck);
-        deck = shuffle_deck(n8, a8, b8);
-        return deck;
-    }
-
-    transition invite(state: GameState, player: address) -> (GameState, Invitation) {
-        // TODO: Update GameState to include the player's address
+    transition shuffle_and_deal(table: Table, commitments: [group; 9], player_index: u8, players: [address; 9]) -> (Hand, Hand, Hand, Hand, Hand, Hand, Hand, Hand, Hand) {
+        let shuffles: [i8; 7] = zk_dealer.leo/determine_shuffles(table, commitments);
+        let s0: i8 = shuffles[0u8];
+        let s1: i8 = shuffles[1u8];
+        let s2: i8 = shuffles[2u8];
+        let s3: i8 = shuffles[3u8];
+        let s4: i8 = shuffles[4u8];
+        let s5: i8 = shuffles[5u8];
+        let s6: i8 = shuffles[6u8];
+        let deck: [[u8; 26]; 2] = zk_deck_shuffle.leo/shuffle(s0, s1, s2, s3, s4, s5, s6);
+        let hands: [[u8; 2]; 9] = zk_dealer.leo/deal(table.table_id, deck, player_index, players);
         return (
-            state,
-            Invitation {
-                owner: player,
-                caller: self.caller,
-            }
-        );
+            Hand {
+                owner: players[0u8],
+                cards: hands[0u8],
+            },
+            Hand {
+                owner: players[1u8],
+                cards: hands[1u8],
+            },
+            Hand {
+                owner: players[2u8],
+                cards: hands[2u8],
+            },
+            Hand {
+                owner: players[3u8],
+                cards: hands[3u8],
+            },
+            Hand {
+                owner: players[4u8],
+                cards: hands[4u8],
+            },
+            Hand {
+                owner: players[5u8],
+                cards: hands[5u8],
+            },
+            Hand {
+                owner: players[6u8],
+                cards: hands[6u8],
+            },
+            Hand {
+                owner: players[7u8],
+                cards: hands[7u8],
+            },
+            Hand {
+                owner: players[8u8],
+                cards: hands[8u8],
+            },
+        ) then finalize (table.table_id, player_index, players);
     }
 
-    transition accept(invitation: Invitation, seed: i8) -> Seed {
-        assert(seed.abs() >= 1i8);
-        assert(seed.abs() <= 26i8);
-        return Seed {
-            owner: invitation.caller,
-            seed,
-        };
+    finalize shuffle_and_deal(table_id: group, player_index: u8, players: [address; 9]) {
+        let fetched_state: TableState = Mapping::get(table_index, table_id);
+        assert(players == fetched_state.players);
+        assert(player_index == fetched_state.player_index);
     }
 }
