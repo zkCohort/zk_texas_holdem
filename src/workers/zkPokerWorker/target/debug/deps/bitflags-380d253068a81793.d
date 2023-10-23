@@ -1,0 +1,11 @@
+/Users/arosboro/git/newsletter-fe/newsletter_worker/target/debug/deps/bitflags-380d253068a81793.rmeta: /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/lib.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/iter.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/parser.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/traits.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/public.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/internal.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/external.rs
+
+/Users/arosboro/git/newsletter-fe/newsletter_worker/target/debug/deps/bitflags-380d253068a81793.d: /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/lib.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/iter.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/parser.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/traits.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/public.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/internal.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/external.rs
+
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/lib.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/iter.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/parser.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/traits.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/public.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/internal.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitflags-2.3.3/src/external.rs:

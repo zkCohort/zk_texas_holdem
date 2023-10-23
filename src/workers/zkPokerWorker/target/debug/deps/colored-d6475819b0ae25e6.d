@@ -1,0 +1,11 @@
+/Users/arosboro/zkPoker/src/workers/zkPokerWorker/target/debug/deps/colored-d6475819b0ae25e6.rmeta: /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/lib.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/color.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/control.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/style.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/customcolors.rs
+
+/Users/arosboro/zkPoker/src/workers/zkPokerWorker/target/debug/deps/libcolored-d6475819b0ae25e6.rlib: /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/lib.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/color.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/control.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/style.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/customcolors.rs
+
+/Users/arosboro/zkPoker/src/workers/zkPokerWorker/target/debug/deps/colored-d6475819b0ae25e6.d: /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/lib.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/color.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/control.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/style.rs /Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/customcolors.rs
+
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/lib.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/color.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/control.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/style.rs:
+/Users/arosboro/.cargo/registry/src/index.crates.io-6f17d22bba15001f/colored-2.0.4/src/customcolors.rs:
