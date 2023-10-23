@@ -20,7 +20,7 @@ function App() {
   async function execute() {
     setExecuting(true);
     const result = await aleoWorker.localProgramExecution(
-      helloworld_program,
+      zk_texas_holdem,
       "main",
       ["5u32", "5u32"]
     );
