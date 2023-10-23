@@ -416,7 +416,7 @@ program zk_deck_shuffle.aleo {
         return [[t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25], [t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51]];
     }
 
-    transition shuffle(s0: i8, s1: i8, s2: i8, s3: i8, s4: i8, s5: i8, s6: i8) -> [[u8; 26]; 2] {
+    transition shuffle(commitments: [[group; 26]; 2]) -> [[u8; 26]; 2] {
         let deck: [[u8; 26]; 2] = [[63u8, 62u8, 61u8, 60u8, 59u8, 58u8, 57u8, 56u8, 55u8, 54u8, 53u8, 52u8, 51u8, 50u8, 49u8, 48u8, 47u8, 46u8, 45u8, 44u8, 43u8, 42u8, 41u8, 40u8, 39u8, 38u8], [37u8, 36u8, 35u8, 34u8, 33u8, 32u8, 31u8, 30u8, 29u8, 28u8, 27u8, 26u8, 25u8, 24u8, 23u8, 22u8, 21u8, 20u8, 19u8, 18u8, 17u8, 16u8, 15u8, 14u8, 13u8, 12u8]];
         let (n1, a1, b1): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s0, deck);
         deck = shuffle_deck(n1, a1, b1);

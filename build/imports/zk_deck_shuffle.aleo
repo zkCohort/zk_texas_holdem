@@ -1,5 +1,7 @@
 program zk_deck_shuffle.aleo;
 
+
+
 closure setup_shuffle:
     input r0 as i8;
     input r1 as [[u8; 26u32]; 2u32];
