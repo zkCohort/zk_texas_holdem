@@ -17,8 +17,9 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn js_generate_phi_n() -> JsValue {
-    let (phi, n) = generate_phi_n(248);
+pub fn js_generate_phi_n(bit_size: usize) -> JsValue {
+    // bit_size = 248
+    let (phi, n) = generate_phi_n(bit_size);
     let obj = js_sys::Object::new();
     js_sys::Reflect::set(&obj, &"phi".into(), &JsValue::from_str(&phi.to_string())).unwrap();
     js_sys::Reflect::set(&obj, &"n".into(), &JsValue::from_str(&n.to_string())).unwrap();
@@ -157,9 +158,9 @@ mod tests {
         log(&format!("\n\n"));
         let mut old_prime: BigInt = BigInt::zero();
         for i in 0..52 {
-            let prime = get_fixed_sized_prime(248 / 2);
+            let prime = get_fixed_sized_prime(32 / 2);
             assert!(old_prime != prime);
-            assert_eq!(prime.bits(), 124);
+            assert_eq!(prime.bits(), 16);
             if (i % 8) == 0 {
                 log(&format!("==================="));
                 log(&format!("prime = {}", prime));
@@ -175,8 +176,8 @@ mod tests {
         log(&format!("\n\n"));
         let mut old_phi_n: (BigInt, BigInt) = (BigInt::zero(), BigInt::zero());
         for i in 0..64 {
-            let (phi, n) = generate_phi_n(248);
-            assert!(n.bits() == 248);
+            let (phi, n) = generate_phi_n(32);
+            assert!(n.bits() == 32);
             assert!(old_phi_n != (phi.clone(), n.clone()));
             if (i % 8) == 0 {
                 log(&format!("==================="));
@@ -192,7 +193,7 @@ mod tests {
     #[wasm_bindgen_test]
     fn test_generate_key_pair() {
         log(&format!("\n\n"));
-        let (phi, n) = generate_phi_n(248);
+        let (phi, n) = generate_phi_n(32);
         let (e, d) = generate_key_pair(&phi, &n);
         // e and d are the encryption and decryption key pair.
         // e is the public key, d is the private key.
@@ -216,7 +217,7 @@ mod tests {
     fn test_sra() {
         log(&format!("\n\n"));
         // Shared p, q, n
-        let (phi, n) = generate_phi_n(248);
+        let (phi, n) = generate_phi_n(32);
         // Alice key pair (e1, d1)
         let (e1, d1) = generate_key_pair(&phi, &n);
         // Bob key pair (e2, d2)

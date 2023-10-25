@@ -14,10 +14,10 @@ program zk_texas_holdem.aleo {
     record Player {
         owner: address,
         table_address: address,
-        e: field,
-        d: field,
-        deck_e: [[u128; 26]; 2],
-        deck_d: [[u128; 26]; 2],
+        e1: field,
+        d1: field,
+        deck_e2: [[u128; 26]; 4],
+        deck_d2: [[u128; 26]; 2],
     }
 
     record Card {
@@ -27,7 +27,7 @@ program zk_texas_holdem.aleo {
 
     record Deck {
         owner: address,
-        cards: [u128; 52],
+        cards: [[u128; 26]; 2],
     }
 
     mapping game_state: address => GameState; // Is there some better key than address?
@@ -92,74 +92,74 @@ program zk_texas_holdem.aleo {
         });
     }
 
-    inline encrypt(message: field, e: field, n: u128) -> field {
-        return card ** e % n;
+    inline encrypt(message: u128, e: u32, n: u128) -> u128 {
+        return message ** e % n;
     }
 
-    inline decrypt(ciphertext: field, d: field, n: u128) -> field {
-        return card ** d % n;
+    inline decrypt(ciphertext: u128, d: u32, n: u128) -> u128 {
+        return ciphertext ** d % n;
     }
 
-    inline empty_deck() -> [[field; 26]; 2] {
-        return [[0field, 0field, 0field, 0field, 0field, 0field,0field, 0field, 0field, 0field, 0field, 0field, 0field,
-                 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field], 
-                [0field, 0field, 0field, 0field, 0field, 0field,0field, 0field, 0field, 0field, 0field, 0field, 0field,
-                 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field, 0field]];
+    inline empty_deck() -> [[u128; 26]; 2] {
+        return [[0u128, 0u128, 0u128, 0u128, 0u128, 0u128,0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128,
+                 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128], 
+                [0u128, 0u128, 0u128, 0u128, 0u128, 0u128,0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128,
+                 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128, 0u128]];
     }
 
-    function encrypt_deck(e: u128, n: u128, deck: [[u8; 26]; 2]) -> [[u128; 26]; 2] {
-        let t0: u128 = deck[0u8][0u8] as u128 ** e % n;
-        let t1: u128 = deck[0u8][1u8] as u128 ** e % n;
-        let t2: u128 = deck[0u8][2u8] as u128 ** e % n;
-        let t3: u128 = deck[0u8][3u8] as u128 ** e % n;
-        let t4: u128 = deck[0u8][4u8] as u128 ** e % n;
-        let t5: u128 = deck[0u8][5u8] as u128 ** e % n;
-        let t6: u128 = deck[0u8][6u8] as u128 ** e % n;
-        let t7: u128 = deck[0u8][7u8] as u128 ** e % n;
-        let t8: u128 = deck[0u8][8u8] as u128 ** e % n;
-        let t9: u128 = deck[0u8][9u8] as u128 ** e % n;
-        let t10: u128 = deck[0u8][10u8] as u128 ** e % n;
-        let t11: u128 = deck[0u8][11u8] as u128 ** e % n;
-        let t12: u128 = deck[0u8][12u8] as u128 ** e % n;
-        let t13: u128 = deck[0u8][13u8] as u128 ** e % n;
-        let t14: u128 = deck[0u8][14u8] as u128 ** e % n;
-        let t15: u128 = deck[0u8][15u8] as u128 ** e % n;
-        let t16: u128 = deck[0u8][16u8] as u128 ** e % n;
-        let t17: u128 = deck[0u8][17u8] as u128 ** e % n;
-        let t18: u128 = deck[0u8][18u8] as u128 ** e % n;
-        let t19: u128 = deck[0u8][19u8] as u128 ** e % n;
-        let t20: u128 = deck[0u8][20u8] as u128 ** e % n;
-        let t21: u128 = deck[0u8][21u8] as u128 ** e % n;
-        let t22: u128 = deck[0u8][22u8] as u128 ** e % n;
-        let t23: u128 = deck[0u8][23u8] as u128 ** e % n;
-        let t24: u128 = deck[0u8][24u8] as u128 ** e % n;
-        let t25: u128 = deck[0u8][25u8] as u128 ** e % n;
-        let t26: u128 = deck[1u8][0u8] as u128 ** e % n;
-        let t27: u128 = deck[1u8][1u8] as u128 ** e % n;
-        let t28: u128 = deck[1u8][2u8] as u128 ** e % n;
-        let t29: u128 = deck[1u8][3u8] as u128 ** e % n;
-        let t30: u128 = deck[1u8][4u8] as u128 ** e % n;
-        let t31: u128 = deck[1u8][5u8] as u128 ** e % n;
-        let t32: u128 = deck[1u8][6u8] as u128 ** e % n;
-        let t33: u128 = deck[1u8][7u8] as u128 ** e % n;
-        let t34: u128 = deck[1u8][8u8] as u128 ** e % n;
-        let t35: u128 = deck[1u8][9u8] as u128 ** e % n;
-        let t36: u128 = deck[1u8][10u8] as u128 ** e % n;
-        let t37: u128 = deck[1u8][11u8] as u128 ** e % n;
-        let t38: u128 = deck[1u8][12u8] as u128 ** e % n;
-        let t39: u128 = deck[1u8][13u8] as u128 ** e % n;
-        let t40: u128 = deck[1u8][14u8] as u128 ** e % n;
-        let t41: u128 = deck[1u8][15u8] as u128 ** e % n;
-        let t42: u128 = deck[1u8][16u8] as u128 ** e % n;
-        let t43: u128 = deck[1u8][17u8] as u128 ** e % n;
-        let t44: u128 = deck[1u8][18u8] as u128 ** e % n;
-        let t45: u128 = deck[1u8][19u8] as u128 ** e % n;
-        let t46: u128 = deck[1u8][20u8] as u128 ** e % n;
-        let t47: u128 = deck[1u8][21u8] as u128 ** e % n;
-        let t48: u128 = deck[1u8][22u8] as u128 ** e % n;
-        let t49: u128 = deck[1u8][23u8] as u128 ** e % n;
-        let t50: u128 = deck[1u8][24u8] as u128 ** e % n;
-        let t51: u128 = deck[1u8][25u8] as u128 ** e % n;
+    function encrypt_deck(e: u32, n: u128, deck: [[u8; 26]; 2]) -> [[u128; 26]; 2] {
+        let t0: u128 = (deck[0u8][0u8] as u128) ** e % n;
+        let t1: u128 = (deck[0u8][1u8] as u128) ** e % n;
+        let t2: u128 = (deck[0u8][2u8] as u128) ** e % n;
+        let t3: u128 = (deck[0u8][3u8] as u128) ** e % n;
+        let t4: u128 = (deck[0u8][4u8] as u128) ** e % n;
+        let t5: u128 = (deck[0u8][5u8] as u128) ** e % n;
+        let t6: u128 = (deck[0u8][6u8] as u128) ** e % n;
+        let t7: u128 = (deck[0u8][7u8] as u128) ** e % n;
+        let t8: u128 = (deck[0u8][8u8] as u128) ** e % n;
+        let t9: u128 = (deck[0u8][9u8] as u128) ** e % n;
+        let t10: u128 = (deck[0u8][10u8] as u128) ** e % n;
+        let t11: u128 = (deck[0u8][11u8] as u128) ** e % n;
+        let t12: u128 = (deck[0u8][12u8] as u128) ** e % n;
+        let t13: u128 = (deck[0u8][13u8] as u128) ** e % n;
+        let t14: u128 = (deck[0u8][14u8] as u128) ** e % n;
+        let t15: u128 = (deck[0u8][15u8] as u128) ** e % n;
+        let t16: u128 = (deck[0u8][16u8] as u128) ** e % n;
+        let t17: u128 = (deck[0u8][17u8] as u128) ** e % n;
+        let t18: u128 = (deck[0u8][18u8] as u128) ** e % n;
+        let t19: u128 = (deck[0u8][19u8] as u128) ** e % n;
+        let t20: u128 = (deck[0u8][20u8] as u128) ** e % n;
+        let t21: u128 = (deck[0u8][21u8] as u128) ** e % n;
+        let t22: u128 = (deck[0u8][22u8] as u128) ** e % n;
+        let t23: u128 = (deck[0u8][23u8] as u128) ** e % n;
+        let t24: u128 = (deck[0u8][24u8] as u128) ** e % n;
+        let t25: u128 = (deck[0u8][25u8] as u128) ** e % n;
+        let t26: u128 = (deck[1u8][0u8] as u128) ** e % n;
+        let t27: u128 = (deck[1u8][1u8] as u128) ** e % n;
+        let t28: u128 = (deck[1u8][2u8] as u128) ** e % n;
+        let t29: u128 = (deck[1u8][3u8] as u128) ** e % n;
+        let t30: u128 = (deck[1u8][4u8] as u128) ** e % n;
+        let t31: u128 = (deck[1u8][5u8] as u128) ** e % n;
+        let t32: u128 = (deck[1u8][6u8] as u128) ** e % n;
+        let t33: u128 = (deck[1u8][7u8] as u128) ** e % n;
+        let t34: u128 = (deck[1u8][8u8] as u128) ** e % n;
+        let t35: u128 = (deck[1u8][9u8] as u128) ** e % n;
+        let t36: u128 = (deck[1u8][10u8] as u128) ** e % n;
+        let t37: u128 = (deck[1u8][11u8] as u128) ** e % n;
+        let t38: u128 = (deck[1u8][12u8] as u128) ** e % n;
+        let t39: u128 = (deck[1u8][13u8] as u128) ** e % n;
+        let t40: u128 = (deck[1u8][14u8] as u128) ** e % n;
+        let t41: u128 = (deck[1u8][15u8] as u128) ** e % n;
+        let t42: u128 = (deck[1u8][16u8] as u128) ** e % n;
+        let t43: u128 = (deck[1u8][17u8] as u128) ** e % n;
+        let t44: u128 = (deck[1u8][18u8] as u128) ** e % n;
+        let t45: u128 = (deck[1u8][19u8] as u128) ** e % n;
+        let t46: u128 = (deck[1u8][20u8] as u128) ** e % n;
+        let t47: u128 = (deck[1u8][21u8] as u128) ** e % n;
+        let t48: u128 = (deck[1u8][22u8] as u128) ** e % n;
+        let t49: u128 = (deck[1u8][23u8] as u128) ** e % n;
+        let t50: u128 = (deck[1u8][24u8] as u128) ** e % n;
+        let t51: u128 = (deck[1u8][25u8] as u128) ** e % n;
         return [[t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10,
                  t11, t12, t13, t14, t15, t16, t17, t18, t19, t20,
                  t21, t22, t23, t24, t25],
