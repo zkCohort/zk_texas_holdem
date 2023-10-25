@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
-use snarkvm_wasm::network::Testnet3;
-use snarkvm_wasm::types::Field;
+// use snarkvm_wasm::network::Testnet3;
+// use snarkvm_wasm::types::Field;
 use num_integer::Integer;
 use std::str::FromStr;
 use num_prime::{RandPrime, BitTest};
@@ -8,7 +8,6 @@ use num_bigint::BigInt;
 use num_traits::{One, Zero};
 use num_traits::FromPrimitive;
 use rand::Rng;
-// use wasm_bindgen::prelude::*;
 
 
 #[wasm_bindgen]
@@ -18,17 +17,7 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn cantors_pairing(x: &str, y: &str) -> String {
-    let one = Field::<Testnet3>::from_str("1field").unwrap();
-    let two = Field::<Testnet3>::from_str("2field").unwrap();
-    let a = Field::<Testnet3>::from_str(x).unwrap();
-    let b = Field::<Testnet3>::from_str(y).unwrap();
-    let result = (((a + b) * (a + b + one)) / two) + b;
-    result.to_string()
-}
-
-#[wasm_bindgen]
-pub fn generate_phi_n_js() -> JsValue {
+pub fn js_generate_phi_n() -> JsValue {
     let (phi, n) = generate_phi_n(248);
     let obj = js_sys::Object::new();
     js_sys::Reflect::set(&obj, &"phi".into(), &JsValue::from_str(&phi.to_string())).unwrap();
@@ -37,10 +26,10 @@ pub fn generate_phi_n_js() -> JsValue {
 }
 
 #[wasm_bindgen]
-pub fn generate_key_pair_js(p_js: &str, q_js: &str) -> JsValue {
+pub fn js_generate_key_pair(js_p: &str, js_q: &str) -> JsValue {
     // parse string into u32 instead of bigint
-    let p = BigInt::from_str(p_js).unwrap();
-    let q = BigInt::from_str(q_js).unwrap();
+    let p = BigInt::from_str(js_p).unwrap();
+    let q = BigInt::from_str(js_q).unwrap();
     let (e, d) = generate_key_pair(&p, &q);
     let obj = js_sys::Object::new();
     js_sys::Reflect::set(&obj, &"e".into(), &JsValue::from_str(&e.to_string())).unwrap();
@@ -48,34 +37,23 @@ pub fn generate_key_pair_js(p_js: &str, q_js: &str) -> JsValue {
     obj.into()
 }
 
-// #[wasm_bindgen]
-// pub fn generate_key_pair_given_n_js(n: &str) -> JsValue {
-//     // parse string into u32 instead of bigint
-//     let n = BigInt::from_str(n).unwrap();
-//     let (e, d) = generate_key_pair_given_n(248, &n);
-//     let obj = js_sys::Object::new();
-//     js_sys::Reflect::set(&obj, &"e".into(), &JsValue::from_str(&e.to_string())).unwrap();
-//     js_sys::Reflect::set(&obj, &"d".into(), &JsValue::from_str(&d.to_string())).unwrap();
-//     obj.into()
-// }
-
 #[wasm_bindgen]
-pub fn encrypt_js(message_js: &str, e_js: &str, n_js: &str) -> JsValue {
+pub fn js_encrypt(js_message: &str, js_e: &str, js_n: &str) -> JsValue {
     // parse string into u32 instead of bigint
-    let message: u32 = message_js.parse().unwrap();
-    let e = BigInt::from_str(e_js).unwrap();
-    let n = BigInt::from_str(n_js).unwrap();
+    let message: u32 = js_message.parse().unwrap();
+    let e = BigInt::from_str(js_e).unwrap();
+    let n = BigInt::from_str(js_n).unwrap();
     
     let cipher = encrypt(&BigInt::from(message), &e, &n);
     JsValue::from_str(&cipher.to_string())
 }
 
 #[wasm_bindgen]
-pub fn decrypt_js(cipher_js: &str, d_js: &str, n_js: &str) -> JsValue {
+pub fn js_decrypt(js_cipher: &str, js_d: &str, js_n: &str) -> JsValue {
     // parse string into u32 instead of bigint
-    let cipher: BigInt = BigInt::from_str(cipher_js).unwrap();
-    let d = BigInt::from_str(d_js).unwrap();
-    let n = BigInt::from_str(n_js).unwrap();
+    let cipher: BigInt = BigInt::from_str(js_cipher).unwrap();
+    let d = BigInt::from_str(js_d).unwrap();
+    let n = BigInt::from_str(js_n).unwrap();
 
     let decrypted = decrypt(&cipher, &d, &n);
     JsValue::from_str(&decrypted.to_string())
@@ -115,11 +93,10 @@ fn get_fixed_sized_prime(bit_size: usize) -> BigInt {
             break;
         }
     }
-    log(&format!("prime = {} bits = {}", prime, prime.bits()));
     BigInt::from_u128(prime).unwrap()
 }
 
-// Generate a shared p, q, N
+// Generate a shared phi and N, while keeping p and q secret.
 fn generate_phi_n(bit_size: usize) -> (BigInt, BigInt) {
     let p = get_fixed_sized_prime(bit_size / 2);
     let q = get_fixed_sized_prime(bit_size / 2);
@@ -130,22 +107,6 @@ fn generate_phi_n(bit_size: usize) -> (BigInt, BigInt) {
     }
     (phi, n)
 }
-
-// Generate an e, d for Bob when he knows N
-// fn generate_key_pair_given_n(bit_size: usize, n: &BigInt) -> (BigInt, BigInt) {
-//     let mut e: BigInt;
-//     loop {
-//         e = get_fixed_sized_prime(bit_size / 2);
-//         if e.gcd(n) == BigInt::one() {
-//             break;
-//         }
-//     }
-//     let d = mod_inverse(&e, n).unwrap_or_else(|| BigInt::zero());
-//     if (&d * &e) % n != BigInt::one() {
-//         return generate_key_pair_given_n(bit_size, n);
-//     }
-//     (e, d)
-// }
 
 fn extended_gcd(a: &BigInt, b: &BigInt) -> (BigInt, BigInt, BigInt) {
     if *a == BigInt::zero() {
@@ -169,10 +130,11 @@ fn mod_inverse(a: &BigInt, m: &BigInt) -> Option<BigInt> {
 fn generate_key_pair(phi: &BigInt, n: &BigInt) -> (BigInt, BigInt) {
     let mut rng = rand::thread_rng();
     let mut e: BigInt;
+    let limit: usize = u128::MAX as usize / 2;
 
     // Generate a random e
     loop {
-        e = BigInt::from(rng.gen_range(3..10000)); // Arbitrarily chose 10000, you can adjust
+        e = BigInt::from(rng.gen_range(3..limit));
         if &e % 2 != BigInt::zero() && phi.gcd(&e) == BigInt::one() {
             break;
         }
@@ -191,58 +153,68 @@ mod tests {
     use wasm_bindgen_test::wasm_bindgen_test;
 
     #[wasm_bindgen_test]
-    fn it_works() {
-        let result = cantors_pairing("6620725176063038515001622937675038563827406628391465806478602334180190206522field", "2field");
-        assert_eq!(result, "1523534527618700274211601211314655639838278312746489101125542475404695911424field");
-    }
-
-    #[wasm_bindgen_test]
     fn test_get_fixed_prime() {
+        log(&format!("\n\n"));
         let mut old_prime: BigInt = BigInt::zero();
-        for _ in 0..52 {
+        for i in 0..52 {
             let prime = get_fixed_sized_prime(248 / 2);
             assert!(old_prime != prime);
             assert_eq!(prime.bits(), 124);
+            if (i % 8) == 0 {
+                log(&format!("==================="));
+                log(&format!("prime = {}", prime));
+                log(&format!("bits = {}", prime.bits()));
+            }
             old_prime = prime;
         }
+        log(&format!("==================="));
     }
 
     #[wasm_bindgen_test]
     fn test_generate_phi_n() {
+        log(&format!("\n\n"));
         let mut old_phi_n: (BigInt, BigInt) = (BigInt::zero(), BigInt::zero());
-        for _ in 0..64 {
+        for i in 0..64 {
             let (phi, n) = generate_phi_n(248);
-            // log the values of p and q to see if they are the same bit size
-            log(&format!("\n\n"));
-            log(&format!("==================="));
-            log(&format!("phi = {} n = {}", phi, n));
-            log(&format!("n = {}", n));
             assert!(n.bits() == 248);
             assert!(old_phi_n != (phi.clone(), n.clone()));
+            if (i % 8) == 0 {
+                log(&format!("==================="));
+                log(&format!("phi = {} n = {}", phi, n));
+                log(&format!("phi bits = {}", phi.bits()));
+                log(&format!("n bits = {}", n.bits()));
+            }
             old_phi_n = (phi, n);
         }
+        log(&format!("==================="));
     }
 
     #[wasm_bindgen_test]
     fn test_generate_key_pair() {
+        log(&format!("\n\n"));
         let (phi, n) = generate_phi_n(248);
         let (e, d) = generate_key_pair(&phi, &n);
-        log(&format!("\n\n"));
+        // e and d are the encryption and decryption key pair.
+        // e is the public key, d is the private key.
         log(&format!("==================="));
         log(&format!("phi = {} n = {}", phi, n));
         log(&format!("e = {} d = {}", e, d));
-        // e and d are the encryption and decryption key pair.
-        // e is the public key, d is the private key.
+        log(&format!("phi bits = {}", phi.bits()));
+        log(&format!("n bits = {}", n.bits()));
+        log(&format!("e bits = {}", e.bits()));
+        log(&format!("d bits = {}", d.bits()));
         assert!(BigInt::one() < e);
         assert!(e < phi);
         assert!(BigInt::one() < d);
         assert!(d < phi);
         assert!(d != BigInt::zero() && e != BigInt::zero());
         assert_eq!((e * d) % phi, BigInt::one());
+        log(&format!("==================="));
     }
 
     #[wasm_bindgen_test]
     fn test_sra() {
+        log(&format!("\n\n"));
         // Shared p, q, n
         let (phi, n) = generate_phi_n(248);
         // Alice key pair (e1, d1)
@@ -255,7 +227,6 @@ mod tests {
         assert!(e1 != e2);
         // The card
         let message = BigInt::from(63);
-        log(&format!("\n\n"));
         log(&format!("==================="));
         log(&format!("phi = {} n = {}", phi, n));
         log(&format!("==================="));
@@ -291,6 +262,7 @@ mod tests {
 
     #[wasm_bindgen_test]
     fn test_sra_mock() {
+        log(&format!("\n\n"));
         let e1: BigInt = BigInt::from(5);
         let d1: BigInt = BigInt::from(29);
         let e2: BigInt = BigInt::from(7);
@@ -298,7 +270,6 @@ mod tests {
         let n: BigInt = BigInt::from(91);
         let message: BigInt = BigInt::from(5);
     
-        log(&format!("\n\n"));
         log(&format!("==================="));
         log(&format!("d1 = {}, d2 = {}", d1, d2));
         log(&format!("e1 = {}, e2 = {}", e1, e2));
