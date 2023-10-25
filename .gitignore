@@ -1,3 +1,5 @@
+# WASM Build files for Poker Worker
+src/workers/zkPokerWorker/target
 # Logs
 logs
 *.log
