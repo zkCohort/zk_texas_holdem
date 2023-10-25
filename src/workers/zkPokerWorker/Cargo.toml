@@ -7,8 +7,15 @@ edition = "2021"
 
 [dependencies]
 snarkvm-wasm = { version = "0.14.6", features = ["console", "fields"] }
-wasm-bindgen = "0.2.74"
+wasm-bindgen = "0.2.78"
+js-sys = "0.3.55"
+num-integer = "0.1.44"
+num-bigint =  "0.4.2"
+num-traits = "0.2.14"
+num-prime = "0.4.3"
 rand = "0.8.4"
+
+
 
 [lib]
 crate-type = ["cdylib", "rlib"]

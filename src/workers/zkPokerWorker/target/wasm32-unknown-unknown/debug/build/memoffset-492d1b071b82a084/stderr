@@ -1,0 +1,26 @@
+error[E0514]: found crate `std` compiled by an incompatible version of rustc
+  |
+  = note: the following crate versions were found:
+          crate `std` compiled by rustc 1.73.0-nightly (f88a8b71c 2023-08-08): /Users/arosboro/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/wasm32-unknown-unknown/lib/libstd_detect-a00a149a2b03044c.rlib
+          crate `std` compiled by rustc 1.73.0-nightly (f88a8b71c 2023-08-08): /Users/arosboro/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/wasm32-unknown-unknown/lib/libstd-643728d24e711e2c.rlib
+  = help: please recompile that crate using this compiler (rustc 1.75.0-nightly (cd674d617 2023-10-24)) (consider running `cargo clean` first)
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0514`.
+error[E0514]: found crate `core` compiled by an incompatible version of rustc
+  |
+  = note: the following crate versions were found:
+          crate `core` compiled by rustc 1.73.0-nightly (f88a8b71c 2023-08-08): /Users/arosboro/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/wasm32-unknown-unknown/lib/libcore-4e48b611ead810f8.rlib
+  = help: please recompile that crate using this compiler (rustc 1.75.0-nightly (cd674d617 2023-10-24)) (consider running `cargo clean` first)
+
+error[E0514]: found crate `compiler_builtins` compiled by an incompatible version of rustc
+  |
+  = note: the following crate versions were found:
+          crate `compiler_builtins` compiled by rustc 1.73.0-nightly (f88a8b71c 2023-08-08): /Users/arosboro/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/wasm32-unknown-unknown/lib/libcompiler_builtins-72beb8928708bded.rlib
+  = help: please recompile that crate using this compiler (rustc 1.75.0-nightly (cd674d617 2023-10-24)) (consider running `cargo clean` first)
+
+error: aborting due to 2 previous errors
+
+For more information about this error, try `rustc --explain E0514`.
+warning: autocfg could not probe for `std`

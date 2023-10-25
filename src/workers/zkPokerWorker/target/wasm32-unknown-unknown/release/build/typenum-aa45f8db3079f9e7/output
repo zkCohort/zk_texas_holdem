@@ -1,3 +1,0 @@
-cargo:rerun-if-changed=build/main.rs
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/arosboro/zkPoker/src/workers/zkPokerWorker/target/wasm32-unknown-unknown/release/build/typenum-aa45f8db3079f9e7/out/consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=/Users/arosboro/zkPoker/src/workers/zkPokerWorker/target/wasm32-unknown-unknown/release/build/typenum-aa45f8db3079f9e7/out/op.rs
