@@ -173,7 +173,68 @@ zk_texas_holdem % leo run shuffle_and_pass -- -- "{
     ]
   ],
   _nonce: 6227482928804889989781829452526314579422943618836555815401568926162241502497group.public
-}" "[[63u8, 62u8, 61u8, 60u8, 59u8, 58u8, 57u8, 56u8, 55u8, 54u8, 53u8, 52u8, 51u8, 50u8, 49u8, 48u8, 47u8, 46u8, 45u8, 44u8, 43u8, 42u8, 41u8, 40u8, 39u8, 38u8],  [37u8, 36u8, 35u8, 34u8, 33u8, 32u8, 31u8, 30u8, 29u8, 28u8, 27u8, 26u8, 25u8, 24u8, 23u8, 22u8, 21u8, 20u8, 19u8, 18u8, 17u8, 16u8, 15u8, 14u8, 13u8, 12u8]]" 3i8 4i8 12i8 -9i8 aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y
+}" "{
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  cards: [
+    [
+      63u32.private,
+      62u32.private,
+      61u32.private,
+      60u32.private,
+      59u32.private,
+      58u32.private,
+      57u32.private,
+      56u32.private,
+      55u32.private,
+      54u32.private,
+      53u32.private,
+      52u32.private,
+      51u32.private,
+      50u32.private,
+      49u32.private,
+      48u32.private,
+      47u32.private,
+      46u32.private,
+      45u32.private,
+      44u32.private,
+      43u32.private,
+      42u32.private,
+      41u32.private,
+      40u32.private,
+      39u32.private,
+      38u32.private
+    ],
+    [
+      37u32.private,
+      36u32.private,
+      35u32.private,
+      34u32.private,
+      33u32.private,
+      32u32.private,
+      31u32.private,
+      30u32.private,
+      29u32.private,
+      28u32.private,
+      27u32.private,
+      26u32.private,
+      25u32.private,
+      24u32.private,
+      23u32.private,
+      22u32.private,
+      21u32.private,
+      20u32.private,
+      19u32.private,
+      18u32.private,
+      17u32.private,
+      16u32.private,
+      15u32.private,
+      14u32.private,
+      13u32.private,
+      12u32.private
+    ]
+  ],
+  _nonce: 2748886393642050821735342760440227962915648045687603101011273625956899716054group.public
+}" 3i8 4i8 12i8 -9i8 aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y
 ```
 
 ## A shuffle_and_pass transaction Output of the Deck Record Alice Sends to Bob.
