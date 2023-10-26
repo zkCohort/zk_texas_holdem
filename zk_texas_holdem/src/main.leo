@@ -202,15 +202,15 @@ program zk_texas_holdem.aleo {
     }
 
     inline exp_by_squaring(base: u32, exp: u32, modulus: u32) -> u32 {
-        let result: u128 = 1u128;
-        let current_base: u128 = base as u128;
-        let mod_u128: u128 = modulus as u128;
+        let result: u64 = 1u64;
+        let current_base: u64 = base as u64;
+        let mod_u64: u64 = modulus as u64;
 
         for i: u32 in 0u32..32u32 {
             if (exp % 2u32 == 1u32) { 
-                result = (result * current_base) % mod_u128;
+                result = (result * current_base) % mod_u64;
             }
-            current_base = (current_base * current_base) % mod_u128;
+            current_base = (current_base * current_base) % mod_u64;
             exp >>= 1u32; // divide by two
         }
 
@@ -225,11 +225,11 @@ program zk_texas_holdem.aleo {
         return exp_by_squaring(ciphertext, d, n);
     }
 
-    inline initial_deck() -> [[u8; 26]; 2] {
-        return [[63u8, 62u8, 61u8, 60u8, 59u8, 58u8, 57u8, 56u8, 55u8, 54u8, 53u8, 52u8, 51u8,
-                 50u8, 49u8, 48u8, 47u8, 46u8, 45u8, 44u8, 43u8, 42u8, 41u8, 40u8, 39u8, 38u8], 
-                [37u8, 36u8, 35u8, 34u8, 33u8, 32u8, 31u8, 30u8, 29u8, 28u8, 27u8, 26u8, 25u8,
-                 24u8, 23u8, 22u8, 21u8, 20u8, 19u8, 18u8, 17u8, 16u8, 15u8, 14u8, 13u8, 12u8]];
+    inline initial_deck() -> [[u32; 26]; 2] {
+        return [[63u32, 62u32, 61u32, 60u32, 59u32, 58u32, 57u32, 56u32, 55u32, 54u32, 53u32, 52u32, 51u32,
+                 50u32, 49u32, 48u32, 47u32, 46u32, 45u32, 44u32, 43u32, 42u32, 41u32, 40u32, 39u32, 38u32], 
+                [37u32, 36u32, 35u32, 34u32, 33u32, 32u32, 31u32, 30u32, 29u32, 28u32, 27u32, 26u32, 25u32,
+                 24u32, 23u32, 22u32, 21u32, 20u32, 19u32, 18u32, 17u32, 16u32, 15u32, 14u32, 13u32, 12u32]];
     }
 
     inline empty_deck() -> [[u32; 26]; 2] {
@@ -239,9 +239,9 @@ program zk_texas_holdem.aleo {
                  0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32, 0u32]];
     }
 
-    function encrypt_deck(e: u32, n: u32, deck: [[u8; 26]; 2]) -> [[u32; 26]; 2] {
-        let bottom_half: [u8; 26] = deck[0u8];
-        let top_half: [u8; 26] = deck[1u8];
+    function encrypt_deck(e: u32, n: u32, deck: [[u32; 26]; 2]) -> [[u32; 26]; 2] {
+        let bottom_half: [u32; 26] = deck[0u8];
+        let top_half: [u32; 26] = deck[1u8];
         let c0: u32 = bottom_half[0u8] as u32;
         let c1: u32 = bottom_half[1u8] as u32;
         let c2: u32 = bottom_half[2u8] as u32;
