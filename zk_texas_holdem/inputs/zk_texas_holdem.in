@@ -1,0 +1,30 @@
+[get_address]
+target_address: field = 0field;
+
+[setup_game]
+players: Players = Players {
+    player0: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+    player1: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y,
+    player2: aleo1xg0z05nm65k5e0aafe8h82m6dtk9hsav6n87kh9rjz4wwexfyyrsfengj5,
+    player3: aleo1z5gjpu2vql5n8hy6ajl57jcm2hgf6vmskxzfszzpmvwxnhl7h5xqawu8gd,
+    player4: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
+    player5: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
+    player6: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
+    player7: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
+    player8: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
+};
+phi: u32 = 2801307600u32;
+n: u32 = 2801413507u32;
+
+[join_game]
+table_address: address = aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c;
+e: u32 = 1170454781u32;
+d: u32 = 2423676821u32;
+phi: u32 = 2801307600u32;
+n: u32 = 2801413507u32;
+
+[test_encrypt_decrypt]
+m: u32 = 63u32;
+e: u32 = 334394389u32;
+d: u32 = 1990853605u32;
+n: u32 = 2764443431u32;

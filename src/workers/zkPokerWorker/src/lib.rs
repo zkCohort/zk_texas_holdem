@@ -76,11 +76,15 @@ fn exp_by_squaring(base: &BigInt, exp: &BigInt, modulus: &BigInt) -> BigInt {
 
 
 fn encrypt(message: &BigInt, e: &BigInt, n: &BigInt) -> BigInt {
-    exp_by_squaring(message, e, n) % n
+    let cipher: BigInt = exp_by_squaring(message, e, n);
+    log(&format!("cipher: {} cipher bits: {}", &cipher, &cipher.bits()));
+    cipher
 }
 
 fn decrypt(cipher: &BigInt, d: &BigInt, n: &BigInt) -> BigInt {
-    exp_by_squaring(cipher, d, n) % n
+    let message: BigInt = exp_by_squaring(cipher, d, n);
+    log(&format!("message: {} message bits: {}", &message, &message.bits()));
+    message
 }
 
 

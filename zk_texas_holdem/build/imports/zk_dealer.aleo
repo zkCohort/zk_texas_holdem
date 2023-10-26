@@ -23,9 +23,12 @@ mapping public_game_state:
 
 function init_table:
     input r0 as group.private;
-    async init_table r0 into r1;
-    output true as boolean.private;
-    output r1 as zk_dealer.aleo/init_table.future;
+    cast 63u862u861u860u859u858u857u856u855u854u853u852u851u850u849u848u847u846u845u844u843u842u841u840u839u838u8 into r1 as [u8; 26u32];
+    cast 37u836u835u834u833u832u831u830u829u828u827u826u825u824u823u822u821u820u819u818u817u816u815u814u813u812u8 into r2 as [u8; 26u32];
+    cast r1r2 into r3 as [[u8; 26u32]; 2u32];
+    async init_table r0 into r4;
+    output r3 as [[u8; 26u32]; 2u32].private;
+    output r4 as zk_dealer.aleo/init_table.future;
 
 finalize init_table:
     input r0 as group.public;

@@ -1,5 +1,5 @@
 program zk_deck_shuffle.aleo {
-    function setup_shuffle(element: i8, deck: [[u8; 26]; 2]) -> (i8, [u8; 26], [u8; 26]) {
+    function setup_shuffle(element: i8, deck: [[u32; 26]; 2]) -> (i8, [u32; 26], [u32; 26]) {
         let n: i8 = element.abs();
         if (element < 0i8) {
             return (n, deck[0u8], deck[1u8]);
@@ -8,61 +8,61 @@ program zk_deck_shuffle.aleo {
         }
     }
 
-    function shuffle_deck(n: i8, a: [u8; 26], b: [u8; 26]) -> [[u8; 26]; 2] {
+    function shuffle_deck(n: i8, a: [u32; 26], b: [u32; 26]) -> [[u32; 26]; 2] {
         assert(n >= 1i8);
         assert(n <= 26i8);
-        let t0: u8 = 0u8;
-        let t1: u8 = 0u8;
-        let t2: u8 = 0u8;
-        let t3: u8 = 0u8;
-        let t4: u8 = 0u8;
-        let t5: u8 = 0u8;
-        let t6: u8 = 0u8;
-        let t7: u8 = 0u8;
-        let t8: u8 = 0u8;
-        let t9: u8 = 0u8;
-        let t10: u8 = 0u8;
-        let t11: u8 = 0u8;
-        let t12: u8 = 0u8;
-        let t13: u8 = 0u8;
-        let t14: u8 = 0u8;
-        let t15: u8 = 0u8;
-        let t16: u8 = 0u8;
-        let t17: u8 = 0u8;
-        let t18: u8 = 0u8;
-        let t19: u8 = 0u8;
-        let t20: u8 = 0u8;
-        let t21: u8 = 0u8;
-        let t22: u8 = 0u8;
-        let t23: u8 = 0u8;
-        let t24: u8 = 0u8;
-        let t25: u8 = 0u8;
-        let t26: u8 = 0u8;
-        let t27: u8 = 0u8;
-        let t28: u8 = 0u8;
-        let t29: u8 = 0u8;
-        let t30: u8 = 0u8;
-        let t31: u8 = 0u8;
-        let t32: u8 = 0u8;
-        let t33: u8 = 0u8;
-        let t34: u8 = 0u8;
-        let t35: u8 = 0u8;
-        let t36: u8 = 0u8;
-        let t37: u8 = 0u8;
-        let t38: u8 = 0u8;
-        let t39: u8 = 0u8;
-        let t40: u8 = 0u8;
-        let t41: u8 = 0u8;
-        let t42: u8 = 0u8;
-        let t43: u8 = 0u8;
-        let t44: u8 = 0u8;
-        let t45: u8 = 0u8;
-        let t46: u8 = 0u8;
-        let t47: u8 = 0u8;
-        let t48: u8 = 0u8;
-        let t49: u8 = 0u8;
-        let t50: u8 = 0u8;
-        let t51: u8 = 0u8;
+        let t0: u32 = 0u32;
+        let t1: u32 = 0u32;
+        let t2: u32 = 0u32;
+        let t3: u32 = 0u32;
+        let t4: u32 = 0u32;
+        let t5: u32 = 0u32;
+        let t6: u32 = 0u32;
+        let t7: u32 = 0u32;
+        let t8: u32 = 0u32;
+        let t9: u32 = 0u32;
+        let t10: u32 = 0u32;
+        let t11: u32 = 0u32;
+        let t12: u32 = 0u32;
+        let t13: u32 = 0u32;
+        let t14: u32 = 0u32;
+        let t15: u32 = 0u32;
+        let t16: u32 = 0u32;
+        let t17: u32 = 0u32;
+        let t18: u32 = 0u32;
+        let t19: u32 = 0u32;
+        let t20: u32 = 0u32;
+        let t21: u32 = 0u32;
+        let t22: u32 = 0u32;
+        let t23: u32 = 0u32;
+        let t24: u32 = 0u32;
+        let t25: u32 = 0u32;
+        let t26: u32 = 0u32;
+        let t27: u32 = 0u32;
+        let t28: u32 = 0u32;
+        let t29: u32 = 0u32;
+        let t30: u32 = 0u32;
+        let t31: u32 = 0u32;
+        let t32: u32 = 0u32;
+        let t33: u32 = 0u32;
+        let t34: u32 = 0u32;
+        let t35: u32 = 0u32;
+        let t36: u32 = 0u32;
+        let t37: u32 = 0u32;
+        let t38: u32 = 0u32;
+        let t39: u32 = 0u32;
+        let t40: u32 = 0u32;
+        let t41: u32 = 0u32;
+        let t42: u32 = 0u32;
+        let t43: u32 = 0u32;
+        let t44: u32 = 0u32;
+        let t45: u32 = 0u32;
+        let t46: u32 = 0u32;
+        let t47: u32 = 0u32;
+        let t48: u32 = 0u32;
+        let t49: u32 = 0u32;
+        let t50: u32 = 0u32;
+        let t51: u32 = 0u32;
 
         let a_index: u8 = 0u8;
         let b_index: u8 = 0u8;
@@ -90,7 +90,7 @@ program zk_deck_shuffle.aleo {
             }
             assert(use_a || use_b);
             assert(match);
-            let temp_card: u8 = 0u8;
+            let temp_card: u32 = 0u32;
             if (use_a) {
                 if (a_index == 0u8) {
                     temp_card = a[0u8];
@@ -416,22 +416,15 @@ program zk_deck_shuffle.aleo {
         return [[t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25], [t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51]];
     }
 
-    transition shuffle(commitments: [[group; 26]; 2]) -> [[u8; 26]; 2] {
-        let deck: [[u8; 26]; 2] = [[63u8, 62u8, 61u8, 60u8, 59u8, 58u8, 57u8, 56u8, 55u8, 54u8, 53u8, 52u8, 51u8, 50u8, 49u8, 48u8, 47u8, 46u8, 45u8, 44u8, 43u8, 42u8, 41u8, 40u8, 39u8, 38u8], [37u8, 36u8, 35u8, 34u8, 33u8, 32u8, 31u8, 30u8, 29u8, 28u8, 27u8, 26u8, 25u8, 24u8, 23u8, 22u8, 21u8, 20u8, 19u8, 18u8, 17u8, 16u8, 15u8, 14u8, 13u8, 12u8]];
-        let (n1, a1, b1): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s0, deck);
+    transition shuffle(deck: [[u32; 26]; 2], s0: i8, s1: i8, s2: i8, s3: i8) -> [[u32; 26]; 2] {
+        let (n1, a1, b1): (i8, [u32; 26], [u32; 26]) = setup_shuffle(s0, deck);
         deck = shuffle_deck(n1, a1, b1);
-        let (n2, a2, b2): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s1, deck);
+        let (n2, a2, b2): (i8, [u32; 26], [u32; 26]) = setup_shuffle(s1, deck);
         deck = shuffle_deck(n2, a2, b2);
-        let (n3, a3, b3): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s2, deck);
+        let (n3, a3, b3): (i8, [u32; 26], [u32; 26]) = setup_shuffle(s2, deck);
         deck = shuffle_deck(n3, a3, b3);
-        let (n4, a4, b4): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s3, deck);
+        let (n4, a4, b4): (i8, [u32; 26], [u32; 26]) = setup_shuffle(s3, deck);
         deck = shuffle_deck(n4, a4, b4);
-        let (n5, a5, b5): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s4, deck);
-        deck = shuffle_deck(n5, a5, b5);
-        let (n6, a6, b6): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s5, deck);
-        deck = shuffle_deck(n6, a6, b6);
-        let (n7, a7, b7): (i8, [u8; 26], [u8; 26]) = setup_shuffle(s6, deck);
-        deck = shuffle_deck(n7, a7, b7);
         return deck;
     }
 }
