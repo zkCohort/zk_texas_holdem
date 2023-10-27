@@ -27,11 +27,10 @@ pub fn js_generate_phi_n(bit_size: usize) -> JsValue {
 }
 
 #[wasm_bindgen]
-pub fn js_generate_key_pair(js_p: &str, js_q: &str) -> JsValue {
-    // parse string into u32 instead of bigint
-    let p = BigInt::from_str(js_p).unwrap();
-    let q = BigInt::from_str(js_q).unwrap();
-    let (e, d) = generate_key_pair(&p, &q);
+pub fn js_generate_key_pair(js_phi: &str, js_n: &str) -> JsValue {
+    let phi = BigInt::from_str(js_phi).unwrap();
+    let n = BigInt::from_str(js_n).unwrap();
+    let (e, d) = generate_key_pair(&phi, &n);
     let obj = js_sys::Object::new();
     js_sys::Reflect::set(&obj, &"e".into(), &JsValue::from_str(&e.to_string())).unwrap();
     js_sys::Reflect::set(&obj, &"d".into(), &JsValue::from_str(&d.to_string())).unwrap();
@@ -199,6 +198,31 @@ mod tests {
         log(&format!("\n\n"));
         let (phi, n) = generate_phi_n(32);
         let (e, d) = generate_key_pair(&phi, &n);
+        let midpoint = 52u8 / 2;
+        
+        // Initialize with default values
+        let mut deck_e: [[String; 26]; 2] = Default::default();
+        let mut deck_d: [[String; 26]; 2] = Default::default();
+
+        for i in 0u8..52u8 {
+            let value: JsValue = js_generate_key_pair(&phi.to_string(), &n.to_string());
+            let e1 = js_sys::Reflect::get(&value, &"e".into()).unwrap().as_string().unwrap().parse::<u32>().unwrap();
+            let d1 = js_sys::Reflect::get(&value, &"d".into()).unwrap().as_string().unwrap().parse::<u32>().unwrap();
+            
+            if i < midpoint {
+                deck_e[0][i as usize] = format!("{}u32", e1);
+                deck_d[0][i as usize] = format!("{}u32", d1);
+            } else {
+                deck_e[1][i as usize - midpoint as usize] = format!("{}u32", e1);
+                deck_d[1][i as usize - midpoint as usize] = format!("{}u32", d1);
+            }
+            
+        }
+
+        log(&format!("==================="));
+        log(&format!("deck_e {:?}", deck_e));
+        log(&format!("deck_d {:?}", deck_d));
+        log(&format!("==================="));
         // e and d are the encryption and decryption key pair.
         // e is the public key, d is the private key.
         log(&format!("==================="));
@@ -216,6 +240,7 @@ mod tests {
         assert_eq!((e * d) % phi, BigInt::one());
         log(&format!("==================="));
     }
+
 
     #[wasm_bindgen_test]
     fn test_sra() {

@@ -6,13 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-snarkvm-wasm = { version = "0.14.6", features = ["console", "fields"] }
 wasm-bindgen = "0.2.78"
 js-sys = "0.3.55"
 num-integer = "0.1.44"
 num-bigint =  "0.4.2"
 num-traits = "0.2.14"
 num-prime = "0.4.3"
+getrandom = { version = "0.2.10", features = ["js"] }
 rand = "0.8.4"
 
 
