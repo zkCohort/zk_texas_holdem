@@ -11,20 +11,11 @@ const wasmPackPlugin = wasmPack(["./src/workers/zk_poker_worker"]);
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), VitePWA({ registerType: "autoUpdate" }), wasmPackPlugin()],
+  plugins: [react(), VitePWA({ registerType: "autoUpdate" }), wasmPackPlugin],
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
-  },
-  worker: {
-    format: 'iife',
-    plugins: [],
-    rollupOptions: {
-      output: {
-        format: 'es',
-      },
-    },
   },
   resolve: {
     alias: {
