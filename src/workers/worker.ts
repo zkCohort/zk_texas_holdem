@@ -9,27 +9,60 @@ import {
   NetworkRecordProvider,
 } from "@aleohq/sdk";
 import { expose, proxy } from "comlink";
+import dotenv from "dotenv";
+dotenv.config();
+
+const ENDPOINT = process.env.VITE_ENDPOINT || "http://127.0.0.1:3030";
+const PRIVATE_KEY = process.env.VITE_PRIVATE_KEY || "APrivateKey1";
 
 await initThreadPool();
 
-async function localProgramExecution(
-  program: string,
-  aleoFunction: string,
+async function executeOffline(
+  programName: string,
+  functionName: string,
   inputs: string[]
 ) {
-  const programManager = new ProgramManager();
+  const host = undefined;
+  const keyProvider = undefined;
+  const recordProvider = undefined;
+  const programManager = new ProgramManager(host, keyProvider, recordProvider);
 
-  // Create a temporary account for the execution of the program
   const account = new Account();
   programManager.setAccount(account);
 
-  const executionResponse = await programManager.executeOffline(
-    program,
-    aleoFunction,
-    inputs,
-    false
+  const executionResponse = await programManager.execute(
+    programName,
+    functionName,
+    0,
+    false,
+    inputs
   );
-  return executionResponse.getOutputs();
+  return executionResponse;
+}
+
+async function execute(
+  programName: string,
+  functionName: string,
+  inputs: string[],
+  fee: number
+) {
+  const host = ENDPOINT;
+  const keyProvider = undefined;
+  const recordProvider = undefined;
+  const programManager = new ProgramManager(host, keyProvider, recordProvider);
+  const account = new Account({
+    privateKey: PRIVATE_KEY,
+  });
+  programManager.setAccount(account);
+
+  const executionResponse: string | Error = await programManager.execute(
+    programName,
+    functionName,
+    fee,
+    false,
+    inputs
+  );
+  return executionResponse;
 }
 
 async function getPrivateKey() {
@@ -52,7 +85,7 @@ async function deployProgram(program: string) {
 
   // Use existing account with funds
   const account = new Account({
-    privateKey: undefined,
+    privateKey: PRIVATE_KEY,
   });
 
   const recordProvider = new NetworkRecordProvider(account, networkClient);
@@ -80,7 +113,8 @@ async function deployProgram(program: string) {
 }
 
 const workerMethods = {
-  localProgramExecution,
+  executeOffline,
+  execute,
   getPrivateKey,
   getAddressKeyPair,
   deployProgram,
