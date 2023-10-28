@@ -5,6 +5,7 @@ import "./App.css";
 import zk_texas_holdem_program from "../zk_texas_holdem/build/main.aleo?raw";
 import { AleoWorker, AleoRemoteWorker } from "./workers/AleoWorker.js";
 import init, { js_generate_phi_n, js_generate_key_pair } from "zk_poker_worker";
+import { Address, PrivateKey } from "@aleohq/sdk";
 
 const aleoWorker: AleoRemoteWorker = AleoWorker() as AleoRemoteWorker;
 
@@ -14,6 +15,7 @@ function App() {
   const BURN_ADDRESS =
     "aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc";
   const ZK_TEXAS_HOLDEM: string = zk_texas_holdem_program;
+  const [isLoading, setIsLoading] = useState(true);
   const [_accountKeys, setAccountKeys] = useState<any>([]);
   const [playerAddresses, setPlayerAddresses] = useState([
     BURN_ADDRESS,
@@ -29,29 +31,37 @@ function App() {
   const [phiN, setPhiN] = useState<any>({});
 
   useEffect(() => {
+    if (!isLoading) return;
     // Initialize the Wasm module
-    init().then(() => {
-      console.log("Wasm module initialized");
-      const phi_n_obj = js_generate_phi_n(BIT_SIZE);
-      setPhiN(phi_n_obj);
-    });
-  }, []);
-
-  useEffect(() => {
     (async () => {
       await generateAccounts(2);
     })();
+    setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) return;
+    // Initialize the Wasm module
+    (async () => {
+      await init();
+      const phiN = await js_generate_phi_n(BIT_SIZE);
+      setPhiN(phiN);
+    })();
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {}, [isLoading]);
+
   type AccountData = {
-    private_key: string | typeof Proxy;
-    address: string | typeof Proxy;
+    private_key: string | PrivateKey;
+    address: string | Address;
   };
 
   const generateAccount = async (): Promise<AccountData> => {
-    const keypair: AccountData = await aleoWorker.getAddressKeyPair();
-    let key_proxy: any = keypair.private_key;
-    let addr_proxy: any = keypair.address;
+    const proxy: typeof Proxy<[PrivateKey, Address]> =
+      await aleoWorker.getAddressKeyPair();
+    let key_proxy: any = proxy[0];
+    let addr_proxy: any = proxy[1];
     const private_key: string = await key_proxy.to_string();
     const address: string = await addr_proxy.to_string();
     console.log(address);
@@ -116,22 +126,25 @@ function App() {
       //   player7: "address",
       //   player8: "address",
       // }
-      let players = {
-        player0: playerAddresses[0],
-        player1: playerAddresses[1],
-        player2: playerAddresses[2],
-        player3: playerAddresses[3],
-        player4: playerAddresses[4],
-        player5: playerAddresses[5],
-        player6: playerAddresses[6],
-        player7: playerAddresses[7],
-        player8: playerAddresses[8],
-      };
+      const players = `"Players {
+        player0: ${playerAddresses[0]},
+        player1: ${playerAddresses[1]},
+        player2: ${playerAddresses[2]},
+        player3: ${playerAddresses[3]},
+        player4: ${playerAddresses[4]},
+        player5: ${playerAddresses[5]},
+        player6: ${playerAddresses[6]},
+        player7: ${playerAddresses[7]},
+        player8: ${playerAddresses[8]},
+      }"`;
+      const phi = `"${phiN.phi}"u32`;
+      const n = `"${phiN.n}"u32`;
 
-      const gameResult = await aleoWorker.localProgramExecution(
+      const gameResult = await aleoWorker.execute(
         ZK_TEXAS_HOLDEM,
         "setup_game",
-        [players, phiN.phi, phiN.n]
+        [players, phi, n],
+        1.9
       );
       console.log(gameResult);
     } catch (error) {
@@ -139,31 +152,40 @@ function App() {
     }
   };
 
+  const renderPlayerInputs = (startIndex: number, endIndex: number) => {
+    return playerAddresses.slice(startIndex, endIndex).map((address, index) => (
+      <div key={index}>
+        <label>Player {startIndex + index + 1}:</label>
+        <input
+          className="address-input"
+          type="text"
+          value={address}
+          onChange={(e) => {
+            const updatedAddresses = [...playerAddresses];
+            updatedAddresses[startIndex + index] = e.target.value;
+            setPlayerAddresses(updatedAddresses);
+          }}
+        />
+      </div>
+    ));
+  };
+
   return (
     <div>
       <img src={aleoLogo} className="aleo-logo" alt="aleo logo" />
       <h1>zkTexasHoldem</h1>
-      {playerAddresses.map((address, index) => (
-        <div key={index}>
-          <label>Player {index + 1}:</label>
-          <input
-            className="address-input"
-            type="text"
-            value={address}
-            onChange={(e) => {
-              const updatedAddresses = [...playerAddresses];
-              updatedAddresses[index] = e.target.value;
-              setPlayerAddresses(updatedAddresses);
-            }}
-          />
-        </div>
-      ))}
+      <h3>A Forray into Mental Poker</h3>
+      <h2>Setup Game</h2>
       {phiN && (phiN.phi, phiN.n) ? (
         <div>
-          <p>phi: {phiN.phi}</p>
-          <p>n: {phiN.n}</p>
+          phi: <span>{phiN.phi}u32</span>&nbsp; n: <span>{phiN.n}u32</span>
         </div>
       ) : null}
+      <div className="players-container">
+        <div className="players-column">{renderPlayerInputs(0, 3)}</div>
+        <div className="players-column">{renderPlayerInputs(3, 6)}</div>
+        <div className="players-column">{renderPlayerInputs(6, 9)}</div>
+      </div>
       <button onClick={handleSetupGame}>Start Poker Game</button>
     </div>
   );

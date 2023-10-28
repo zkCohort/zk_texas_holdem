@@ -3,15 +3,21 @@ import { wrap, Remote } from "comlink";
 let singletonWorker: Remote<Worker> | undefined;
 
 interface AleoRemoteWorker extends Remote<Worker> {
-  localProgramExecution: (
-    program: string,
-    entrypoint: string,
-    args: string[]
+  executeOffline: (
+    programName: string,
+    functionName: string,
+    inputs: string[]
   ) => Promise<any>;
-  deployProgram: (program: Uint8Array) => Promise<string>;
-  getPrivateKey: () => Promise<any>;
-  getAddressKeyPair: () => Promise<any>;
-  generateAccount: () => Promise<any>;
+  execute: (
+    programName: string,
+    functionName: string,
+    inputs: string[],
+    fee: number
+  ) => Promise<any>;
+  deployProgram: (program: string) => Promise<string>;
+  getPrivateKey: () => Promise<typeof Proxy>;
+  getAddressKeyPair: () => Promise<typeof Proxy>;
+  generateAccount: () => Promise<typeof Proxy>;
 }
 
 const AleoWorker = () => {

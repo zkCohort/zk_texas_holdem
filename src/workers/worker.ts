@@ -9,11 +9,9 @@ import {
   NetworkRecordProvider,
 } from "@aleohq/sdk";
 import { expose, proxy } from "comlink";
-import dotenv from "dotenv";
-dotenv.config();
 
-const ENDPOINT = process.env.VITE_ENDPOINT || "http://127.0.0.1:3030";
-const PRIVATE_KEY = process.env.VITE_PRIVATE_KEY || "APrivateKey1";
+const ENDPOINT = import.meta.env.VITE_ENDPOINT || "http://127.0.0.1:3030";
+const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY || "APrivateKey1";
 
 await initThreadPool();
 
@@ -73,7 +71,7 @@ async function getPrivateKey() {
 async function getAddressKeyPair() {
   const private_key = new PrivateKey();
   const address = Address.from_private_key(private_key);
-  return proxy({ private_key: private_key, address: address });
+  return proxy([private_key, address]);
 }
 
 async function deployProgram(program: string) {

@@ -41185,5 +41185,6 @@ function test_encrypt_decrypt:
     rem r518 r264 into r519;
     shr r512 1u32 into r520;
     cast r517 into r521 as u32;
+    assert.eq r0 r521;
     output r262 as u32.private;
     output r521 as u32.private;
