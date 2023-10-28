@@ -195,9 +195,33 @@ program zk_texas_holdem.aleo {
         });
     }
 
+    transition decrypt_encrypt_each_then_pass(player: Player, deck: Deck, deck_e: [[u32; 26]; 2], deck_d: [[u32; 26]; 2], next_player: address) -> (Player, Deck) {
+        let e: u32 = player.e;
+        let d: u32 = player.d;
+        let n: u32 = player.n;
+        let decrypted_deck: [[u32; 26]; 2] = decrypt_deck(d, n, deck.cards);
+        let encrypted_deck: [[u32; 26]; 2] = encrypt_deck_per_card(deck_e, n, decrypted_deck);
+        return (
+            Player {
+                owner: self.caller,
+                table_address: player.table_address,
+                phi: player.phi,
+                n: player.n,
+                e: player.e,
+                d: player.d,
+                deck_e: deck_e,
+                deck_d: deck_d,
+            },
+            Deck {
+                owner: next_player,
+                cards: encrypted_deck,
+            });
+    }
+
     transition test_encrypt_decrypt(public m: u32, e: u32, d: u32, n: u32) -> (u32, u32) {
       let c: u32 = exp_by_squaring(m, e, n);
       let p: u32 = exp_by_squaring(c, d, n);
+      assert_eq(m, p);
       return (c, p);
     }
 
@@ -346,6 +370,187 @@ program zk_texas_holdem.aleo {
         let t49: u32 = encrypt(c49, e, n);
         let t50: u32 = encrypt(c50, e, n);
         let t51: u32 = encrypt(c51, e, n);
+        return [[t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10,
+                 t11, t12, t13, t14, t15, t16, t17, t18, t19, t20,
+                 t21, t22, t23, t24, t25],
+                [t26, t27, t28, t29, t30, t31, t32, t33, t34, t35,
+                 t36, t37, t38, t39, t40, t41, t42, t43, t44, t45,
+                 t46, t47, t48, t49, t50, t51]];
+    }
+
+    function decrypt_deck(d: u32, n: u32, deck: [[u32; 26]; 2]) -> [[u32; 26]; 2] {
+        let bottom_half: [u32; 26] = deck[0u8];
+        let top_half: [u32; 26] = deck[1u8];
+        let c0: u32 = decrypt(bottom_half[0u8], d, n);
+        let c1: u32 = decrypt(bottom_half[1u8], d, n);
+        let c2: u32 = decrypt(bottom_half[2u8], d, n);
+        let c3: u32 = decrypt(bottom_half[3u8], d, n);
+        let c4: u32 = decrypt(bottom_half[4u8], d, n);
+        let c5: u32 = decrypt(bottom_half[5u8], d, n);
+        let c6: u32 = decrypt(bottom_half[6u8], d, n);
+        let c7: u32 = decrypt(bottom_half[7u8], d, n);
+        let c8: u32 = decrypt(bottom_half[8u8], d, n);
+        let c9: u32 = decrypt(bottom_half[9u8], d, n);
+        let c10: u32 = decrypt(bottom_half[10u8], d, n);
+        let c11: u32 = decrypt(bottom_half[11u8], d, n);
+        let c12: u32 = decrypt(bottom_half[12u8], d, n);
+        let c13: u32 = decrypt(bottom_half[13u8], d, n);
+        let c14: u32 = decrypt(bottom_half[14u8], d, n);
+        let c15: u32 = decrypt(bottom_half[15u8], d, n);
+        let c16: u32 = decrypt(bottom_half[16u8], d, n);
+        let c17: u32 = decrypt(bottom_half[17u8], d, n);
+        let c18: u32 = decrypt(bottom_half[18u8], d, n);
+        let c19: u32 = decrypt(bottom_half[19u8], d, n);
+        let c20: u32 = decrypt(bottom_half[20u8], d, n);
+        let c21: u32 = decrypt(bottom_half[21u8], d, n);
+        let c22: u32 = decrypt(bottom_half[22u8], d, n);
+        let c23: u32 = decrypt(bottom_half[23u8], d, n);
+        let c24: u32 = decrypt(bottom_half[24u8], d, n);
+        let c25: u32 = decrypt(bottom_half[25u8], d, n);
+        let c26: u32 = decrypt(top_half[0u8], d, n);
+        let c27: u32 = decrypt(top_half[1u8], d, n);
+        let c28: u32 = decrypt(top_half[2u8], d, n);
+        let c29: u32 = decrypt(top_half[3u8], d, n);
+        let c30: u32 = decrypt(top_half[4u8], d, n);
+        let c31: u32 = decrypt(top_half[5u8], d, n);
+        let c32: u32 = decrypt(top_half[6u8], d, n);
+        let c33: u32 = decrypt(top_half[7u8], d, n);
+        let c34: u32 = decrypt(top_half[8u8], d, n);
+        let c35: u32 = decrypt(top_half[9u8], d, n);
+        let c36: u32 = decrypt(top_half[10u8], d, n);
+        let c37: u32 = decrypt(top_half[11u8], d, n);
+        let c38: u32 = decrypt(top_half[12u8], d, n);
+        let c39: u32 = decrypt(top_half[13u8], d, n);
+        let c40: u32 = decrypt(top_half[14u8], d, n);
+        let c41: u32 = decrypt(top_half[15u8], d, n);
+        let c42: u32 = decrypt(top_half[16u8], d, n);
+        let c43: u32 = decrypt(top_half[17u8], d, n);
+        let c44: u32 = decrypt(top_half[18u8], d, n);
+        let c45: u32 = decrypt(top_half[19u8], d, n);
+        let c46: u32 = decrypt(top_half[20u8], d, n);
+        let c47: u32 = decrypt(top_half[21u8], d, n);
+        let c48: u32 = decrypt(top_half[22u8], d, n);
+        let c49: u32 = decrypt(top_half[23u8], d, n);
+        let c50: u32 = decrypt(top_half[24u8], d, n);
+        let c51: u32 = decrypt(top_half[25u8], d, n);
+        return [[c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10,
+                 c11, c12, c13, c14, c15, c16, c17, c18, c19, c20,
+                 c21, c22, c23, c24, c25],
+                [c26, c27, c28, c29, c30, c31, c32, c33, c34, c35,
+                 c36, c37, c38, c39, c40, c41, c42, c43, c44, c45,
+                 c46, c47, c48, c49, c50, c51]];
+    }
+
+    function encrypt_deck_per_card(deck_e: [[u32; 26]; 2], n: u32, deck: [[u32; 26]; 2]) -> [[u32; 26]; 2] {
+        let bottom_half: [u32; 26] = deck[0u8];
+        let top_half: [u32; 26] = deck[1u8];
+        let bottom_half_e: [u32; 26] = deck_e[0u8];
+        let top_half_e: [u32; 26] = deck_e[1u8];
+        let e0: u32 = bottom_half_e[0u8];
+        let e1: u32 = bottom_half_e[1u8];
+        let e2: u32 = bottom_half_e[2u8];
+        let e3: u32 = bottom_half_e[3u8];
+        let e4: u32 = bottom_half_e[4u8];
+        let e5: u32 = bottom_half_e[5u8];
+        let e6: u32 = bottom_half_e[6u8];
+        let e7: u32 = bottom_half_e[7u8];
+        let e8: u32 = bottom_half_e[8u8];
+        let e9: u32 = bottom_half_e[9u8];
+        let e10: u32 = bottom_half_e[10u8];
+        let e11: u32 = bottom_half_e[11u8];
+        let e12: u32 = bottom_half_e[12u8];
+        let e13: u32 = bottom_half_e[13u8];
+        let e14: u32 = bottom_half_e[14u8];
+        let e15: u32 = bottom_half_e[15u8];
+        let e16: u32 = bottom_half_e[16u8];
+        let e17: u32 = bottom_half_e[17u8];
+        let e18: u32 = bottom_half_e[18u8];
+        let e19: u32 = bottom_half_e[19u8];
+        let e20: u32 = bottom_half_e[20u8];
+        let e21: u32 = bottom_half_e[21u8];
+        let e22: u32 = bottom_half_e[22u8];
+        let e23: u32 = bottom_half_e[23u8];
+        let e24: u32 = bottom_half_e[24u8];
+        let e25: u32 = bottom_half_e[25u8];
+        let e26: u32 = top_half_e[0u8];
+        let e27: u32 = top_half_e[1u8];
+        let e28: u32 = top_half_e[2u8];
+        let e29: u32 = top_half_e[3u8];
+        let e30: u32 = top_half_e[4u8];
+        let e31: u32 = top_half_e[5u8];
+        let e32: u32 = top_half_e[6u8];
+        let e33: u32 = top_half_e[7u8];
+        let e34: u32 = top_half_e[8u8];
+        let e35: u32 = top_half_e[9u8];
+        let e36: u32 = top_half_e[10u8];
+        let e37: u32 = top_half_e[11u8];
+        let e38: u32 = top_half_e[12u8];
+        let e39: u32 = top_half_e[13u8];
+        let e40: u32 = top_half_e[14u8];
+        let e41: u32 = top_half_e[15u8];
+        let e42: u32 = top_half_e[16u8];
+        let e43: u32 = top_half_e[17u8];
+        let e44: u32 = top_half_e[18u8];
+        let e45: u32 = top_half_e[19u8];
+        let e46: u32 = top_half_e[20u8];
+        let e47: u32 = top_half_e[21u8];
+        let e48: u32 = top_half_e[22u8];
+        let e49: u32 = top_half_e[23u8];
+        let e50: u32 = top_half_e[24u8];
+        let e51: u32 = top_half_e[25u8];
+        // Encrypt per card
+        let t0: u32 = encrypt(bottom_half[0u8], e0, n);
+        let t1: u32 = encrypt(bottom_half[1u8], e1, n);
+        let t2: u32 = encrypt(bottom_half[2u8], e2, n);
+        let t3: u32 = encrypt(bottom_half[3u8], e3, n);
+        let t4: u32 = encrypt(bottom_half[4u8], e4, n);
+        let t5: u32 = encrypt(bottom_half[5u8], e5, n);
+        let t6: u32 = encrypt(bottom_half[6u8], e6, n);
+        let t7: u32 = encrypt(bottom_half[7u8], e7, n);
+        let t8: u32 = encrypt(bottom_half[8u8], e8, n);
+        let t9: u32 = encrypt(bottom_half[9u8], e9, n);
+        let t10: u32 = encrypt(bottom_half[10u8], e10, n);
+        let t11: u32 = encrypt(bottom_half[11u8], e11, n);
+        let t12: u32 = encrypt(bottom_half[12u8], e12, n);
+        let t13: u32 = encrypt(bottom_half[13u8], e13, n);
+        let t14: u32 = encrypt(bottom_half[14u8], e14, n);
+        let t15: u32 = encrypt(bottom_half[15u8], e15, n);
+        let t16: u32 = encrypt(bottom_half[16u8], e16, n);
+        let t17: u32 = encrypt(bottom_half[17u8], e17, n);
+        let t18: u32 = encrypt(bottom_half[18u8], e18, n);
+        let t19: u32 = encrypt(bottom_half[19u8], e19, n);
+        let t20: u32 = encrypt(bottom_half[20u8], e20, n);
+        let t21: u32 = encrypt(bottom_half[21u8], e21, n);
+        let t22: u32 = encrypt(bottom_half[22u8], e22, n);
+        let t23: u32 = encrypt(bottom_half[23u8], e23, n);
+        let t24: u32 = encrypt(bottom_half[24u8], e24, n);
+        let t25: u32 = encrypt(bottom_half[25u8], e25, n);
+        let t26: u32 = encrypt(top_half[0u8], e26, n);
+        let t27: u32 = encrypt(top_half[1u8], e27, n);
+        let t28: u32 = encrypt(top_half[2u8], e28, n);
+        let t29: u32 = encrypt(top_half[3u8], e29, n);
+        let t30: u32 = encrypt(top_half[4u8], e30, n);
+        let t31: u32 = encrypt(top_half[5u8], e31, n);
+        let t32: u32 = encrypt(top_half[6u8], e32, n);
+        let t33: u32 = encrypt(top_half[7u8], e33, n);
+        let t34: u32 = encrypt(top_half[8u8], e34, n);
+        let t35: u32 = encrypt(top_half[9u8], e35, n);
+        let t36: u32 = encrypt(top_half[10u8], e36, n);
+        let t37: u32 = encrypt(top_half[11u8], e37, n);
+        let t38: u32 = encrypt(top_half[12u8], e38, n);
+        let t39: u32 = encrypt(top_half[13u8], e39, n);
+        let t40: u32 = encrypt(top_half[14u8], e40, n);
+        let t41: u32 = encrypt(top_half[15u8], e41, n);
+        let t42: u32 = encrypt(top_half[16u8], e42, n);
+        let t43: u32 = encrypt(top_half[17u8], e43, n);
+        let t44: u32 = encrypt(top_half[18u8], e44, n);
+        let t45: u32 = encrypt(top_half[19u8], e45, n);
+        let t46: u32 = encrypt(top_half[20u8], e46, n);
+        let t47: u32 = encrypt(top_half[21u8], e47, n);
+        let t48: u32 = encrypt(top_half[22u8], e48, n);
+        let t49: u32 = encrypt(top_half[23u8], e49, n);
+        let t50: u32 = encrypt(top_half[24u8], e50, n);
+        let t51: u32 = encrypt(top_half[25u8], e51, n);
         return [[t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10,
                  t11, t12, t13, t14, t15, t16, t17, t18, t19, t20,
                  t21, t22, t23, t24, t25],

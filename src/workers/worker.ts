@@ -1,4 +1,5 @@
 import {
+  Address,
   Account,
   ProgramManager,
   PrivateKey,
@@ -16,10 +17,7 @@ async function localProgramExecution(
   aleoFunction: string,
   inputs: string[]
 ) {
-  const host = undefined;
-  const keyProvider = undefined;
-  const recordProvider = undefined;
-  const programManager = new ProgramManager(host, keyProvider, recordProvider);
+  const programManager = new ProgramManager();
 
   // Create a temporary account for the execution of the program
   const account = new Account();
@@ -39,6 +37,12 @@ async function getPrivateKey() {
   return proxy(key);
 }
 
+async function getAddressKeyPair() {
+  const private_key = new PrivateKey();
+  const address = Address.from_private_key(private_key);
+  return proxy({ private_key: private_key, address: address });
+}
+
 async function deployProgram(program: string) {
   const keyProvider = new AleoKeyProvider();
   keyProvider.useCache(true);
@@ -48,7 +52,7 @@ async function deployProgram(program: string) {
 
   // Use existing account with funds
   const account = new Account({
-    privateKey: "user1PrivateKey",
+    privateKey: undefined,
   });
 
   const recordProvider = new NetworkRecordProvider(account, networkClient);
@@ -75,5 +79,5 @@ async function deployProgram(program: string) {
   return tx_id;
 }
 
-const workerMethods = { localProgramExecution, getPrivateKey, deployProgram };
+const workerMethods = { localProgramExecution, getPrivateKey, getAddressKeyPair, deployProgram };
 expose(workerMethods);

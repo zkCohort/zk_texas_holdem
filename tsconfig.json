@@ -27,6 +27,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "vite.config.ts"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "vite.config.ts", "src/workers/worker.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

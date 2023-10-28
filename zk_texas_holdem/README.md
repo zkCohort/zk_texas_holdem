@@ -17,6 +17,12 @@ snarkvm run hello
 ## Some Aleo Accounts for Testing and Demonstration purposes
 
 ### !!! Do not put keys from your .env file here !!!
+snarkos developer execute credits.aleo transfer_private "{  owner: aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px.private,  microcredits: 1000000000000u64.private,  _nonce: 1870384227717108990812464071079401090030090200169646008180314689517851502548group.public}" "aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c" 873000000000u64 --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --query "http://localhost:3030" --broadcast "http://localhost:3030/testnet3/transaction/broadcast"
+
+snarkos developer execute credits.aleo transfer_private $RECORD1 "aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c" 837500000000u64 --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --query "http://localhost:3030" --broadcast "http://localhost:3030/testnet3/transaction/broadcast"
+
+snarkos developer deploy zk_deck_shuffle.aleo --private-key APrivateKey1zkpFbE6pVQGjDg76PmNJTvPLMSucSqQ4VvJ8yf8zWhBxMnN --query "http://localhost:3030" --path "./zk_texas_holdem/build/imports" --broadcast "http://localhost:3030/testnet3/transaction/broadcast" --fee 600000 --record "UNSPENT_RECORD"
+
 
 1. Private Key APrivateKey1zkpFbE6pVQGjDg76PmNJTvPLMSucSqQ4VvJ8yf8zWhBxMnN
    View Key AViewKey1qrgqzJkfen4Y85Uz3S91PhprWNRpevzpJ2tnb5fw4S9Q
