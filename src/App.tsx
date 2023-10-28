@@ -36,11 +36,6 @@ function App() {
     (async () => {
       await generateAccounts(2);
     })();
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading) return;
     // Initialize the Wasm module
     (async () => {
       await init();
@@ -139,7 +134,7 @@ function App() {
       }"`;
       const phi = `"${phiN.phi}"u32`;
       const n = `"${phiN.n}"u32`;
-
+      console.log([players, phi, n]);
       const gameResult = await aleoWorker.execute(
         ZK_TEXAS_HOLDEM,
         "setup_game",
