@@ -79,5 +79,10 @@ async function deployProgram(program: string) {
   return tx_id;
 }
 
-const workerMethods = { localProgramExecution, getPrivateKey, getAddressKeyPair, deployProgram };
+const workerMethods = {
+  localProgramExecution,
+  getPrivateKey,
+  getAddressKeyPair,
+  deployProgram,
+};
 expose(workerMethods);

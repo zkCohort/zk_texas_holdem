@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
+// import reactLogo  from "./assets/react.svg";
 import aleoLogo from "./assets/aleo.svg";
 import "./App.css";
 import zk_texas_holdem_program from "../zk_texas_holdem/build/main.aleo?raw";
-import zk_deck_shuffle_program from "../zk_texas_holdem/imports/zk_deck_shuffle.leo?raw";
-import { AleoWorker } from "./workers/AleoWorker.js";
+import { AleoWorker, AleoRemoteWorker } from "./workers/AleoWorker.js";
 import init, { js_generate_phi_n, js_generate_key_pair } from "zk_poker_worker";
-import { Remote } from "comlink";
 
-const aleoWorker: Remote<Worker> = AleoWorker();
+const aleoWorker: AleoRemoteWorker = AleoWorker() as AleoRemoteWorker;
 
 function App() {
   // Start Poker Logic
   const BIT_SIZE = 32;
   const BURN_ADDRESS =
     "aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc";
-  const ZK_TEXAS_HOLDEM = zk_texas_holdem_program;
-  const [accountKeys, setAccountKeys] = useState<any>([]);
+  const ZK_TEXAS_HOLDEM: string = zk_texas_holdem_program;
+  const [_accountKeys, setAccountKeys] = useState<any>([]);
   const [playerAddresses, setPlayerAddresses] = useState([
     BURN_ADDRESS,
     BURN_ADDRESS,
@@ -28,7 +26,6 @@ function App() {
     BURN_ADDRESS,
     BURN_ADDRESS,
   ]);
-  const [players, setPlayers] = useState(""); // Adjust the type and initial value accordingly.
   const [phiN, setPhiN] = useState<any>({});
 
   useEffect(() => {
@@ -47,34 +44,36 @@ function App() {
   }, []);
 
   type AccountData = {
-    private_key: string;
-    address: string;
-};
+    private_key: string | typeof Proxy;
+    address: string | typeof Proxy;
+  };
 
-const generateAccount = async (): Promise<AccountData> => {
+  const generateAccount = async (): Promise<AccountData> => {
     const keypair: AccountData = await aleoWorker.getAddressKeyPair();
-    const private_key = await keypair.private_key.to_string();
-    const address = await keypair.address.to_string();
+    let key_proxy: any = keypair.private_key;
+    let addr_proxy: any = keypair.address;
+    const private_key: string = await key_proxy.to_string();
+    const address: string = await addr_proxy.to_string();
     console.log(address);
     return { private_key, address };
-};
+  };
 
-const generateAccounts = async (count: number = 2): Promise<void> => {
-  const accountsData: AccountData[] = [];
+  const generateAccounts = async (count: number = 2): Promise<void> => {
+    const accountsData: AccountData[] = [];
 
-  for(let i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
       const accountData = await generateAccount();
       accountsData.push(accountData);
-  }
+    }
 
-  setAccountKeys(accountsData);
+    setAccountKeys(accountsData);
 
-  const updatedPlayerAddresses = [...playerAddresses];
-  for(let i = 0; i < accountsData.length; i++) {
-      updatedPlayerAddresses[i] = accountsData[i].address;
-  }
-  setPlayerAddresses(updatedPlayerAddresses);
-};
+    const updatedPlayerAddresses = [...playerAddresses];
+    for (let i = 0; i < accountsData.length; i++) {
+      updatedPlayerAddresses[i] = accountsData[i].address as string;
+    }
+    setPlayerAddresses(updatedPlayerAddresses);
+  };
 
   // async function execute() {
   //   setExecuting(true);
@@ -127,7 +126,7 @@ const generateAccounts = async (count: number = 2): Promise<void> => {
         player6: playerAddresses[6],
         player7: playerAddresses[7],
         player8: playerAddresses[8],
-      }
+      };
 
       const gameResult = await aleoWorker.localProgramExecution(
         ZK_TEXAS_HOLDEM,
@@ -142,11 +141,13 @@ const generateAccounts = async (count: number = 2): Promise<void> => {
 
   return (
     <div>
+      <img src={aleoLogo} className="aleo-logo" alt="aleo logo" />
       <h1>zkTexasHoldem</h1>
       {playerAddresses.map((address, index) => (
         <div key={index}>
           <label>Player {index + 1}:</label>
-          <input className="address-input"
+          <input
+            className="address-input"
             type="text"
             value={address}
             onChange={(e) => {
@@ -158,10 +159,11 @@ const generateAccounts = async (count: number = 2): Promise<void> => {
         </div>
       ))}
       {phiN && (phiN.phi, phiN.n) ? (
-      <div>
-        <p>phi: {phiN.phi}</p>
-        <p>n: {phiN.n}</p>
-      </div>) : null}
+        <div>
+          <p>phi: {phiN.phi}</p>
+          <p>n: {phiN.n}</p>
+        </div>
+      ) : null}
       <button onClick={handleSetupGame}>Start Poker Game</button>
     </div>
   );

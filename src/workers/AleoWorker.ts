@@ -2,17 +2,17 @@ import { wrap, Remote } from "comlink";
 
 let singletonWorker: Remote<Worker> | undefined;
 
-// interface AleoWorker extends Worker {
-//   localProgramExecution: (
-//     program: Uint8Array,
-//     entrypoint: string,
-//     args: string[]
-//   ) => Promise<any>;
-//   deployProgram: (program: Uint8Array) => Promise<string>;
-//   getPrivateKey: () => Promise<any>;
-//   getAddressKeyPair: () => Promise<any>;
-//   generateAccount: () => Promise<any>;
-// }
+interface AleoRemoteWorker extends Remote<Worker> {
+  localProgramExecution: (
+    program: string,
+    entrypoint: string,
+    args: string[]
+  ) => Promise<any>;
+  deployProgram: (program: Uint8Array) => Promise<string>;
+  getPrivateKey: () => Promise<any>;
+  getAddressKeyPair: () => Promise<any>;
+  generateAccount: () => Promise<any>;
+}
 
 const AleoWorker = () => {
   if (!singletonWorker) {
@@ -29,4 +29,5 @@ const AleoWorker = () => {
   return singletonWorker;
 };
 
+export type { AleoRemoteWorker };
 export { AleoWorker };
