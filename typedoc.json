@@ -1,0 +1,10 @@
+{
+  "out": "./docs",
+  "entryPoints": ["./src"],
+  "entryPointStrategy": "expand",
+  "exclude": ["**/__tests__/**/*", "**/*.test.ts", "**/*.test.tsx"],
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "tsconfig": "./tsconfig.json"
+}

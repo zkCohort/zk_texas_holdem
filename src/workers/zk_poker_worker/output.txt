@@ -1,0 +1,132 @@
+
+[INFO]: 🎯  Checking for the Wasm target...
+    Finished dev [unoptimized + debuginfo] target(s) in 0.25s
+[INFO]: ⬇️  Installing wasm-bindgen...
+    Finished test [unoptimized + debuginfo] target(s) in 0.24s
+     Running unittests src/lib.rs (target/wasm32-unknown-unknown/debug/deps/zk_poker_worker-3ee4807ad0864e89.wasm)
+     
+> zkpoker@0.0.0 test:wasm
+> cd ./src/workers/zkPokerWorker && wasm-pack test --node
+
+Set timeout to 20 seconds...
+Executing bindgen...                              
+                                                  
+running 5 tests
+
+
+
+
+===================
+d1 = 29, d2 = 31
+e1 = 5, e2 = 7
+n = 91
+Message = 5
+===================
+Cipher result (after Alice encrypt): 31
+Cipher result (after Bob encrypt): 73
+===================
+Cipher result (After Bob decrypt): 31
+Cipher result (After Alice decrypt): 5
+A -> B -> B -> A: 5
+Cipher result (After Alice decrypt): 47
+Cipher result (After Bob decrypt): 5
+A -> B -> A -> B: 5
+test zk_poker_worker::tests::test_sra_mock ... ok
+
+
+
+===================
+phi = 2801307600 n = 2801413507
+===================
+e1 = 1170454781 d1 = 2423676821
+e2 = 1380396943 d2 = 2734228207
+n = 2801413507
+Message = 63
+===================
+  Cipher result (after Alice encrypt): 421829602
+  Cipher result (after Bob encrypt): 2342371725
+  Cipher result (After Bob decrypt): 421829602
+  Cipher result (After Alice decrypt): 63
+A -> B -> B -> A: 63
+  Cipher result (After Alice decrypt): 646018564
+  Cipher result (After Bob decrypt): 63
+A -> B -> A -> B: 63
+test zk_poker_worker::tests::test_sra ... ok
+
+
+
+===================
+phi = 2760037900 n = 2760144901
+e = 1499310121 d = 2684041781
+phi bits = 32
+n bits = 32
+e bits = 31
+d bits = 32
+===================
+test zk_poker_worker::tests::test_generate_key_pair ... ok
+
+
+
+===================
+phi = 2606871816 n = 2606976467
+phi bits = 32
+n bits = 32
+===================
+phi = 3529329076 n = 3529447897
+phi bits = 32
+n bits = 32
+===================
+phi = 3236288640 n = 3236403227
+phi bits = 32
+n bits = 32
+===================
+phi = 3092657904 n = 3092770001
+phi bits = 32
+n bits = 32
+===================
+phi = 2616500416 n = 2616602959
+phi bits = 32
+n bits = 32
+===================
+phi = 2367137280 n = 2367234599
+phi bits = 32
+n bits = 32
+===================
+phi = 2378030424 n = 2378131739
+phi bits = 32
+n bits = 32
+===================
+phi = 2253726904 n = 2253825559
+phi bits = 32
+n bits = 32
+===================
+test zk_poker_worker::tests::test_generate_phi_n ... ok
+
+
+
+===================
+prime = 36433
+bits = 16
+===================
+prime = 42899
+bits = 16
+===================
+prime = 47137
+bits = 16
+===================
+prime = 42589
+bits = 16
+===================
+prime = 61861
+bits = 16
+===================
+prime = 57427
+bits = 16
+===================
+prime = 61627
+bits = 16
+===================
+test zk_poker_worker::tests::test_get_fixed_prime ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored
+
