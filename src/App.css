@@ -51,7 +51,7 @@
 /* Style for the player input fields */
 input[type="text"] {
   max-width: 95%; /* Ensures the input fields fit within the screen width on smaller devices */
-  width: 33em; /* Adjust as needed */
+  width: 34em; /* Adjust as needed */
   font-size: 14px; /* Adjust as needed */
   padding: 8px 12px; /* Vertical and horizontal padding */
   border: 1px solid #ccc; /* Light gray border */
@@ -89,7 +89,7 @@ input[type="text"]:focus {
 }
 
 .global-context::before {
-  content: "Glboal Shared Values";
+  content: "Global Shared Values";
   margin-right: 1em;
 }
 

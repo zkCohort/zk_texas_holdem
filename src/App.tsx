@@ -128,7 +128,10 @@ function App() {
   const renderPlayerInputs = (startIndex: number, endIndex: number) => {
     return playerAddresses.slice(startIndex, endIndex).map((address, index) => (
       <div key={index}>
-        <label>Player {startIndex + index + 1}:</label>
+        <label>
+          Player {startIndex + index + 1}{" "}
+          {burnAddress(address) ? <span>(Burn Address)</span> : null}
+        </label>
         <input
           className="address-input"
           type="text"
@@ -141,6 +144,16 @@ function App() {
         />
       </div>
     ));
+  };
+
+  const burnAddress = (address: string) => {
+    if (
+      address ==
+      "aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc"
+    ) {
+      return true;
+    }
+    return false;
   };
 
   if (isLoading || isLoadingPlayers) {
