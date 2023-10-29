@@ -18,6 +18,12 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
 @keyframes logo-spin {
   from {
@@ -44,7 +50,8 @@
 
 /* Style for the player input fields */
 input[type="text"] {
-  width: 32em; /* Adjust as needed */
+  max-width: 95%; /* Ensures the input fields fit within the screen width on smaller devices */
+  width: 33em; /* Adjust as needed */
   font-size: 14px; /* Adjust as needed */
   padding: 8px 12px; /* Vertical and horizontal padding */
   border: 1px solid #ccc; /* Light gray border */
@@ -62,13 +69,49 @@ input[type="text"]:focus {
   outline: 2px solid #007bff; /* Blue outline */
 }
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* This ensures the container takes up the entire viewport height */
+  width: 100vw; /* This ensures the container takes up the entire viewport width */
+  background-color: #000; /* Assuming you want a black background */
+}
+
+/* If you have elements that should span the full width of the container, you can add additional styles: */
+.app-container > div,
+.app-container > h1,
+.app-container > h2,
+.app-container > h3 {
+  width: 100%;
+  text-align: center; /* This ensures text is centered */
+}
+
+.global-context::before {
+  content: "Glboal Shared Values";
+  margin-right: 1em;
+}
+
+.inline-field {
+  display: inline-block;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.inline-field > label {
+  margin-right: 0.5em;
+  font-weight: bolder;
+}
+
 /* Players Columns on Setup Game */
 
 .players-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 1em;
 }
 
 /* Responsive Design */

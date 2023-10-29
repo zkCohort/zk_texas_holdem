@@ -6,6 +6,7 @@ import zk_texas_holdem_program from "../zk_texas_holdem/build/main.aleo?raw";
 import { AleoWorker, AleoRemoteWorker } from "./workers/AleoWorker.js";
 import init, { js_generate_phi_n, js_generate_key_pair } from "zk_poker_worker";
 import { Address, PrivateKey } from "@aleohq/sdk";
+import { BeatLoader } from "react-spinners";
 
 const aleoWorker: AleoRemoteWorker = AleoWorker() as AleoRemoteWorker;
 
@@ -15,6 +16,7 @@ function App() {
   const BURN_ADDRESS =
     "aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc";
   const ZK_TEXAS_HOLDEM: string = zk_texas_holdem_program;
+  const [isLoadingPlayers, setIsLoadingPlayers] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [_accountKeys, setAccountKeys] = useState<any>([]);
   const [playerAddresses, setPlayerAddresses] = useState([
@@ -31,21 +33,22 @@ function App() {
   const [phiN, setPhiN] = useState<any>({});
 
   useEffect(() => {
-    if (!isLoading) return;
-    // Initialize the Wasm module
-    (async () => {
-      await generateAccounts(2);
-    })();
-    // Initialize the Wasm module
-    (async () => {
-      await init();
-      const phiN = await js_generate_phi_n(BIT_SIZE);
-      setPhiN(phiN);
-    })();
-    setIsLoading(false);
+    if (isLoadingPlayers) {
+      // Initialize the Wasm module
+      (async () => {
+        await generateAccounts(2);
+      })();
+    }
+    if (isLoading) {
+      // Initialize the Wasm module
+      (async () => {
+        await init();
+        const phiN = await js_generate_phi_n(BIT_SIZE);
+        setPhiN(phiN);
+      })();
+      setIsLoading(false);
+    }
   }, []);
-
-  useEffect(() => {}, [isLoading]);
 
   type AccountData = {
     private_key: string | PrivateKey;
@@ -78,33 +81,8 @@ function App() {
       updatedPlayerAddresses[i] = accountsData[i].address as string;
     }
     setPlayerAddresses(updatedPlayerAddresses);
+    setIsLoadingPlayers(false);
   };
-
-  // async function execute() {
-  //   setExecuting(true);
-  //   const result = await aleoWorker.localProgramExecution(
-  //     zk_texas_holdem,
-  //     "main",
-  //     ["5u32", "5u32"]
-  //   );
-  //   setExecuting(false);
-
-  //   alert(JSON.stringify(result));
-  // }
-
-  // async function deploy() {
-  //   setDeploying(true);
-  //   try {
-  //     const result = await aleoWorker.deployProgram(zk_texas_holdem_program);
-  //     console.log("Transaction:");
-  //     console.log("https://explorer.hamp.app/transaction?id=" + result);
-  //     alert("Transaction ID: " + result);
-  //   } catch (e) {
-  //     console.log(e);
-  //     alert("Error with deployment, please check console for details");
-  //   }
-  //   setDeploying(false);
-  // }
 
   const handleSetupGame = async () => {
     try {
@@ -136,7 +114,7 @@ function App() {
       const n = `"${phiN.n}"u32`;
       console.log([players, phi, n]);
       const gameResult = await aleoWorker.execute(
-        ZK_TEXAS_HOLDEM,
+        "zk_texas_holdem.aleo",
         "setup_game",
         [players, phi, n],
         1.9
@@ -165,15 +143,32 @@ function App() {
     ));
   };
 
+  if (isLoading || isLoadingPlayers) {
+    return (
+      <div className="spinner-container">
+        <BeatLoader color="#FFFFFF" />{" "}
+        {/* You can change the color or spinner type */}
+      </div>
+    );
+  }
+
   return (
+    // react-spinner if isLoading || isLoadingPlayers
     <div>
       <img src={aleoLogo} className="aleo-logo" alt="aleo logo" />
       <h1>zkTexasHoldem</h1>
       <h3>A Forray into Mental Poker</h3>
       <h2>Setup Game</h2>
       {phiN && (phiN.phi, phiN.n) ? (
-        <div>
-          phi: <span>{phiN.phi}u32</span>&nbsp; n: <span>{phiN.n}u32</span>
+        <div className="global-context">
+          <div className="inline-field">
+            <label>phi</label>
+            <span>{phiN.phi}u32</span>
+          </div>
+          <div className="inline-field">
+            <label>N</label>
+            <span>{phiN.n}u32</span>
+          </div>
         </div>
       ) : null}
       <div className="players-container">

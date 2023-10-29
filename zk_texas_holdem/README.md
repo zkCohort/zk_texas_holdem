@@ -16,6 +16,22 @@ snarkvm run hello
 
 ## Deploying locally
 
+snarkOS/devnet.sh
+
+```
+👋 Welcome to Aleo! We thank you for running a node and supporting privacy.
+
+🔑 Your development private key for node 3 is APrivateKey1zkpBjpEgLo4arVUkQmcLdKQMiAKGaHAQVVwmF8HQby8vdYs
+
+🪪 Your Aleo address is aleo12ux3gdauck0v60westgcpqj7v8rrcr3v346e4jtq04q7kkt22czsh808v2.
+
+🧭 Starting a validator node on Aleo Testnet 3 Phase 3 at 0.0.0.0:4133.
+
+🌐 Starting the REST server at 0.0.0.0:3033.
+
+🔑 Your one-time JWT token is eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGVvMTJ1eDNnZGF1Y2swdjYwd2VzdGdjcHFqN3Y4cnJjcjN2MzQ2ZTRqdHEwNHE3a2t0MjJjenNoODA4djIiLCJpYXQiOjE2OTg1NDE5MTIsImV4cCI6MjAxMzkwMTkxMn0.ve-LYPPl_pGhCjSycx1MMSg_rYQjW96YuFprrN88GhU
+```
+
 `export PRIVATE_KEY=APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH`
 `export ENDPOINT=http://localhost:3030`
 `export RECORD=UNSPENT_RECORD`

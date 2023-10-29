@@ -44,22 +44,30 @@ async function execute(
   inputs: string[],
   fee: number
 ) {
-  const host = ENDPOINT;
-  const keyProvider = undefined;
-  const recordProvider = undefined;
-  const programManager = new ProgramManager(host, keyProvider, recordProvider);
   const account = new Account({
     privateKey: PRIVATE_KEY,
   });
+  const networkClient = new AleoNetworkClient(ENDPOINT);
+  const keyProvider = new AleoKeyProvider();
+  keyProvider.useCache(true);
+  const recordProvider = new NetworkRecordProvider(account, networkClient);
+  const programManager = new ProgramManager(
+    ENDPOINT,
+    keyProvider,
+    recordProvider
+  );
+
   programManager.setAccount(account);
 
-  const executionResponse: string | Error = await programManager.execute(
+  const executionResponse = await programManager.execute(
     programName,
     functionName,
     fee,
     false,
     inputs
   );
+
+  console.log(executionResponse);
   return executionResponse;
 }
 
