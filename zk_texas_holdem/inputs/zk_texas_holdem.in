@@ -18,10 +18,13 @@ n: u32 = 2801413507u32;
 
 [join_game]
 table_address: address = aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c;
-e: u32 = 1170454781u32;
-d: u32 = 2423676821u32;
+// e: u32 = 1170454781u32;
+// d: u32 = 2423676821u32;
+e: u32 = 1380396943u32;
+d: u32 = 2734228207u32;
 phi: u32 = 2801307600u32;
 n: u32 = 2801413507u32;
+
 
 [test_encrypt_decrypt]
 m: u32 = 63u32;

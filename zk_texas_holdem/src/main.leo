@@ -225,6 +225,12 @@ program zk_texas_holdem.aleo {
       return (c, p);
     }
 
+    transition test_decrypt(public m: u32, d1: u32, d2: u32, n: u32) -> (u32, u32) {
+      let m1: u32 = exp_by_squaring(m, d1, n);
+      let p: u32 = exp_by_squaring(m1, d2, n);
+      return (m1, p);
+    }
+
     inline exp_by_squaring(base: u32, exp: u32, modulus: u32) -> u32 {
         let result: u64 = 1u64;
         let current_base: u64 = base as u64;

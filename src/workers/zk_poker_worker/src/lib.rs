@@ -196,7 +196,8 @@ mod tests {
     #[wasm_bindgen_test]
     fn test_generate_key_pair() {
         log(&format!("\n\n"));
-        let (phi, n) = generate_phi_n(32);
+        // let (phi, n) = generate_phi_n(32);
+        let (phi, n): (BigInt, BigInt) = (BigInt::from(2801307600u32), BigInt::from(2801413507u32));
         let (e, d) = generate_key_pair(&phi, &n);
         let midpoint = 52u8 / 2;
         
