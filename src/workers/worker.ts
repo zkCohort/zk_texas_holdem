@@ -10,26 +10,65 @@ import {
 } from "@aleohq/sdk";
 import { expose, proxy } from "comlink";
 
+const ENDPOINT = import.meta.env.VITE_ENDPOINT || "http://127.0.0.1:3030";
+const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY || "APrivateKey1";
+
 await initThreadPool();
 
-async function localProgramExecution(
-  program: string,
-  aleoFunction: string,
+async function executeOffline(
+  programName: string,
+  functionName: string,
   inputs: string[]
 ) {
-  const programManager = new ProgramManager();
+  const host = undefined;
+  const keyProvider = undefined;
+  const recordProvider = undefined;
+  const programManager = new ProgramManager(host, keyProvider, recordProvider);
 
-  // Create a temporary account for the execution of the program
   const account = new Account();
   programManager.setAccount(account);
 
-  const executionResponse = await programManager.executeOffline(
-    program,
-    aleoFunction,
-    inputs,
-    false
+  const executionResponse = await programManager.execute(
+    programName,
+    functionName,
+    0,
+    false,
+    inputs
   );
-  return executionResponse.getOutputs();
+  return executionResponse;
+}
+
+async function execute(
+  programName: string,
+  functionName: string,
+  inputs: string[],
+  fee: number
+) {
+  const account = new Account({
+    privateKey: PRIVATE_KEY,
+  });
+  const networkClient = new AleoNetworkClient(ENDPOINT);
+  const keyProvider = new AleoKeyProvider();
+  keyProvider.useCache(true);
+  const recordProvider = new NetworkRecordProvider(account, networkClient);
+  const programManager = new ProgramManager(
+    ENDPOINT,
+    keyProvider,
+    recordProvider
+  );
+
+  programManager.setAccount(account);
+
+  const executionResponse = await programManager.execute(
+    programName,
+    functionName,
+    fee,
+    false,
+    inputs
+  );
+
+  console.log(executionResponse);
+  return executionResponse;
 }
 
 async function getPrivateKey() {
@@ -40,7 +79,7 @@ async function getPrivateKey() {
 async function getAddressKeyPair() {
   const private_key = new PrivateKey();
   const address = Address.from_private_key(private_key);
-  return proxy({ private_key: private_key, address: address });
+  return proxy([private_key, address]);
 }
 
 async function deployProgram(program: string) {
@@ -52,7 +91,7 @@ async function deployProgram(program: string) {
 
   // Use existing account with funds
   const account = new Account({
-    privateKey: undefined,
+    privateKey: PRIVATE_KEY,
   });
 
   const recordProvider = new NetworkRecordProvider(account, networkClient);
@@ -79,5 +118,11 @@ async function deployProgram(program: string) {
   return tx_id;
 }
 
-const workerMethods = { localProgramExecution, getPrivateKey, getAddressKeyPair, deployProgram };
+const workerMethods = {
+  executeOffline,
+  execute,
+  getPrivateKey,
+  getAddressKeyPair,
+  deployProgram,
+};
 expose(workerMethods);

@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color: #ccc;
 }
 
 .logo {
@@ -16,6 +17,12 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 @keyframes logo-spin {
@@ -43,16 +50,74 @@
 
 /* Style for the player input fields */
 input[type="text"] {
-  width: 300px;           /* Adjust as needed */
-  font-size: 14px;        /* Adjust as needed */
-  padding: 8px 12px;      /* Vertical and horizontal padding */
+  max-width: 95%; /* Ensures the input fields fit within the screen width on smaller devices */
+  width: 34em; /* Adjust as needed */
+  font-size: 14px; /* Adjust as needed */
+  padding: 8px 12px; /* Vertical and horizontal padding */
   border: 1px solid #ccc; /* Light gray border */
-  border-radius: 4px;     /* Rounded corners */
-  margin-bottom: 8px;    /* Spacing between inputs */
-  display: block;        /* Make the inputs block elements so they take the full width */
+  border-radius: 4px; /* Rounded corners */
+  margin-bottom: 8px; /* Spacing between inputs */
+  display: block; /* Make the inputs block elements so they take the full width */
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden; /* Hides any overflowing content */
+  margin-bottom: 1em; /* Increased spacing between input fields */
+  margin-right: 1em; /* Increased spacing between input fields */
 }
 
 /* Custom focus outline */
 input[type="text"]:focus {
-  outline: 2px solid #007BFF; /* Blue outline */
+  outline: 2px solid #007bff; /* Blue outline */
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* This ensures the container takes up the entire viewport height */
+  width: 100vw; /* This ensures the container takes up the entire viewport width */
+  background-color: #000; /* Assuming you want a black background */
+}
+
+/* If you have elements that should span the full width of the container, you can add additional styles: */
+.app-container > div,
+.app-container > h1,
+.app-container > h2,
+.app-container > h3 {
+  width: 100%;
+  text-align: center; /* This ensures text is centered */
+}
+
+.global-context::before {
+  content: "Global Shared Values";
+  margin-right: 1em;
+}
+
+.inline-field {
+  display: inline-block;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.inline-field > label {
+  margin-right: 0.5em;
+  font-weight: bolder;
+}
+
+/* Players Columns on Setup Game */
+
+.players-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+/* Responsive Design */
+/* For screens smaller than 768px, stack the input fields */
+@media (max-width: 768px) {
+  .players-container {
+    flex-direction: column; /* Stacks the child elements vertically */
+  }
 }
