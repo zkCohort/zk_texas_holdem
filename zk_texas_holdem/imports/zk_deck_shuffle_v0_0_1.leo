@@ -1,4 +1,4 @@
-import bitwise_stack_v0_0_1.leo;
+import zk_bitwise_stack_v0_0_1.leo;
 
 program zk_deck_shuffle_v0_0_1.aleo {
 
