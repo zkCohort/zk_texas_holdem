@@ -531,7 +531,7 @@ program zk_bitwise_stack_v0_0_1.aleo {
 
         // Shift Left and then use OR to add the value to the series.
         let new_buffer_in_series: u128 = (series.shl_wrapped(stack.member_size)) | value;
-        let (s00, s01): ([u128; 26], [u128; 26]) = zk_bitwise_stack_seiries_updates_v0_0_1.leo/(series_index, buffer_index, stack, new_buffer_in_series);
+        let (s00, s01): ([u128; 26], [u128; 26]) = set_buffer_at_series_index(series_index, buffer_index, stack, new_buffer_in_series);
 
         return Stack {
             capacity: stack.capacity,

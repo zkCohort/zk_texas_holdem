@@ -184,7 +184,7 @@ program zk_texas_holdem.aleo {
         let empty: [[u128; 26]; 2] = empty_deck();
         let tuple: (i8, [u128; 26], [u128; 26]) = (0i8, empty[0u8], empty[1u8]);
         for i: i8 in 0i8..7i8 {
-            tuple: (i8, [u128; 26], [u128; 26]) = zk_deck_shuffle_v0_0_1.leo/setup_shuffle(shuffles[i as u8], encrypted_deck);
+            tuple = zk_deck_shuffle_v0_0_1.leo/setup_shuffle(shuffles[i as u8], encrypted_deck);
             encrypted_deck = zk_deck_shuffle_v0_0_1.leo/shuffle_deck(tuple.0, member_size, tuple.1, tuple.2);
         }
         return (Player {
