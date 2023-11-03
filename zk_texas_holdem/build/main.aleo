@@ -1,5 +1,5 @@
 import sra_encryption.aleo;
-import zk_deck_shuffle.aleo;
+import zk_deck_shuffle_v0_0_1.aleo;
 program zk_texas_holdem.aleo;
 
 
@@ -150,14 +150,14 @@ function shuffle_and_pass:
     input r5 as i8.private;
     input r6 as address.private;
     call sra_encryption.aleo/encrypt_deck r0.e r0.n r1.cards into r7;
-    call zk_deck_shuffle.aleo/setup_shuffle r2 r7 into r8 r9 r10;
-    call zk_deck_shuffle.aleo/shuffle_deck r8 r9 r10 into r11;
-    call zk_deck_shuffle.aleo/setup_shuffle r3 r11 into r12 r13 r14;
-    call zk_deck_shuffle.aleo/shuffle_deck r12 r13 r14 into r15;
-    call zk_deck_shuffle.aleo/setup_shuffle r4 r15 into r16 r17 r18;
-    call zk_deck_shuffle.aleo/shuffle_deck r16 r17 r18 into r19;
-    call zk_deck_shuffle.aleo/setup_shuffle r5 r19 into r20 r21 r22;
-    call zk_deck_shuffle.aleo/shuffle_deck r20 r21 r22 into r23;
+    call zk_deck_shuffle_v0_0_1.aleo/setup_shuffle r2 r7 into r8 r9 r10;
+    call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r8 128u8 r9 r10 into r11;
+    call zk_deck_shuffle_v0_0_1.aleo/setup_shuffle r3 r11 into r12 r13 r14;
+    call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r12 128u8 r13 r14 into r15;
+    call zk_deck_shuffle_v0_0_1.aleo/setup_shuffle r4 r15 into r16 r17 r18;
+    call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r16 128u8 r17 r18 into r19;
+    call zk_deck_shuffle_v0_0_1.aleo/setup_shuffle r5 r19 into r20 r21 r22;
+    call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r20 128u8 r21 r22 into r23;
     cast r0.owner r0.table_address r0.phi r0.n r0.e r0.d r0.deck_e r0.deck_d into r24 as Player.record;
     cast r6 into r25 as address;
     cast r25 r23 into r26 as Deck.record;

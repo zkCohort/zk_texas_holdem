@@ -1,5 +1,5 @@
-import sra_encryption.leo;
-import zk_deck_shuffle.leo;
+import sra_encryption_v0_0_1.leo;
+import zk_deck_shuffle_v0_0_1.leo;
 
 // The 'zk_texas_holdem' program.
 program zk_texas_holdem.aleo {
@@ -176,17 +176,17 @@ program zk_texas_holdem.aleo {
         assert(listed);
     }
 
-    transition shuffle_and_pass(player: Player, deck: Deck, s0: i8, s1: i8, s2: i8, s3: i8, next_player: address) -> (Player, Deck) {
+    
+
+    transition shuffle_and_pass(player: Player, deck: Deck, shuffles: [i8; 7], next_player: address) -> (Player, Deck) {
         let encrypted_deck: [[u128; 26]; 2] = sra_encryption.leo/encrypt_deck(player.e, player.n, deck.cards);
-        let (n1, a1, b1): (i8, [u128; 26], [u128; 26]) = zk_deck_shuffle.leo/setup_shuffle(s0, encrypted_deck);
-        let shuffled_deck: [[u128; 26]; 2] = zk_deck_shuffle.leo/shuffle_deck(n1, a1, b1);
-        let (n2, a2, b2): (i8, [u128; 26], [u128; 26]) = zk_deck_shuffle.leo/setup_shuffle(s1, shuffled_deck);
-        shuffled_deck = zk_deck_shuffle.leo/shuffle_deck(n2, a2, b2);
-        let (n3, a3, b3): (i8, [u128; 26], [u128; 26]) = zk_deck_shuffle.leo/setup_shuffle(s2, shuffled_deck);
-        shuffled_deck = zk_deck_shuffle.leo/shuffle_deck(n3, a3, b3);
-        let (n4, a4, b4): (i8, [u128; 26], [u128; 26]) = zk_deck_shuffle.leo/setup_shuffle(s3, shuffled_deck);
-        shuffled_deck = zk_deck_shuffle.leo/shuffle_deck(n4, a4, b4);
-        
+        let member_size: u8 = 128u8;
+        let empty: [[u128; 26]; 2] = empty_deck();
+        let tuple: (i8, [u128; 26], [u128; 26]) = (0i8, empty[0u8], empty[1u8]);
+        for i: i8 in 0i8..7i8 {
+            tuple: (i8, [u128; 26], [u128; 26]) = zk_deck_shuffle_v0_0_1.leo/setup_shuffle(shuffles[i as u8], encrypted_deck);
+            encrypted_deck = zk_deck_shuffle_v0_0_1.leo/shuffle_deck(tuple.0, member_size, tuple.1, tuple.2);
+        }
         return (Player {
             owner: player.owner,
             table_address: player.table_address,
@@ -198,7 +198,7 @@ program zk_texas_holdem.aleo {
             deck_d: player.deck_d,
         }, Deck {
             owner: next_player as address,
-            cards: shuffled_deck,
+            cards: encrypted_deck,
         });
     }
 
