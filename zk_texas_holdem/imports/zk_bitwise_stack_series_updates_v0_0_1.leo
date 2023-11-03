@@ -1,4 +1,4 @@
-program zk_deck_bitwise_stack_v0_0_1.aleo {
+program zk_bitwise_stack_series_updates_v0_0_1.aleo {
     
     transition get_buffer_at_series_index(series_index: u8, buffer_index: u8, stack: Stack) -> u128 {
         let s00: [u128; 26] = stack.s00;

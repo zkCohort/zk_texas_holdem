@@ -1,4 +1,4 @@
-import zk_bitwise_stack_seiries_updates_v0_0_1.leo;
+import zk_bitwise_stack_series_updates_v0_0_1.leo;
 
 program zk_bitwise_stack_v0_0_1.aleo {
 
