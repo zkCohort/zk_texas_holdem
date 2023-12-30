@@ -240,7 +240,7 @@ zk_texas_holdem % leo run shuffle_and_pass -- -- "{
     ]
   ],
   _nonce: 2748886393642050821735342760440227962915648045687603101011273625956899716054group.public
-}" 3i8 4i8 12i8 -9i8 aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y
+}" "[3i8, 4i8, 12i8, -9i8, -14i8, 17i8, 24i8]" aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y
 ```
 
 ## from address 2 to address 1

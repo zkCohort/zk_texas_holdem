@@ -1,6 +1,4 @@
-program sra_encryption.aleo;
-
-
+program zk_sra_encryption_v0_0_1.aleo;
 
 closure exp_by_squaring:
     input r0 as u128;
@@ -265,7 +263,6 @@ closure exp_by_squaring:
     cast r255 into r259 as u128;
     output r259 as u128;
 
-
 function encrypt_deck:
     input r0 as u128.private;
     input r1 as u128.private;
@@ -322,11 +319,10 @@ function encrypt_deck:
     call exp_by_squaring r2[1u32][23u32] r0 r1 into r52;
     call exp_by_squaring r2[1u32][24u32] r0 r1 into r53;
     call exp_by_squaring r2[1u32][25u32] r0 r1 into r54;
-    cast r3r4r5r6r7r8r9r10r11r12r13r14r15r16r17r18r19r20r21r22r23r24r25r26r27r28 into r55 as [u128; 26u32];
-    cast r29r30r31r32r33r34r35r36r37r38r39r40r41r42r43r44r45r46r47r48r49r50r51r52r53r54 into r56 as [u128; 26u32];
-    cast r55r56 into r57 as [[u128; 26u32]; 2u32];
+    cast r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 r16 r17 r18 r19 r20 r21 r22 r23 r24 r25 r26 r27 r28 into r55 as [u128; 26u32];
+    cast r29 r30 r31 r32 r33 r34 r35 r36 r37 r38 r39 r40 r41 r42 r43 r44 r45 r46 r47 r48 r49 r50 r51 r52 r53 r54 into r56 as [u128; 26u32];
+    cast r55 r56 into r57 as [[u128; 26u32]; 2u32];
     output r57 as [[u128; 26u32]; 2u32].private;
-
 
 function decrypt_deck:
     input r0 as u128.private;
@@ -384,11 +380,10 @@ function decrypt_deck:
     call exp_by_squaring r2[1u32][23u32] r0 r1 into r52;
     call exp_by_squaring r2[1u32][24u32] r0 r1 into r53;
     call exp_by_squaring r2[1u32][25u32] r0 r1 into r54;
-    cast r3r4r5r6r7r8r9r10r11r12r13r14r15r16r17r18r19r20r21r22r23r24r25r26r27r28 into r55 as [u128; 26u32];
-    cast r29r30r31r32r33r34r35r36r37r38r39r40r41r42r43r44r45r46r47r48r49r50r51r52r53r54 into r56 as [u128; 26u32];
-    cast r55r56 into r57 as [[u128; 26u32]; 2u32];
+    cast r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 r16 r17 r18 r19 r20 r21 r22 r23 r24 r25 r26 r27 r28 into r55 as [u128; 26u32];
+    cast r29 r30 r31 r32 r33 r34 r35 r36 r37 r38 r39 r40 r41 r42 r43 r44 r45 r46 r47 r48 r49 r50 r51 r52 r53 r54 into r56 as [u128; 26u32];
+    cast r55 r56 into r57 as [[u128; 26u32]; 2u32];
     output r57 as [[u128; 26u32]; 2u32].private;
-
 
 function encrypt_deck_per_card:
     input r0 as [[u128; 26u32]; 2u32].private;
@@ -446,11 +441,10 @@ function encrypt_deck_per_card:
     call exp_by_squaring r2[1u32][23u32] r0[1u32][23u32] r1 into r52;
     call exp_by_squaring r2[1u32][24u32] r0[1u32][24u32] r1 into r53;
     call exp_by_squaring r2[1u32][25u32] r0[1u32][25u32] r1 into r54;
-    cast r3r4r5r6r7r8r9r10r11r12r13r14r15r16r17r18r19r20r21r22r23r24r25r26r27r28 into r55 as [u128; 26u32];
-    cast r29r30r31r32r33r34r35r36r37r38r39r40r41r42r43r44r45r46r47r48r49r50r51r52r53r54 into r56 as [u128; 26u32];
-    cast r55r56 into r57 as [[u128; 26u32]; 2u32];
+    cast r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 r16 r17 r18 r19 r20 r21 r22 r23 r24 r25 r26 r27 r28 into r55 as [u128; 26u32];
+    cast r29 r30 r31 r32 r33 r34 r35 r36 r37 r38 r39 r40 r41 r42 r43 r44 r45 r46 r47 r48 r49 r50 r51 r52 r53 r54 into r56 as [u128; 26u32];
+    cast r55 r56 into r57 as [[u128; 26u32]; 2u32];
     output r57 as [[u128; 26u32]; 2u32].private;
-
 
 function test_encrypt_exp_by_squaring:
     input r0 as u128.public;
@@ -459,10 +453,9 @@ function test_encrypt_exp_by_squaring:
     input r3 as u128.private;
     call exp_by_squaring r0 r1 r3 into r4;
     call exp_by_squaring r4 r2 r3 into r5;
-    assert.eq r0 r5;
+    assert.eq r0 r5 ;
     output r4 as u128.private;
     output r5 as u128.private;
-
 
 function test_exp_by_squaring:
     input r0 as u128.public;

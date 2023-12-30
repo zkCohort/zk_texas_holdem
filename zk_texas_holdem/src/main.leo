@@ -1,5 +1,5 @@
-import sra_encryption_v0_0_1.leo;
-import zk_deck_shuffle_v0_0_1.leo;
+import zk_sra_encryption_v0_0_1.aleo;
+import zk_deck_shuffle_v0_0_1.aleo;
 
 // The 'zk_texas_holdem' program.
 program zk_texas_holdem.aleo {
@@ -46,12 +46,8 @@ program zk_texas_holdem.aleo {
 
     mapping game_state_map: address => GameState; // Is there some better key than address?
 
-    transition get_address(target_address: u128) -> address {
-        return target_address as address;
-    }
-
     transition setup_game(players: Players, phi: u128, n: u128) -> Deck {
-        let burn_address: address = 0u128 as address;
+        const burn_address: address = aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0;
         let player0: address = players.player0;
         assert(player0 != burn_address);
         assert_eq(player0, self.caller);
@@ -145,7 +141,7 @@ program zk_texas_holdem.aleo {
         assert(game_state.active);
         let players: Players = game_state.players;
         let listed: bool = false;
-        let burn_address: address = 0u128 as address;
+        const burn_address: address = aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0;
         if (players.player0 == caller) {
             listed = true;
         } 
@@ -179,13 +175,10 @@ program zk_texas_holdem.aleo {
     
 
     transition shuffle_and_pass(player: Player, deck: Deck, shuffles: [i8; 7], next_player: address) -> (Player, Deck) {
-        let encrypted_deck: [[u128; 26]; 2] = sra_encryption.leo/encrypt_deck(player.e, player.n, deck.cards);
-        let member_size: u8 = 128u8;
-        let empty: [[u128; 26]; 2] = empty_deck();
-        let tuple: (i8, [u128; 26], [u128; 26]) = (0i8, empty[0u8], empty[1u8]);
+        let encrypted_deck: [[u128; 26]; 2] = sra_encryption.aleo/encrypt_deck(player.e, player.n, deck.cards);
+        let member_size: u16 = 128u16;
         for i: i8 in 0i8..7i8 {
-            tuple = zk_deck_shuffle_v0_0_1.leo/setup_shuffle(shuffles[i as u8], encrypted_deck);
-            encrypted_deck = zk_deck_shuffle_v0_0_1.leo/shuffle_deck(tuple.0, member_size, tuple.1, tuple.2);
+            encrypted_deck = zk_deck_shuffle_v0_0_1.aleo/shuffle_deck(shuffles[i], member_size, deck.cards);
         }
         return (Player {
             owner: player.owner,
@@ -199,15 +192,67 @@ program zk_texas_holdem.aleo {
         }, Deck {
             owner: next_player as address,
             cards: encrypted_deck,
-        });
+        }) then finalize (self.caller, player.table_address, next_player);
+    }
+
+    finalize shuffle_and_pass(player_address: address, table_address: address, next_player: address) {
+        const burn_address: address = aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0;
+        let game_state: GameState = Mapping::get(game_state_map, table_address);
+        assert(game_state.active);
+        let players: Players = game_state.players;
+        let count: u8 = 0u8;
+        if players.player0 != burn_address {
+            count += 1u8;
+        }
+        if players.player1 != burn_address {
+            count += 1u8;
+        }
+        if players.player2 != burn_address {
+            count += 1u8;
+        }
+        if players.player3 != burn_address {
+            count += 1u8;
+        }
+        if players.player4 != burn_address {
+            count += 1u8;
+        }
+        if players.player5 != burn_address {
+            count += 1u8;
+        }
+        if players.player6 != burn_address {
+            count += 1u8;
+        }
+        if players.player7 != burn_address {
+            count += 1u8;
+        }
+        if players.player8 != burn_address {
+            count += 1u8;
+        }
+        assert(count > 1u8);
+        // TODO - Figure out how to get the next player
+        // let hands: [address; 9] = [players.player0, players.player1, players.player2, players.player3, players.player4, players.player5, players.player6, players.player7, players.player8];
+        // let test_player: address = hands[0u8];
+        // for i: u8 in 0u8..9u8 {
+        //     if i < count && hands[i] == player_address {
+        //         // Next player is the player after the current player
+        //         // If i == count - 1, then next player is the first player
+        //         if i == count - 1u8 {
+        //             test_player = hands[0u8];
+        //             assert_eq(test_player, next_player);
+        //         } else {
+        //             test_player = hands[i + 1u8];
+        //             assert_eq(test_player, next_player);
+        //         }
+        //     }
+        // }
     }
 
     transition decrypt_encrypt_each_then_pass(player: Player, deck: Deck, deck_e: [[u128; 26]; 2], deck_d: [[u128; 26]; 2], next_player: address) -> (Player, Deck) {
         let e: u128 = player.e;
         let d: u128 = player.d;
         let n: u128 = player.n;
-        let decrypted_deck: [[u128; 26]; 2] = sra_encryption.leo/decrypt_deck(d, n, deck.cards);
-        let encrypted_deck: [[u128; 26]; 2] = sra_encryption.leo/encrypt_deck_per_card(deck_e, n, decrypted_deck);
+        let decrypted_deck: [[u128; 26]; 2] = sra_encryption.aleo/decrypt_deck(d, n, deck.cards);
+        let encrypted_deck: [[u128; 26]; 2] = sra_encryption.aleo/encrypt_deck_per_card(deck_e, n, decrypted_deck);
         return (
             Player {
                 owner: self.caller,
@@ -222,8 +267,64 @@ program zk_texas_holdem.aleo {
             Deck {
                 owner: next_player,
                 cards: encrypted_deck,
-            });
+            }) then finalize (self.caller, player.table_address, next_player);
     }
+
+    finalize decrypt_encrypt_each_then_pass(player_address: address, table_address: address, next_player: address) {
+        const burn_address: address = aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0;
+        let game_state: GameState = Mapping::get(game_state_map, table_address);
+        assert(game_state.active);
+        let players: Players = game_state.players;
+        let count: u8 = 0u8;
+        if players.player0 != burn_address {
+            count += 1u8;
+        }
+        if players.player1 != burn_address {
+            count += 1u8;
+        }
+        if players.player2 != burn_address {
+            count += 1u8;
+        }
+        if players.player3 != burn_address {
+            count += 1u8;
+        }
+        if players.player4 != burn_address {
+            count += 1u8;
+        }
+        if players.player5 != burn_address {
+            count += 1u8;
+        }
+        if players.player6 != burn_address {
+            count += 1u8;
+        }
+        if players.player7 != burn_address {
+            count += 1u8;
+        }
+        if players.player8 != burn_address {
+            count += 1u8;
+        }
+        assert(count > 1u8);
+        // TODO Validate next player is in the game
+        // let hands: [address; 9] = [players.player0, players.player1, players.player2, players.player3, players.player4, players.player5, players.player6, players.player7, players.player8];
+        // let test_player: address = hands[0u8];
+        // for i: u8 in 0u8..9u8 {
+        //     if i < count && hands[i] == player_address {
+        //         // Next player is the player after the current player
+        //         // If i == count - 1, then next player is the first player
+        //         if i == count - 1u8 {
+        //             test_player = hands[0u8];
+        //             assert_eq(test_player, next_player);
+        //         } else {
+        //             test_player = hands[i + 1u8];
+        //             assert_eq(test_player, next_player);
+        //         }
+        //     }
+        // }
+    }
+
+    /// Deal Card to Player
+
+    /// Reveal Card to Player
 
     inline initial_deck() -> [[u128; 26]; 2] {
         return [[63u128, 62u128, 61u128, 60u128, 59u128, 58u128, 57u128, 56u128, 55u128, 54u128, 53u128, 52u128, 51u128,

@@ -1,6 +1,18 @@
 {
-    "program": "zk_texas_holdem.aleo",
-    "version": "0.0.0",
-    "description": "",
-    "license": "MIT"
+  "program": "zk_texas_holdem.aleo",
+  "version": "0.0.0",
+  "description": "",
+  "license": "GPL-3.0",
+  "dependencies": [
+    {
+      "name": "zk_deck_shuffle_v0_0_1.aleo",
+      "location": "local",
+      "path": "../../zk_deck_shuffle"
+    },
+    {
+      "name": "zk_sra_encryption_v0_0_1.aleo",
+      "location": "network",
+      "network": "testnet3"
+    }
+  ]
 }

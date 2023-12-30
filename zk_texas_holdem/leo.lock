@@ -1,0 +1,6 @@
+[[package]]
+name = "zk_bitwise_stack_v0_0_2.aleo"
+network = "testnet3"
+location = "network"
+checksum = "25f2dc8e6dc52fe61cd3de89ee6bc303a11554d7ebd69aad3c262419aa706738"
+dependencies = []
