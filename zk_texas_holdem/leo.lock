@@ -1,6 +1,20 @@
 [[package]]
-name = "zk_bitwise_stack_v0_0_2.aleo"
+name = "zk_bitwise_stack_v0_0_4"
 network = "testnet3"
 location = "network"
-checksum = "25f2dc8e6dc52fe61cd3de89ee6bc303a11554d7ebd69aad3c262419aa706738"
+checksum = "7242da1a399919082894362f9833273e67c8daff9fa175d9a24ad27a78dd3cb9"
+dependencies = []
+
+[[package]]
+name = "zk_deck_shuffle_v0_0_1"
+location = "local"
+path = "../../zk_deck_shuffle"
+checksum = "01797ea90bf570d2c0f9f9d9277c7c3e072dde48a12ae467d3d190dc2a2947fc"
+dependencies = ["zk_bitwise_stack_v0_0_4.aleo"]
+
+[[package]]
+name = "zk_sra_encryption_v0_0_1"
+location = "local"
+path = "../../zk_sra_encryption"
+checksum = "c060eb1a695e28c091f36eb9117348ef9e017d38b6a6c10ca8235790efe893ae"
 dependencies = []

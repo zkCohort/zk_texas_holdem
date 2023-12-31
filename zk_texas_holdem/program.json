@@ -11,8 +11,8 @@
     },
     {
       "name": "zk_sra_encryption_v0_0_1.aleo",
-      "location": "network",
-      "network": "testnet3"
+      "location": "local",
+      "path": "../../zk_sra_encryption"
     }
   ]
 }

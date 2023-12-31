@@ -175,10 +175,10 @@ program zk_texas_holdem.aleo {
     
 
     transition shuffle_and_pass(player: Player, deck: Deck, shuffles: [i8; 7], next_player: address) -> (Player, Deck) {
-        let encrypted_deck: [[u128; 26]; 2] = sra_encryption.aleo/encrypt_deck(player.e, player.n, deck.cards);
+        let encrypted_deck: [[u128; 26]; 2] = zk_sra_encryption_v0_0_1.aleo/encrypt_deck(player.e, player.n, deck.cards);
         let member_size: u16 = 128u16;
         for i: i8 in 0i8..7i8 {
-            encrypted_deck = zk_deck_shuffle_v0_0_1.aleo/shuffle_deck(shuffles[i], member_size, deck.cards);
+            encrypted_deck = zk_deck_shuffle_v0_0_1.aleo/shuffle_deck(shuffles[i], member_size, encrypted_deck);
         }
         return (Player {
             owner: player.owner,
@@ -251,8 +251,8 @@ program zk_texas_holdem.aleo {
         let e: u128 = player.e;
         let d: u128 = player.d;
         let n: u128 = player.n;
-        let decrypted_deck: [[u128; 26]; 2] = sra_encryption.aleo/decrypt_deck(d, n, deck.cards);
-        let encrypted_deck: [[u128; 26]; 2] = sra_encryption.aleo/encrypt_deck_per_card(deck_e, n, decrypted_deck);
+        let decrypted_deck: [[u128; 26]; 2] = zk_sra_encryption_v0_0_1.aleo/decrypt_deck(d, n, deck.cards);
+        let encrypted_deck: [[u128; 26]; 2] = zk_sra_encryption_v0_0_1.aleo/encrypt_deck_per_card(deck_e, n, decrypted_deck);
         return (
             Player {
                 owner: self.caller,
