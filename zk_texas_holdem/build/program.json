@@ -6,13 +6,13 @@
   "dependencies": [
     {
       "name": "zk_deck_shuffle_v0_0_1.aleo",
-      "location": "local",
-      "path": "../../zk_deck_shuffle"
+      "location": "network",
+      "network": "testnet3"
     },
     {
-      "name": "zk_sra_encryption_v0_0_1.aleo",
-      "location": "local",
-      "path": "../../zk_sra_encryption"
+      "name": "zk_sra_encryption_v0_0_2.aleo",
+      "location": "network",
+      "network": "testnet3"
     }
   ]
 }

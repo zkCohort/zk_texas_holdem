@@ -13,7 +13,7 @@ players: Players = Players {
     player7: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
     player8: aleo1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3ljyzc,
 };
-phi: u128 = 2801307600u128;
+phi: field = 2801307600field;
 n: u128 = 2801413507u128;
 
 [join_game]

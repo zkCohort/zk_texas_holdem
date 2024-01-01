@@ -1,6 +1,6 @@
-import zk_bitwise_stack_v0_0_4.aleo;
+import zk_bitwise_stack_v0_0_5.aleo;
 import zk_deck_shuffle_v0_0_1.aleo;
-import zk_sra_encryption_v0_0_1.aleo;
+import zk_sra_encryption_v0_0_2.aleo;
 program zk_texas_holdem.aleo;
 
 
@@ -18,26 +18,26 @@ struct Players:
 struct GameState:
     active as boolean;
     players as Players;
-    phi as u128;
+    phi as field;
     n as u128;
 
 record Player:
     owner as address.private;
     table_address as address.private;
-    phi as u128.private;
+    phi as field.private;
     n as u128.private;
-    e as u128.private;
-    d as u128.private;
-    deck_e as [[u128; 26u32]; 2u32].private;
-    deck_d as [[u128; 26u32]; 2u32].private;
+    e as field.private;
+    d as field.private;
+    deck_e as [[field; 26u32]; 2u32].private;
+    deck_d as [[field; 26u32]; 2u32].private;
 
 record Card:
     owner as address.private;
-    card as u128.private;
+    card as field.private;
 
 record Deck:
     owner as address.private;
-    cards as [[u128; 26u32]; 2u32].private;
+    cards as [[field; 26u32]; 2u32].private;
 
 
 mapping game_state_map:
@@ -48,7 +48,7 @@ mapping game_state_map:
 
 function setup_game:
     input r0 as Players.private;
-    input r1 as u128.private;
+    input r1 as field.private;
     input r2 as u128.private;
     is.neq r0.player0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 into r3;
     assert.eq r3 true;
@@ -71,9 +71,9 @@ function setup_game:
     ternary r18 r0.player8 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 into r19;
     cast self.caller into r20 as u128;
     cast r0.player0 r5 r7 r9 r11 r13 r15 r17 r19 into r21 as Players;
-    cast  63u128 62u128 61u128 60u128 59u128 58u128 57u128 56u128 55u128 54u128 53u128 52u128 51u128 50u128 49u128 48u128 47u128 46u128 45u128 44u128 43u128 42u128 41u128 40u128 39u128 38u128 into r22 as [u128; 26u32];
-    cast  37u128 36u128 35u128 34u128 33u128 32u128 31u128 30u128 29u128 28u128 27u128 26u128 25u128 24u128 23u128 22u128 21u128 20u128 19u128 18u128 17u128 16u128 15u128 14u128 13u128 12u128 into r23 as [u128; 26u32];
-    cast  r22 r23 into r24 as [[u128; 26u32]; 2u32];
+    cast  63field 62field 61field 60field 59field 58field 57field 56field 55field 54field 53field 52field 51field 50field 49field 48field 47field 46field 45field 44field 43field 42field 41field 40field 39field 38field into r22 as [field; 26u32];
+    cast  37field 36field 35field 34field 33field 32field 31field 30field 29field 28field 27field 26field 25field 24field 23field 22field 21field 20field 19field 18field 17field 16field 15field 14field 13field 12field into r23 as [field; 26u32];
+    cast  r22 r23 into r24 as [[field; 26u32]; 2u32];
     cast self.caller r24 into r25 as Deck.record;
     async setup_game self.caller r21 r1 r2 into r26;
     output r25 as Deck.record;
@@ -82,7 +82,7 @@ function setup_game:
 finalize setup_game:
     input r0 as address.public;
     input r1 as Players.public;
-    input r2 as u128.public;
+    input r2 as field.public;
     input r3 as u128.public;
     assert.eq r1.player0 r0;
     cast true r1 r2 r3 into r4 as GameState;
@@ -93,16 +93,16 @@ finalize setup_game:
 
 function join_game:
     input r0 as address.private;
-    input r1 as u128.private;
-    input r2 as u128.private;
-    input r3 as u128.private;
+    input r1 as field.private;
+    input r2 as field.private;
+    input r3 as field.private;
     input r4 as u128.private;
-    cast  0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 into r5 as [u128; 26u32];
-    cast  0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 into r6 as [u128; 26u32];
-    cast  r5 r6 into r7 as [[u128; 26u32]; 2u32];
-    cast  0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 into r8 as [u128; 26u32];
-    cast  0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 0u128 into r9 as [u128; 26u32];
-    cast  r8 r9 into r10 as [[u128; 26u32]; 2u32];
+    cast  0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field into r5 as [field; 26u32];
+    cast  0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field into r6 as [field; 26u32];
+    cast  r5 r6 into r7 as [[field; 26u32]; 2u32];
+    cast  0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field into r8 as [field; 26u32];
+    cast  0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field 0field into r9 as [field; 26u32];
+    cast  r8 r9 into r10 as [[field; 26u32]; 2u32];
     cast self.caller r0 r3 r4 r1 r2 r7 r10 into r11 as Player.record;
     async join_game r0 self.caller into r12;
     output r11 as Player.record;
@@ -139,7 +139,7 @@ function shuffle_and_pass:
     input r1 as Deck.record;
     input r2 as [i8; 7u32].private;
     input r3 as address.private;
-    call zk_sra_encryption_v0_0_1.aleo/encrypt_deck r0.e r0.n r1.cards into r4;
+    call zk_sra_encryption_v0_0_2.aleo/encrypt_deck r0.e r0.n r1.cards into r4;
     call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r2[0u32] 128u16 r4 into r5;
     call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r2[1u32] 128u16 r5 into r6;
     call zk_deck_shuffle_v0_0_1.aleo/shuffle_deck r2[2u32] 128u16 r6 into r7;
@@ -195,11 +195,11 @@ finalize shuffle_and_pass:
 function decrypt_encrypt_each_then_pass:
     input r0 as Player.record;
     input r1 as Deck.record;
-    input r2 as [[u128; 26u32]; 2u32].private;
-    input r3 as [[u128; 26u32]; 2u32].private;
+    input r2 as [[field; 26u32]; 2u32].private;
+    input r3 as [[field; 26u32]; 2u32].private;
     input r4 as address.private;
-    call zk_sra_encryption_v0_0_1.aleo/decrypt_deck r0.d r0.n r1.cards into r5;
-    call zk_sra_encryption_v0_0_1.aleo/encrypt_deck_per_card r2 r0.n r5 into r6;
+    call zk_sra_encryption_v0_0_2.aleo/decrypt_deck r0.d r0.n r1.cards into r5;
+    call zk_sra_encryption_v0_0_2.aleo/encrypt_deck_per_card r2 r0.n r5 into r6;
     cast self.caller r0.table_address r0.phi r0.n r0.e r0.d r2 r3 into r7 as Player.record;
     cast r4 r6 into r8 as Deck.record;
     async decrypt_encrypt_each_then_pass self.caller r0.table_address r4 into r9;
@@ -242,3 +242,14 @@ finalize decrypt_encrypt_each_then_pass:
     ternary r28 r29 r27 into r30;
     gt r30 1u8 into r31;
     assert.eq r31 true;
+
+
+function test_reveal_card:
+    input r0 as field.private;
+    input r1 as field.private;
+    input r2 as field.private;
+    input r3 as u128.private;
+    call zk_sra_encryption_v0_0_2.aleo/sra_decrypt r0 r1 r3 into r4;
+    call zk_sra_encryption_v0_0_2.aleo/sra_decrypt r4 r2 r3 into r5;
+    cast self.caller r5 into r6 as Card.record;
+    output r6 as Card.record;
