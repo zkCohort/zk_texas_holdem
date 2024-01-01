@@ -52,12 +52,310 @@ snarkos developer deploy zk_deck_shuffle.aleo --private-key APrivateKey1zkpFbE6p
    View Key AViewKey1eanMB7MSZCPaM8MK8RaHhns57YtbTqDBtin8fUTiz59i
    Address aleo1zw0ah806rpxqffcwt9lu82qzn0vwnq70he0gk28ludtfqsuukcgsel6qpd
 
-# A shuffle_and_pass transaction to address 2
+## Game Setup
+
+```zsh
+leo run init_players aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0 aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0
+       Leo ✅ Compiled 'main.leo' into Aleo instructions
+
+⛓  Constraints
+
+ •  'zk_texas_holdem.aleo/init_players' - 0 constraints (called 1 time)
+
+➡️  Output
+
+ • {
+  player0: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+  player1: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y,
+  player2: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player3: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player4: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player5: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player6: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player7: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player8: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0
+}
+
+       Leo ✅ Finished 'zk_texas_holdem.aleo/init_players'
+```
+
+```zsh
+leo run setup_game "{
+  player0: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+  player1: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y,
+  player2: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player3: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player4: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player5: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player6: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player7: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player8: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0
+}" 2801307600field 2801413507u128
+       Leo ✅ Compiled 'main.leo' into Aleo instructions
+
+⛓  Constraints
+
+ •  'zk_texas_holdem.aleo/setup_game' - 2,266 constraints (called 1 time)
+
+➡️  Outputs
+
+ • {
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  cards: [
+    [
+      63field.private,
+      62field.private,
+      61field.private,
+      60field.private,
+      59field.private,
+      58field.private,
+      57field.private,
+      56field.private,
+      55field.private,
+      54field.private,
+      53field.private,
+      52field.private,
+      51field.private,
+      50field.private,
+      49field.private,
+      48field.private,
+      47field.private,
+      46field.private,
+      45field.private,
+      44field.private,
+      43field.private,
+      42field.private,
+      41field.private,
+      40field.private,
+      39field.private,
+      38field.private
+    ],
+    [
+      37field.private,
+      36field.private,
+      35field.private,
+      34field.private,
+      33field.private,
+      32field.private,
+      31field.private,
+      30field.private,
+      29field.private,
+      28field.private,
+      27field.private,
+      26field.private,
+      25field.private,
+      24field.private,
+      23field.private,
+      22field.private,
+      21field.private,
+      20field.private,
+      19field.private,
+      18field.private,
+      17field.private,
+      16field.private,
+      15field.private,
+      14field.private,
+      13field.private,
+      12field.private
+    ]
+  ],
+  _nonce: 2139819510586079660120932439902383743899412820148858738718185967579374721054group.public
+}
+ • {
+  program_id: zk_texas_holdem.aleo,
+  function_name: setup_game,
+  arguments: [
+    aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+    2u8,
+    {
+  player0: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+  player1: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y,
+  player2: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player3: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player4: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player5: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player6: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player7: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player8: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0
+},
+    {
+  player0: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y,
+  player1: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+  player2: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player3: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player4: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player5: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player6: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player7: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0,
+  player8: aleo1qgqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqanmpl0
+},
+    2801307600field,
+    2801413507u128
+  ]
+}
+
+       Leo ✅ Finished 'zk_texas_holdem.aleo/setup_game'
+```
+
+## Player 2 joins game
+
+```zsh
+leo run join_game aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c 1380396943field 2734228207field 2801307600field 2801413507u128
+       Leo ✅ Compiled 'main.leo' into Aleo instructions
+
+⛓  Constraints
+
+ •  'zk_texas_holdem.aleo/join_game' - 2,020 constraints (called 1 time)
+
+➡️  Outputs
+
+ • {
+  owner: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y.private,
+  table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 1u8.private,
+  phi: 2801307600field.private,
+  n: 2801413507u128.private,
+  e: 1380396943field.private,
+  d: 2734228207field.private,
+  deck_e: [
+    [
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private
+    ],
+    [
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private
+    ]
+  ],
+  deck_d: [
+    [
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private
+    ],
+    [
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private,
+      0field.private
+    ]
+  ],
+  _nonce: 1998383111598947495510883532423805162695083236822547473446741607927122423105group.public
+}
+ • {
+  program_id: zk_texas_holdem.aleo,
+  function_name: join_game,
+  arguments: [
+    aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+    aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y,
+    2801307600field,
+    2801413507u128
+  ]
+}
+
+       Leo ✅ Finished 'zk_texas_holdem.aleo/join_game'
+```
+
+## Player 0 does a shuffle_and_pass transaction to address Player 1
 
 ```zsh
 zk_texas_holdem % leo run shuffle_and_pass -- -- "{
   owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1170454781field.private,
@@ -254,6 +552,7 @@ zk_texas_holdem % leo run shuffle_and_pass -- -- "{
  • {
   owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1170454781field.private,
@@ -451,12 +750,15 @@ zk_texas_holdem % leo run shuffle_and_pass -- -- "{
        Leo ✅ Finished 'zk_texas_holdem.aleo/shuffle_and_pass'
 ```
 
-## from address 2 to address 1
+## Player 1 does a shuffle and pass back to Player 0
+
+```zsh
 
 ```bash
 leo run shuffle_and_pass "{
   owner: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 1u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1380396943field.private,
@@ -653,6 +955,7 @@ leo run shuffle_and_pass "{
  • {
   owner: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 1u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1380396943field.private,
@@ -850,12 +1153,13 @@ leo run shuffle_and_pass "{
        Leo ✅ Finished 'zk_texas_holdem.aleo/shuffle_and_pass'
 ```
 
-## decrypt and encrypt per card from address 1 to address 2
+## decrypt and encrypt per card from Player 0 to Player 1
 
-```
+```zsh
 leo run decrypt_encrypt_each_then_pass "{
   owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1170454781field.private,
@@ -1052,6 +1356,7 @@ leo run decrypt_encrypt_each_then_pass "{
  • {
   owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1170454781field.private,
@@ -1249,12 +1554,13 @@ leo run decrypt_encrypt_each_then_pass "{
        Leo ✅ Finished 'zk_texas_holdem.aleo/decrypt_encrypt_each_then_pass'
 ```
 
-## decrypt and encrypt per card to player 1
+## Player 1 does decrypt and encrypt per card to Player 0
 
 ```
 leo run decrypt_encrypt_each_then_pass "{
   owner: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 1u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1380396943field.private,
@@ -1451,6 +1757,7 @@ leo run decrypt_encrypt_each_then_pass "{
  • {
   owner: aleo1gtrgfxzhuvpgmxtm5jz0pj8h6m6vacn07dcf5tdp86xxmpuyqsxqw45d4y.private,
   table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 1u8.private,
   phi: 2801307600field.private,
   n: 2801413507u128.private,
   e: 1380396943field.private,
@@ -1648,7 +1955,736 @@ leo run decrypt_encrypt_each_then_pass "{
        Leo ✅ Finished 'zk_texas_holdem.aleo/decrypt_encrypt_each_then_pass'
 ```
 
-## Example when all players provide the key to a card.  Decrypt keys come from the first index of deck_d of each player.
+## After all rounds of suffling and encryption are done, The deck is published.
+
+```zsh
+leo run publish_deck "{                                                         
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
+  phi: 2801307600field.private,
+  n: 2801413507u128.private,  
+  e: 1170454781field.private, 
+  d: 2423676821field.private, 
+  deck_e: [                  
+    [                         
+      333049603field.private,
+      1654889471field.private,
+      1921379489field.private,
+      883389029field.private, 
+      2146122613field.private,
+      823429423field.private,
+      1170274603field.private,
+      704161421field.private,
+      819741157field.private,
+      960122407field.private, 
+      2066102789field.private,
+      791247907field.private,
+      1514399101field.private,
+      57812059field.private, 
+      1780465111field.private,
+      1271448463field.private,
+      461104981field.private, 
+      2127822449field.private,
+      2065346921field.private,
+      1740989899field.private,
+      1281503651field.private,
+      618298943field.private,
+      1581324613field.private,
+      1747213609field.private,
+      75413243field.private,  
+      1235103199field.private 
+    ],                       
+    [                         
+      999059149field.private,
+      2067597887field.private,
+      2043920849field.private,
+      1599023653field.private,
+      954436397field.private,
+      1555980533field.private,
+      1049548999field.private,
+      150286973field.private,
+      751615601field.private,
+      839281003field.private,
+      779529337field.private,
+      545437223field.private,
+      1545514531field.private,
+      456969839field.private, 
+      1216270829field.private,
+      953066129field.private, 
+      2021014291field.private,
+      2026867187field.private,
+      1101677327field.private,
+      675372013field.private, 
+      1922818111field.private,
+      887015861field.private, 
+      1809876379field.private,
+      1595328871field.private,
+      1651110697field.private,
+      1592518111field.private 
+    ]                         
+  ],                          
+  deck_d: [                  
+    [                         
+      1260384667field.private,
+      521309231field.private, 
+      882323009field.private,
+      1816651469field.private,
+      720096877field.private,
+      2602150687field.private,
+      1687735267field.private,
+      1335274181field.private,                                                                    
+      901205293field.private,
+      2029938343field.private,                                                   
+      1375897709field.private,
+      2526276043field.private,
+      424172101field.private, 
+      2217571939field.private,
+      1844849191field.private,
+      1835613727field.private,
+      2152034221field.private,
+      471742049field.private, 
+      2679902681field.private,
+      461594899field.private, 
+      1573449851field.private,
+      2332759007field.private,
+      1695518077field.private,
+      297551689field.private, 
+      646503107field.private, 
+      481035199field.private  
+    ],                        
+    [                         
+      619228549field.private, 
+      835902623field.private, 
+      815333249field.private, 
+      2180479117field.private,
+      1305036533field.private,
+      27750797field.private,  
+      1099255399field.private,
+      2182877237field.private,
+      135874001field.private, 
+      926762467field.private,
+      1112455273field.private,
+      2258368487field.private,
+      2777879371field.private,
+      258119759field.private,
+      2223360869field.private,
+      428348369field.private,
+      2041592011field.private,
+      1200600923field.private,
+      1807373663field.private,
+      126603877field.private, 
+      1818916591field.private,
+      579569741field.private, 
+      2011707619field.private,
+      914255431field.private, 
+      555201433field.private, 
+      324560191field.private  
+    ]                         
+  ],                          
+  _nonce: 3110706512630320701370615463918688776435363236330891485259830921362053835939group.public
+}" "{
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  cards: [
+    [
+      1050790452field.private,
+      1101608491field.private,
+      453323342field.private,
+      1078274922field.private,
+      1917329326field.private,
+      2150760462field.private,
+      529737511field.private,
+      2609080075field.private,
+      1851631477field.private,
+      1435282277field.private,
+      2475270608field.private,
+      1079324907field.private,
+      1017668325field.private,
+      2009194323field.private,
+      1754204914field.private,
+      1707082925field.private,
+      2213434551field.private,
+      1854444071field.private,
+      1228241181field.private,
+      418157025field.private,
+      2306807885field.private,
+      2308517426field.private,
+      1830643830field.private,
+      62833233field.private,
+      1766805518field.private,
+      2698874611field.private
+    ],
+    [
+      1841844434field.private,
+      252061821field.private,
+      2616375467field.private,
+      786475824field.private,
+      2312861639field.private,
+      1253966708field.private,
+      1373197314field.private,
+      1092779175field.private,
+      1171905317field.private,
+      1258699423field.private,
+      2785748748field.private,
+      1556096087field.private,
+      1275442285field.private,
+      2737173998field.private,
+      2492485030field.private,
+      1701951647field.private,
+      555707125field.private,
+      23044881field.private,
+      2570124839field.private,
+      502544522field.private,
+      414683129field.private,
+      503487620field.private,
+      2219866936field.private,
+      2474597341field.private,
+      300018055field.private,
+      240502608field.private
+    ]
+  ],
+  _nonce: 4502234571094271188508722117681479036535993747809473984001561129380832996984group.public
+}"
+       Leo ✅ Compiled 'main.leo' into Aleo instructions
+
+⛓  Constraints
+
+ •  'zk_texas_holdem.aleo/publish_deck' - 4,040 constraints (called 1 time)
+
+➡️  Outputs
+
+ • {
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
+  phi: 2801307600field.private,
+  n: 2801413507u128.private,
+  e: 1170454781field.private,
+  d: 2423676821field.private,
+  deck_e: [
+    [
+      1050790452field.private,
+      1101608491field.private,
+      453323342field.private,
+      1078274922field.private,
+      1917329326field.private,
+      2150760462field.private,
+      529737511field.private,
+      2609080075field.private,
+      1851631477field.private,
+      1435282277field.private,
+      2475270608field.private,
+      1079324907field.private,
+      1017668325field.private,
+      2009194323field.private,
+      1754204914field.private,
+      1707082925field.private,
+      2213434551field.private,
+      1854444071field.private,
+      1228241181field.private,
+      418157025field.private,
+      2306807885field.private,
+      2308517426field.private,
+      1830643830field.private,
+      62833233field.private,
+      1766805518field.private,
+      2698874611field.private
+    ],
+    [
+      1841844434field.private,
+      252061821field.private,
+      2616375467field.private,
+      786475824field.private,
+      2312861639field.private,
+      1253966708field.private,
+      1373197314field.private,
+      1092779175field.private,
+      1171905317field.private,
+      1258699423field.private,
+      2785748748field.private,
+      1556096087field.private,
+      1275442285field.private,
+      2737173998field.private,
+      2492485030field.private,
+      1701951647field.private,
+      555707125field.private,
+      23044881field.private,
+      2570124839field.private,
+      502544522field.private,
+      414683129field.private,
+      503487620field.private,
+      2219866936field.private,
+      2474597341field.private,
+      300018055field.private,
+      240502608field.private
+    ]
+  ],
+  deck_d: [
+    [
+      1260384667field.private,
+      521309231field.private,
+      882323009field.private,
+      1816651469field.private,
+      720096877field.private,
+      2602150687field.private,
+      1687735267field.private,
+      1335274181field.private,
+      901205293field.private,
+      2029938343field.private,
+      1375897709field.private,
+      2526276043field.private,
+      424172101field.private,
+      2217571939field.private,
+      1844849191field.private,
+      1835613727field.private,
+      2152034221field.private,
+      471742049field.private,
+      2679902681field.private,
+      461594899field.private,
+      1573449851field.private,
+      2332759007field.private,
+      1695518077field.private,
+      297551689field.private,
+      646503107field.private,
+      481035199field.private
+    ],
+    [
+      619228549field.private,
+      835902623field.private,
+      815333249field.private,
+      2180479117field.private,
+      1305036533field.private,
+      27750797field.private,
+      1099255399field.private,
+      2182877237field.private,
+      135874001field.private,
+      926762467field.private,
+      1112455273field.private,
+      2258368487field.private,
+      2777879371field.private,
+      258119759field.private,
+      2223360869field.private,
+      428348369field.private,
+      2041592011field.private,
+      1200600923field.private,
+      1807373663field.private,
+      126603877field.private,
+      1818916591field.private,
+      579569741field.private,
+      2011707619field.private,
+      914255431field.private,
+      555201433field.private,
+      324560191field.private
+    ]
+  ],
+  _nonce: 4248774256693202442744540208725654662325115039883704699207578730027379429873group.public
+}
+ • {
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  cards: [
+    [
+      1050790452field.private,
+      1101608491field.private,
+      453323342field.private,
+      1078274922field.private,
+      1917329326field.private,
+      2150760462field.private,
+      529737511field.private,
+      2609080075field.private,
+      1851631477field.private,
+      1435282277field.private,
+      2475270608field.private,
+      1079324907field.private,
+      1017668325field.private,
+      2009194323field.private,
+      1754204914field.private,
+      1707082925field.private,
+      2213434551field.private,
+      1854444071field.private,
+      1228241181field.private,
+      418157025field.private,
+      2306807885field.private,
+      2308517426field.private,
+      1830643830field.private,
+      62833233field.private,
+      1766805518field.private,
+      2698874611field.private
+    ],
+    [
+      1841844434field.private,
+      252061821field.private,
+      2616375467field.private,
+      786475824field.private,
+      2312861639field.private,
+      1253966708field.private,
+      1373197314field.private,
+      1092779175field.private,
+      1171905317field.private,
+      1258699423field.private,
+      2785748748field.private,
+      1556096087field.private,
+      1275442285field.private,
+      2737173998field.private,
+      2492485030field.private,
+      1701951647field.private,
+      555707125field.private,
+      23044881field.private,
+      2570124839field.private,
+      502544522field.private,
+      414683129field.private,
+      503487620field.private,
+      2219866936field.private,
+      2474597341field.private,
+      300018055field.private,
+      240502608field.private
+    ]
+  ],
+  _nonce: 6277853453353631697473920765860607494696748488496263765922123003819419014156group.public
+}
+ • {
+  program_id: zk_texas_holdem.aleo,
+  function_name: publish_deck,
+  arguments: [
+    aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+    aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+    [
+  [
+    1050790452field,
+    1101608491field,
+    453323342field,
+    1078274922field,
+    1917329326field,
+    2150760462field,
+    529737511field,
+    2609080075field,
+    1851631477field,
+    1435282277field,
+    2475270608field,
+    1079324907field,
+    1017668325field,
+    2009194323field,
+    1754204914field,
+    1707082925field,
+    2213434551field,
+    1854444071field,
+    1228241181field,
+    418157025field,
+    2306807885field,
+    2308517426field,
+    1830643830field,
+    62833233field,
+    1766805518field,
+    2698874611field
+  ],
+  [
+    1841844434field,
+    252061821field,
+    2616375467field,
+    786475824field,
+    2312861639field,
+    1253966708field,
+    1373197314field,
+    1092779175field,
+    1171905317field,
+    1258699423field,
+    2785748748field,
+    1556096087field,
+    1275442285field,
+    2737173998field,
+    2492485030field,
+    1701951647field,
+    555707125field,
+    23044881field,
+    2570124839field,
+    502544522field,
+    414683129field,
+    503487620field,
+    2219866936field,
+    2474597341field,
+    300018055field,
+    240502608field
+  ]
+]
+  ]
+}
+
+       Leo ✅ Finished 'zk_texas_holdem.aleo/publish_deck'
+```
+
+## Player 0 deals the flop (At this point there's nothing to see becuase it's handled in mappings)
+
+```zsh
+{
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
+  phi: 2801307600field.private,
+  n: 2801413507u128.private,
+  e: 1170454781field.private,
+  d: 2423676821field.private,
+  deck_e: [
+    [
+      1050790452field.private,
+      1101608491field.private,
+      453323342field.private,
+      1078274922field.private,
+      1917329326field.private,
+      2150760462field.private,
+      529737511field.private,
+      2609080075field.private,
+      1851631477field.private,
+      1435282277field.private,
+      2475270608field.private,
+      1079324907field.private,
+      1017668325field.private,
+      2009194323field.private,
+      1754204914field.private,
+      1707082925field.private,
+      2213434551field.private,
+      1854444071field.private,
+      1228241181field.private,
+      418157025field.private,
+      2306807885field.private,
+      2308517426field.private,
+      1830643830field.private,
+      62833233field.private,
+      1766805518field.private,
+      2698874611field.private
+    ],
+    [
+      1841844434field.private,
+      252061821field.private,
+      2616375467field.private,
+      786475824field.private,
+      2312861639field.private,
+      1253966708field.private,
+      1373197314field.private,
+      1092779175field.private,
+      1171905317field.private,
+      1258699423field.private,
+      2785748748field.private,
+      1556096087field.private,
+      1275442285field.private,
+      2737173998field.private,
+      2492485030field.private,
+      1701951647field.private,
+      555707125field.private,
+      23044881field.private,
+      2570124839field.private,
+      502544522field.private,
+      414683129field.private,
+      503487620field.private,
+      2219866936field.private,
+      2474597341field.private,
+      300018055field.private,
+      240502608field.private
+    ]
+  ],
+  deck_d: [
+    [
+      1260384667field.private,
+      521309231field.private,
+      882323009field.private,
+      1816651469field.private,
+      720096877field.private,
+      2602150687field.private,
+      1687735267field.private,
+      1335274181field.private,
+      901205293field.private,
+      2029938343field.private,
+      1375897709field.private,
+      2526276043field.private,
+      424172101field.private,
+      2217571939field.private,
+      1844849191field.private,
+      1835613727field.private,
+      2152034221field.private,
+      471742049field.private,
+      2679902681field.private,
+      461594899field.private,
+      1573449851field.private,
+      2332759007field.private,
+      1695518077field.private,
+      297551689field.private,
+      646503107field.private,
+      481035199field.private
+    ],
+    [
+      619228549field.private,
+      835902623field.private,
+      815333249field.private,
+      2180479117field.private,
+      1305036533field.private,
+      27750797field.private,
+      1099255399field.private,
+      2182877237field.private,
+      135874001field.private,
+      926762467field.private,
+      1112455273field.private,
+      2258368487field.private,
+      2777879371field.private,
+      258119759field.private,
+      2223360869field.private,
+      428348369field.private,
+      2041592011field.private,
+      1200600923field.private,
+      1807373663field.private,
+      126603877field.private,
+      1818916591field.private,
+      579569741field.private,
+      2011707619field.private,
+      914255431field.private,
+      555201433field.private,
+      324560191field.private
+    ]
+  ],
+  _nonce: 4248774256693202442744540208725654662325115039883704699207578730027379429873group.public
+}
+       Leo ✅ Compiled 'main.leo' into Aleo instructions
+
+⛓  Constraints
+
+ •  'zk_texas_holdem.aleo/deal_flop' - 2,026 constraints (called 1 time)
+
+➡️  Outputs
+
+ • {
+  owner: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  table_address: aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c.private,
+  index: 0u8.private,
+  phi: 2801307600field.private,
+  n: 2801413507u128.private,
+  e: 1170454781field.private,
+  d: 2423676821field.private,
+  deck_e: [
+    [
+      1050790452field.private,
+      1101608491field.private,
+      453323342field.private,
+      1078274922field.private,
+      1917329326field.private,
+      2150760462field.private,
+      529737511field.private,
+      2609080075field.private,
+      1851631477field.private,
+      1435282277field.private,
+      2475270608field.private,
+      1079324907field.private,
+      1017668325field.private,
+      2009194323field.private,
+      1754204914field.private,
+      1707082925field.private,
+      2213434551field.private,
+      1854444071field.private,
+      1228241181field.private,
+      418157025field.private,
+      2306807885field.private,
+      2308517426field.private,
+      1830643830field.private,
+      62833233field.private,
+      1766805518field.private,
+      2698874611field.private
+    ],
+    [
+      1841844434field.private,
+      252061821field.private,
+      2616375467field.private,
+      786475824field.private,
+      2312861639field.private,
+      1253966708field.private,
+      1373197314field.private,
+      1092779175field.private,
+      1171905317field.private,
+      1258699423field.private,
+      2785748748field.private,
+      1556096087field.private,
+      1275442285field.private,
+      2737173998field.private,
+      2492485030field.private,
+      1701951647field.private,
+      555707125field.private,
+      23044881field.private,
+      2570124839field.private,
+      502544522field.private,
+      414683129field.private,
+      503487620field.private,
+      2219866936field.private,
+      2474597341field.private,
+      300018055field.private,
+      240502608field.private
+    ]
+  ],
+  deck_d: [
+    [
+      1260384667field.private,
+      521309231field.private,
+      882323009field.private,
+      1816651469field.private,
+      720096877field.private,
+      2602150687field.private,
+      1687735267field.private,
+      1335274181field.private,
+      901205293field.private,
+      2029938343field.private,
+      1375897709field.private,
+      2526276043field.private,
+      424172101field.private,
+      2217571939field.private,
+      1844849191field.private,
+      1835613727field.private,
+      2152034221field.private,
+      471742049field.private,
+      2679902681field.private,
+      461594899field.private,
+      1573449851field.private,
+      2332759007field.private,
+      1695518077field.private,
+      297551689field.private,
+      646503107field.private,
+      481035199field.private
+    ],
+    [
+      619228549field.private,
+      835902623field.private,
+      815333249field.private,
+      2180479117field.private,
+      1305036533field.private,
+      27750797field.private,
+      1099255399field.private,
+      2182877237field.private,
+      135874001field.private,
+      926762467field.private,
+      1112455273field.private,
+      2258368487field.private,
+      2777879371field.private,
+      258119759field.private,
+      2223360869field.private,
+      428348369field.private,
+      2041592011field.private,
+      1200600923field.private,
+      1807373663field.private,
+      126603877field.private,
+      1818916591field.private,
+      579569741field.private,
+      2011707619field.private,
+      914255431field.private,
+      555201433field.private,
+      324560191field.private
+    ]
+  ],
+  _nonce: 4917636073613794181935562325831692662900716299735949335925027960885718522878group.public
+}
+ • {
+  program_id: zk_texas_holdem.aleo,
+  function_name: deal_flop,
+  arguments: [
+    aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c,
+    aleo1w68rxc2rtr37gz4pnc9qpy9jwh308cl0ygdcf7t2l0yknwej4ygsym6z5c
+  ]
+}
+```
+
+# This example shows the cards can be decrypted with the proper keys.
 
 ```
 leo run test_reveal_card 1050790452field 1540730939field 1260384667field 2801413507u128
