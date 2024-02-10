@@ -1,0 +1,103 @@
+.table {
+  position: relative;
+  width: 100vw; /* Adjust based on your actual table size */
+  height: 75vh; /* Adjust based on your actual table size */
+}
+  
+.hand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: absolute;
+  transition: background-color 0.25s;
+}
+  
+.hand:hover {
+  background-color: #f0f0f0;
+}
+  
+/* Additional CSS to position each hand and card elements based on the table layout */
+/* Example for one hand, replicate for others with specific positioning */
+.hand-1 {
+  top: 15%;
+  left: 33%;
+  width: 80px;
+  height: 120px;
+}
+  
+.hand-2 {
+  top: 20%;
+  left: 50%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-3 {
+  top: 35%;
+  right: 35%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-4 {
+  top: 70%;
+  right: 35%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-5 {
+  top: 85%;
+  left: 50%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-6 {
+  top: 85%;
+  left: 15%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-7 {
+  top: 70%;
+  left: 5%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-8 {
+  top: 35%;
+  left: 5%;
+  width: 80px;
+  height: 120px;
+}
+
+.hand-9 {
+  top: 20%;
+  left: 15%;
+  width: 80px;
+  height: 120px;
+}
+
+.card {
+  position: absolute;
+  /* Add specific positioning, width, and height for cards */
+}
+  
+.card-1 {
+  top: 50%; /* adjust as necessary */
+  left: 50%; /* adjust as necessary */
+  width: 80px; /* adjust as necessary */
+  height: 120px; /* adjust as necessary */
+  transform: translate(-50%, -50%); /* center the card */
+}
+  
+/* Continue with .card-2, .card-3, etc., with specific transform values for overlap */
+  
